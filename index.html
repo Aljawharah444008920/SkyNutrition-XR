@@ -1,166 +1,464 @@
 <<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>SkyNutrition XR</title>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SkyNutrition XR - Final</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
   <style>
-    body { margin: 0; }
-    #uploadUI {
-      position: absolute;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #10244a 0%, #061227 65%, #040b18 100%);
+    }
+
+    .overlay {
+      position: fixed;
       top: 20px;
       left: 20px;
-      background: rgba(0,0,0,0.6);
-      padding: 15px;
-      border-radius: 12px;
+      width: 360px;
+      padding: 22px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(10,25,55,0.96), rgba(7,15,30,0.95));
       color: white;
-      font-family: sans-serif;
       z-index: 10;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      border: 1px solid rgba(124,173,255,0.16);
+    }
+
+    .overlay h2 {
+      margin: 0 0 12px 0;
+      font-size: 40px;
+      line-height: 1;
+    }
+
+    .overlay p {
+      margin: 0 0 16px 0;
+      font-size: 15px;
+      line-height: 1.5;
+      color: #dbeafe;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #bcd8ff;
+      background: rgba(59,130,246,0.16);
+    }
+
+    .input-wrap {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    input, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+
+    input {
+      background: white;
+      color: #111827;
+    }
+
+    button {
+      background: linear-gradient(90deg,#7cc7ff,#3b82f6);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(59,130,246,0.25);
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 13px;
+      color: #9fc5ff;
     }
   </style>
 </head>
 
 <body>
 
-<!-- 👇 UI خارجي (اختياري) -->
-<div id="uploadUI">
-  <h3>SkyNutrition XR</h3>
-  <button onclick="startScan()">Scan Meal</button>
+<div class="overlay">
+  <div class="badge">Final Judge Demo</div>
+  <h2>SkyNutrition XR</h2>
+  <p>Upload a meal image, analyze it with AI, then enter the immersive XR experience.</p>
+
+  <div class="input-wrap">
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="prepareAnalysis()">Analyze & Prepare XR</button>
+    <button onclick="enterVRMode()">Enter VR</button>
+  </div>
+
+  <div class="note">Recommended flow: upload → analyze → enter VR → press Start Scan.</div>
 </div>
 
-<a-scene background="color: #071a2f">
+<a-scene background="color: #06101f">
 
-  <!-- ✈️ طيارة تتحرك -->
-  <a-entity id="plane"
-    position="-6 2 -5"
-    geometry="primitive: box"
-    material="color: white"
-    scale="0.5 0.2 1.5"
-    animation="property: position; to: 6 2 -5; dur: 6000; loop: true">
+  <!-- Camera -->
+  <a-entity position="0 1.6 0">
+    <a-camera>
+      <a-cursor color="#9dd6ff"></a-cursor>
+    </a-camera>
   </a-entity>
 
-  <!-- 🪑 منصة -->
-  <a-box position="0 0 -3" width="6" height="0.2" depth="2"
-         color="#1a2c47">
-  </a-box>
+  <a-sky color="#06101f"></a-sky>
 
-  <!-- 🟩 شعارات -->
-  <a-plane src="assets/saudi.png"
-           position="-1.8 1.5 -3"
-           width="1.8" height="0.8"
-           material="shader: flat">
+  <!-- Background ambience -->
+  <a-plane position="0 3 -7" width="20" height="9" color="#11284f" opacity="0.24"></a-plane>
+  <a-plane position="-4.5 1.7 -6" width="3" height="5.5" color="#12305e" opacity="0.12"></a-plane>
+  <a-plane position="4.5 1.7 -6" width="3" height="5.5" color="#12305e" opacity="0.12"></a-plane>
+
+  <!-- Animated airplane -->
+  <a-entity position="-4.6 2.45 -5.2"
+            animation="property: position; to: 4.6 2.75 -5.2; dur: 6500; easing: linear; loop: true">
+    <a-cylinder position="0 0 0" radius="0.11" height="1.25" rotation="90 0 0" color="#ffffff"></a-cylinder>
+    <a-box position="0 0 0" width="1.3" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
+    <a-box position="0 0 -0.43" width="0.35" height="0.03" depth="0.08" color="#8dc6ff"></a-box>
+    <a-box position="0 0.18 -0.43" width="0.08" height="0.22" depth="0.04" color="#8dc6ff"></a-box>
+    <a-sphere position="0 0 0.62" radius="0.11" color="#ffffff"></a-sphere>
+  </a-entity>
+
+  <!-- Logo Header -->
+  <a-plane position="0 2.95 -2.55" width="4.3" height="1.02" color="#0f2448" opacity="0.98"></a-plane>
+  <a-plane position="0 3.36 -2.53" width="3.7" height="0.06" color="#79beff" opacity="0.95"
+           animation="property: opacity; from: 0.45; to: 1; dir: alternate; dur: 1300; loop: true">
   </a-plane>
 
-  <a-plane src="assets/kacst.png"
-           position="1.8 1.5 -3"
-           width="1.8" height="0.8"
-           material="shader: flat">
+  <a-plane position="-1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff" opacity="1"></a-plane>
+  <a-image src="assets/saudi.png" position="-1.2 2.9 -2.51" width="1.58" height="0.31"></a-image>
+
+  <a-plane position="0 2.9 -2.50" width="0.02" height="0.72" color="#8cccff" opacity="0.7"></a-plane>
+
+  <a-plane position="1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff" opacity="1"></a-plane>
+  <a-image src="assets/kacst.png" position="1.2 2.9 -2.51" width="1.58" height="0.42"></a-image>
+
+  <!-- Main XR Experience Panel -->
+  <a-plane
+    position="0 1.1 -2.35"
+    width="3.75"
+    height="2.45"
+    color="#0d1f3f"
+    opacity="0.99"
+    animation="property: position; from: 0 0.45 -2.35; to: 0 1.1 -2.35; dur: 1100; easing: easeOutCubic">
   </a-plane>
 
-  <!-- 🔘 زر Scan داخل VR -->
-  <a-plane id="scanBtn"
-           position="0 1 -2.5"
+  <a-plane position="0 2.06 -2.33" width="3.35" height="0.08" color="#79beff" opacity="0.95"></a-plane>
+
+  <a-text
+    value="SKYNUTRITION XR"
+    position="0 1.78 -2.30"
+    align="center"
+    color="#ffffff"
+    width="4.1"
+    font="mozillavr">
+  </a-text>
+
+  <a-text
+    value="AI-powered inflight meal intelligence"
+    position="0 1.55 -2.30"
+    align="center"
+    color="#8cccff"
+    width="2.7"
+    font="mozillavr">
+  </a-text>
+
+  <!-- Start Scan Button -->
+  <a-plane id="startScanBtn"
+           position="0 1.12 -2.29"
            width="1.8"
-           height="0.6"
-           color="#3b82f6"
-           text="value: Scan Meal; align: center; color: white; width: 3"
-           class="clickable">
+           height="0.38"
+           color="#2f6ef0"
+           class="clickable"
+           text="value: Start Scan; align: center; color: white; width: 3.2"
+           animation__hover="property: scale; startEvents: mouseenter; dur: 180; to: 1.05 1.05 1.05"
+           animation__leave="property: scale; startEvents: mouseleave; dur: 180; to: 1 1 1">
   </a-plane>
 
-  <!-- ⏳ حالة -->
-  <a-text id="statusText"
-          value="Ready to scan"
-          position="0 0.3 -2.5"
+  <!-- Scanning Ring -->
+  <a-ring id="scanRing"
+          position="0 0.55 -2.25"
+          radius-inner="0.23"
+          radius-outer="0.30"
+          color="#79beff"
+          visible="false"
+          animation="property: rotation; to: 0 0 360; dur: 1400; easing: linear; loop: true">
+  </a-ring>
+
+  <a-text id="scanState"
+          value="Ready for scan"
+          position="0 0.08 -2.24"
           align="center"
-          color="#9ecbff"
-          width="3">
+          color="#e5f1ff"
+          width="2.6"
+          wrap-count="28"
+          font="mozillavr">
   </a-text>
 
-  <!-- 🟦 بطاقة النتيجة -->
+  <!-- Result Card -->
   <a-plane id="resultCard"
-           position="0 0.8 -3"
-           width="2.5"
-           height="1.5"
-           color="#0f2a44"
+           position="0 -0.55 -2.28"
+           width="3.1"
+           height="1.2"
+           color="#08111f"
            visible="false">
   </a-plane>
 
-  <!-- 📝 النص داخل النتيجة -->
-  <a-text id="resultText"
-          position="0 1 -2.9"
+  <a-text id="meal"
+          value=""
+          position="0 -0.20 -2.24"
           align="center"
-          color="white"
-          width="3"
-          visible="false">
+          color="#ffffff"
+          width="2.8"
+          wrap-count="26"
+          visible="false"
+          font="mozillavr">
   </a-text>
 
-  <!-- 🔁 زر إعادة -->
+  <a-text id="metrics"
+          value=""
+          position="0 -0.78 -2.24"
+          align="center"
+          color="#ffffff"
+          width="2.6"
+          wrap-count="30"
+          visible="false"
+          font="mozillavr">
+  </a-text>
+
+  <!-- Details Button -->
+  <a-plane id="detailsBtn"
+           position="-0.72 -1.35 -2.27"
+           width="1.25"
+           height="0.28"
+           color="#1d4ed8"
+           visible="false"
+           class="clickable"
+           text="value: AI Details; align: center; color: white; width: 2.5">
+  </a-plane>
+
+  <!-- Scan Again Button -->
   <a-plane id="againBtn"
-           position="0 0.2 -2.5"
-           width="1.5"
-           height="0.5"
-           color="#22c55e"
-           text="value: Scan Again; align: center; color: white; width: 3"
+           position="0.72 -1.35 -2.27"
+           width="1.25"
+           height="0.28"
+           color="#16a34a"
+           visible="false"
+           class="clickable"
+           text="value: Scan Again; align: center; color: white; width: 2.5">
+  </a-plane>
+
+  <!-- AI Details Card -->
+  <a-plane id="detailsCard"
+           position="0 -2.05 -2.32"
+           width="3.1"
+           height="0.7"
+           color="#050d18"
            visible="false">
   </a-plane>
 
-  <!-- 🎯 كاميرا -->
-  <a-entity camera look-controls position="0 1.6 0">
-    <a-cursor></a-cursor>
-  </a-entity>
+  <a-text id="result"
+          value=""
+          position="0 -2.08 -2.28"
+          align="center"
+          color="#79beff"
+          width="2.7"
+          wrap-count="30"
+          visible="false"
+          font="mozillavr">
+  </a-text>
 
 </a-scene>
 
 <script>
+  const API_KEY = "AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ";
 
-const scanBtn = document.getElementById("scanBtn");
-const statusText = document.getElementById("statusText");
-const resultCard = document.getElementById("resultCard");
-const resultText = document.getElementById("resultText");
-const againBtn = document.getElementById("againBtn");
+  let preparedAnalysis = null;
 
-// 🔥 ضغط زر Scan
-scanBtn.addEventListener("click", startScan);
-againBtn.addEventListener("click", reset);
+  const startScanBtn = document.getElementById("startScanBtn");
+  const scanRing = document.getElementById("scanRing");
+  const scanState = document.getElementById("scanState");
+  const resultCard = document.getElementById("resultCard");
+  const mealEl = document.getElementById("meal");
+  const metricsEl = document.getElementById("metrics");
+  const resultEl = document.getElementById("result");
+  const detailsCard = document.getElementById("detailsCard");
+  const detailsBtn = document.getElementById("detailsBtn");
+  const againBtn = document.getElementById("againBtn");
 
-function startScan() {
-  statusText.setAttribute("value", "Scanning...");
-  scanBtn.setAttribute("visible", false);
+  async function prepareAnalysis() {
+    const file = document.getElementById("imageInput").files[0];
 
-  setTimeout(() => {
-    showResult();
-  }, 2000);
-}
+    if (!file) {
+      alert("Please choose an image first.");
+      return;
+    }
 
-// 📊 عرض النتيجة
-function showResult() {
+    scanState.setAttribute("value", "Preparing AI analysis...");
+    hideResultSections();
 
-  statusText.setAttribute("value", "Analysis Complete");
+    try {
+      const base64 = await toBase64(file);
 
-  resultCard.setAttribute("visible", true);
-  resultText.setAttribute("visible", true);
-  againBtn.setAttribute("visible", true);
+      const res = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`, {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+          requests: [{
+            image: { content: base64 },
+            features: [{ type: "LABEL_DETECTION", maxResults: 5 }]
+          }]
+        })
+      });
 
-  resultText.setAttribute("value",
-`Chicken Meal 🍗
+      const data = await res.json();
 
-Calories: 520 kcal
-Protein: 35g
-Reward: +50 Miles ✈️
-Waste Risk: Low`);
-}
+      if (!res.ok) {
+        scanState.setAttribute("value", "AI preparation failed");
+        alert(data.error?.message || "Vision API error");
+        return;
+      }
 
-// 🔁 إعادة
-function reset() {
-  resultCard.setAttribute("visible", false);
-  resultText.setAttribute("visible", false);
-  againBtn.setAttribute("visible", false);
-  scanBtn.setAttribute("visible", true);
-  statusText.setAttribute("value", "Ready to scan");
-}
+      const labels = data?.responses?.[0]?.labelAnnotations || [];
 
+      if (!labels.length) {
+        scanState.setAttribute("value", "No meal detected");
+        alert("No labels found. Try another image.");
+        return;
+      }
+
+      const mealData = inferMealData(labels.map(l => l.description));
+      const labelsText = labels
+        .slice(0, 4)
+        .map((l, i) => `${i + 1}. ${l.description} (${Math.round((l.score || 0) * 100)}%)`)
+        .join("\n");
+
+      preparedAnalysis = {
+        name: mealData.name,
+        calories: mealData.calories,
+        protein: mealData.protein,
+        reward: mealData.reward,
+        wasteRisk: mealData.wasteRisk,
+        labels: labelsText
+      };
+
+      scanState.setAttribute("value", "AI ready. Enter VR and press Start Scan.");
+
+    } catch (err) {
+      scanState.setAttribute("value", "Request failed");
+      alert(err.message);
+    }
+  }
+
+  function enterVRMode() {
+    const scene = document.querySelector('a-scene');
+    if (scene.enterVR) {
+      scene.enterVR();
+    }
+  }
+
+  startScanBtn.addEventListener("click", () => {
+    if (!preparedAnalysis) {
+      scanState.setAttribute("value", "Please analyze an image first.");
+      return;
+    }
+
+    hideResultSections();
+    startScanBtn.setAttribute("visible", false);
+    scanRing.setAttribute("visible", true);
+    scanState.setAttribute("value", "Analyzing meal...");
+
+    setTimeout(() => {
+      scanRing.setAttribute("visible", false);
+      showPreparedResult();
+    }, 1800);
+  });
+
+  detailsBtn.addEventListener("click", () => {
+    const visible = detailsCard.getAttribute("visible");
+    detailsCard.setAttribute("visible", !visible);
+    resultEl.setAttribute("visible", !visible);
+  });
+
+  againBtn.addEventListener("click", () => {
+    hideResultSections();
+    detailsCard.setAttribute("visible", false);
+    resultEl.setAttribute("visible", false);
+    startScanBtn.setAttribute("visible", true);
+    scanState.setAttribute("value", "Ready for scan");
+  });
+
+  function showPreparedResult() {
+    resultCard.setAttribute("visible", true);
+    mealEl.setAttribute("visible", true);
+    metricsEl.setAttribute("visible", true);
+    detailsBtn.setAttribute("visible", true);
+    againBtn.setAttribute("visible", true);
+
+    mealEl.setAttribute("value", preparedAnalysis.name);
+    metricsEl.setAttribute(
+      "value",
+      `Calories: ${preparedAnalysis.calories}\nProtein: ${preparedAnalysis.protein}\nReward: ${preparedAnalysis.reward}\nWaste Risk: ${preparedAnalysis.wasteRisk}`
+    );
+
+    resultEl.setAttribute("value", preparedAnalysis.labels);
+    scanState.setAttribute("value", "Analysis complete");
+  }
+
+  function hideResultSections() {
+    resultCard.setAttribute("visible", false);
+    mealEl.setAttribute("visible", false);
+    metricsEl.setAttribute("visible", false);
+    detailsBtn.setAttribute("visible", false);
+    againBtn.setAttribute("visible", false);
+    detailsCard.setAttribute("visible", false);
+    resultEl.setAttribute("visible", false);
+  }
+
+  function inferMealData(labels) {
+    const text = labels.join(" ").toLowerCase();
+
+    if (text.includes("rice") && (text.includes("chicken") || text.includes("meat"))) {
+      return { name:"Chicken Rice", calories:"520 kcal", protein:"35g", reward:"+50 Miles", wasteRisk:"Low" };
+    }
+    if (text.includes("salad") || (text.includes("vegetable") && text.includes("food"))) {
+      return { name:"Salad Bowl", calories:"250 kcal", protein:"10g", reward:"+35 Miles", wasteRisk:"Medium" };
+    }
+    if (text.includes("pasta") || text.includes("noodle")) {
+      return { name:"Pasta Dish", calories:"480 kcal", protein:"18g", reward:"+40 Miles", wasteRisk:"Medium" };
+    }
+    if (text.includes("sandwich") || text.includes("burger")) {
+      return { name:"Sandwich / Burger", calories:"560 kcal", protein:"25g", reward:"+45 Miles", wasteRisk:"Medium" };
+    }
+    if (text.includes("dessert") || text.includes("cake")) {
+      return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High" };
+    }
+
+    return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium" };
+  }
+
+  function toBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = err => reject(err);
+      reader.readAsDataURL(file);
+    });
+  }
 </script>
 
 </body>
