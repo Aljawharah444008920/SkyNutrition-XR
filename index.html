@@ -1,413 +1,169 @@
 <<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8">
   <title>SkyNutrition XR</title>
+
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-      background: radial-gradient(circle at top, #10244a 0%, #061227 65%, #040b18 100%);
-    }
-
-    .overlay {
-      position: fixed;
+    body { margin: 0; }
+    #uploadUI {
+      position: absolute;
       top: 20px;
       left: 20px;
-      width: 360px;
-      padding: 22px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(10,25,55,0.96), rgba(7,15,30,0.95));
-      color: white;
-      z-index: 10;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
-      border: 1px solid rgba(124,173,255,0.16);
-    }
-
-    .overlay h2 {
-      margin: 0 0 12px 0;
-      font-size: 42px;
-      line-height: 1;
-    }
-
-    .overlay p {
-      margin: 0 0 16px 0;
-      font-size: 16px;
-      line-height: 1.5;
-      color: #dbeafe;
-    }
-
-    .badge {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 12px;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #bcd8ff;
-      background: rgba(59,130,246,0.16);
-    }
-
-    .input-wrap {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    input, button {
-      width: 100%;
-      margin-top: 10px;
-      padding: 12px;
+      background: rgba(0,0,0,0.6);
+      padding: 15px;
       border-radius: 12px;
-      border: none;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-
-    input {
-      background: white;
-      color: #111827;
-    }
-
-    button {
-      background: linear-gradient(90deg,#7cc7ff,#3b82f6);
       color: white;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(59,130,246,0.25);
-    }
-
-    .secondary-btn {
-      background: linear-gradient(90deg,#334155,#475569);
-    }
-
-    .note {
-      margin-top: 14px;
-      font-size: 13px;
-      color: #9fc5ff;
+      font-family: sans-serif;
+      z-index: 10;
     }
   </style>
 </head>
 
 <body>
 
-<div class="overlay">
-  <div class="badge">Premium Cabin Demo</div>
-  <h2>SkyNutrition XR</h2>
-  <p>Upload a meal image, analyze it, then enter the VR experience.</p>
-
-  <div class="input-wrap">
-    <input type="file" id="imageInput" accept="image/*">
-    <button onclick="analyzeImage()">Analyze Meal</button>
-    <button class="secondary-btn" onclick="enterVRMode()">Enter VR</button>
-  </div>
-
-  <div class="note">Best workflow: upload image first, then open the immersive VR view.</div>
+<!-- 👇 UI خارجي (اختياري) -->
+<div id="uploadUI">
+  <h3>SkyNutrition XR</h3>
+  <button onclick="startScan()">Scan Meal</button>
 </div>
 
-<a-scene background="color: #06101f">
+<a-scene background="color: #071a2f">
 
-  <!-- Camera -->
-  <a-entity position="0 1.6 0">
-    <a-camera>
-      <a-cursor color="#9dd6ff"></a-cursor>
-    </a-camera>
+  <!-- ✈️ طيارة تتحرك -->
+  <a-entity id="plane"
+    position="-6 2 -5"
+    geometry="primitive: box"
+    material="color: white"
+    scale="0.5 0.2 1.5"
+    animation="property: position; to: 6 2 -5; dur: 6000; loop: true">
   </a-entity>
 
-  <a-sky color="#06101f"></a-sky>
+  <!-- 🪑 منصة -->
+  <a-box position="0 0 -3" width="6" height="0.2" depth="2"
+         color="#1a2c47">
+  </a-box>
 
-  <!-- Background -->
-  <a-plane position="0 3 -7" width="20" height="9" color="#11284f" opacity="0.24"></a-plane>
-  <a-plane position="-4.5 1.7 -6" width="3" height="5.5" color="#12305e" opacity="0.12"></a-plane>
-  <a-plane position="4.5 1.7 -6" width="3" height="5.5" color="#12305e" opacity="0.12"></a-plane>
+  <!-- 🟩 شعارات -->
+  <a-plane src="assets/saudi.png"
+           position="-1.8 1.5 -3"
+           width="1.8" height="0.8"
+           material="shader: flat">
+  </a-plane>
 
-  <!-- Animated airplane -->
-  <a-entity position="-4.6 2.45 -5.2"
-            animation="property: position; to: 4.6 2.75 -5.2; dur: 6500; easing: linear; loop: true">
-    <a-cylinder position="0 0 0" radius="0.11" height="1.25" rotation="90 0 0" color="#ffffff"></a-cylinder>
-    <a-box position="0 0 0" width="1.3" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
-    <a-box position="0 0 -0.43" width="0.35" height="0.03" depth="0.08" color="#8dc6ff"></a-box>
-    <a-box position="0 0.18 -0.43" width="0.08" height="0.22" depth="0.04" color="#8dc6ff"></a-box>
-    <a-sphere position="0 0 0.62" radius="0.11" color="#ffffff"></a-sphere>
+  <a-plane src="assets/kacst.png"
+           position="1.8 1.5 -3"
+           width="1.8" height="0.8"
+           material="shader: flat">
+  </a-plane>
+
+  <!-- 🔘 زر Scan داخل VR -->
+  <a-plane id="scanBtn"
+           position="0 1 -2.5"
+           width="1.8"
+           height="0.6"
+           color="#3b82f6"
+           text="value: Scan Meal; align: center; color: white; width: 3"
+           class="clickable">
+  </a-plane>
+
+  <!-- ⏳ حالة -->
+  <a-text id="statusText"
+          value="Ready to scan"
+          position="0 0.3 -2.5"
+          align="center"
+          color="#9ecbff"
+          width="3">
+  </a-text>
+
+  <!-- 🟦 بطاقة النتيجة -->
+  <a-plane id="resultCard"
+           position="0 0.8 -3"
+           width="2.5"
+           height="1.5"
+           color="#0f2a44"
+           visible="false">
+  </a-plane>
+
+  <!-- 📝 النص داخل النتيجة -->
+  <a-text id="resultText"
+          position="0 1 -2.9"
+          align="center"
+          color="white"
+          width="3"
+          visible="false">
+  </a-text>
+
+  <!-- 🔁 زر إعادة -->
+  <a-plane id="againBtn"
+           position="0 0.2 -2.5"
+           width="1.5"
+           height="0.5"
+           color="#22c55e"
+           text="value: Scan Again; align: center; color: white; width: 3"
+           visible="false">
+  </a-plane>
+
+  <!-- 🎯 كاميرا -->
+  <a-entity camera look-controls position="0 1.6 0">
+    <a-cursor></a-cursor>
   </a-entity>
-
-  <!-- Logo Header -->
-  <a-plane position="0 2.95 -2.55" width="4.3" height="1.02" color="#0f2448" opacity="0.98"></a-plane>
-
-  <a-plane position="0 3.36 -2.53" width="3.7" height="0.06" color="#79beff" opacity="0.95"
-           animation="property: opacity; from: 0.45; to: 1; dir: alternate; dur: 1300; loop: true">
-  </a-plane>
-
-  <!-- Saudi card -->
-  <a-plane position="-1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff" opacity="1"></a-plane>
-  <a-image src="assets/saudi.png" position="-1.2 2.9 -2.51" width="1.58" height="0.31"></a-image>
-
-  <!-- Divider -->
-  <a-plane position="0 2.9 -2.50" width="0.02" height="0.72" color="#8cccff" opacity="0.7"></a-plane>
-
-  <!-- KACST card -->
-  <a-plane position="1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff" opacity="1"></a-plane>
-  <a-image src="assets/kacst.png" position="1.2 2.9 -2.51" width="1.58" height="0.42"></a-image>
-
-  <!-- Main Panel -->
-  <a-plane
-    position="0 1.1 -2.35"
-    width="3.75"
-    height="2.45"
-    color="#0d1f3f"
-    opacity="0.99"
-    animation="property: position; from: 0 0.45 -2.35; to: 0 1.1 -2.35; dur: 1100; easing: easeOutCubic">
-  </a-plane>
-
-  <!-- Accent -->
-  <a-plane
-    position="0 2.06 -2.33"
-    width="3.35"
-    height="0.08"
-    color="#79beff"
-    opacity="0.95">
-  </a-plane>
-
-  <!-- Title -->
-  <a-text
-    value="SKYNUTRITION XR"
-    position="0 1.78 -2.30"
-    align="center"
-    color="#ffffff"
-    width="4.1"
-    font="mozillavr">
-  </a-text>
-
-  <a-text
-    value="Inflight Meal Intelligence"
-    position="0 1.55 -2.30"
-    align="center"
-    color="#8cccff"
-    width="2.9"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Status -->
-  <a-plane position="0 1.22 -2.29" width="3.0" height="0.28" color="#17315f"></a-plane>
-  <a-text
-    id="status"
-    value="STATUS: Waiting for analysis"
-    position="0 1.22 -2.25"
-    align="center"
-    color="#e5f1ff"
-    width="2.8"
-    wrap-count="34"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Meal -->
-  <a-plane position="0 0.82 -2.28" width="3.0" height="0.36" color="#0a162a"></a-plane>
-  <a-text
-    value="Detected Meal"
-    position="0 0.94 -2.25"
-    align="center"
-    color="#79beff"
-    width="1.7"
-    font="mozillavr">
-  </a-text>
-
-  <a-text
-    id="meal"
-    value="Awaiting image..."
-    position="0 0.71 -2.24"
-    align="center"
-    color="#ffffff"
-    width="2.5"
-    wrap-count="26"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Metrics -->
-  <a-plane position="0 0.25 -2.28" width="3.0" height="0.66" color="#08111f"></a-plane>
-  <a-text
-    value="Meal Metrics"
-    position="0 0.50 -2.25"
-    align="center"
-    color="#79beff"
-    width="1.7"
-    font="mozillavr">
-  </a-text>
-
-  <a-text
-    id="metrics"
-    value="Calories: --\nProtein: --\nReward: --\nWaste Risk: --"
-    position="0 0.11 -2.24"
-    align="center"
-    color="#ffffff"
-    width="2.55"
-    wrap-count="28"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Labels -->
-  <a-plane position="0 -0.55 -2.28" width="3.0" height="0.82" color="#050d18"></a-plane>
-  <a-text
-    value="AI Labels"
-    position="0 -0.22 -2.25"
-    align="center"
-    color="#79beff"
-    width="1.5"
-    font="mozillavr">
-  </a-text>
-
-  <a-text
-    id="result"
-    value="No analysis yet."
-    position="0 -0.66 -2.24"
-    align="center"
-    color="#ffffff"
-    width="2.55"
-    wrap-count="30"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Bottom -->
-  <a-plane position="0 -1.18 -2.27" width="2.2" height="0.22" color="#2f6ef0"></a-plane>
-  <a-text
-    value="ONBOARD SMART SERVICE"
-    position="0 -1.18 -2.23"
-    align="center"
-    color="#ffffff"
-    width="2.15"
-    font="mozillavr">
-  </a-text>
-
-  <!-- Frame -->
-  <a-box position="-1.82 0.5 -2.55" depth="0.14" height="2.05" width="0.10" color="#24406c"></a-box>
-  <a-box position="1.82 0.5 -2.55" depth="0.14" height="2.05" width="0.10" color="#24406c"></a-box>
-  <a-box position="0 2.15 -2.55" depth="0.14" height="0.07" width="3.9" color="#24406c"></a-box>
-  <a-box position="0 -1.42 -2.55" depth="0.18" height="0.08" width="3.95" color="#24406c"></a-box>
 
 </a-scene>
 
 <script>
-  function enterVRMode() {
-    const scene = document.querySelector('a-scene');
-    if (scene.enterVR) {
-      scene.enterVR();
-    }
-  }
 
-  async function analyzeImage() {
-    const status = document.getElementById("status");
-    const meal = document.getElementById("meal");
-    const metrics = document.getElementById("metrics");
-    const result = document.getElementById("result");
-    const file = document.getElementById("imageInput").files[0];
+const scanBtn = document.getElementById("scanBtn");
+const statusText = document.getElementById("statusText");
+const resultCard = document.getElementById("resultCard");
+const resultText = document.getElementById("resultText");
+const againBtn = document.getElementById("againBtn");
 
-    if (!file) {
-      status.setAttribute("value", "STATUS: No image selected");
-      meal.setAttribute("value", "Please choose an image.");
-      metrics.setAttribute("value", "Calories: --\nProtein: --\nReward: --\nWaste Risk: --");
-      result.setAttribute("value", "Waiting for input.");
-      return;
-    }
+// 🔥 ضغط زر Scan
+scanBtn.addEventListener("click", startScan);
+againBtn.addEventListener("click", reset);
 
-    status.setAttribute("value", "STATUS: Analyzing meal...");
-    meal.setAttribute("value", "Scanning...");
-    metrics.setAttribute("value", "Calculating...\nCalculating...\nCalculating...\nCalculating...");
-    result.setAttribute("value", "AI is processing the uploaded image.");
+function startScan() {
+  statusText.setAttribute("value", "Scanning...");
+  scanBtn.setAttribute("visible", false);
 
-    try {
-      const base64 = await toBase64(file);
+  setTimeout(() => {
+    showResult();
+  }, 2000);
+}
 
-      const res = await fetch("https://vision.googleapis.com/v1/images:annotate?key=AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ", {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          requests: [{
-            image: { content: base64 },
-            features: [{ type: "LABEL_DETECTION", maxResults: 5 }]
-          }]
-        })
-      });
+// 📊 عرض النتيجة
+function showResult() {
 
-      const data = await res.json();
+  statusText.setAttribute("value", "Analysis Complete");
 
-      if (!res.ok) {
-        status.setAttribute("value", "STATUS: Error");
-        meal.setAttribute("value", "Analysis failed");
-        metrics.setAttribute("value", "Calories: --\nProtein: --\nReward: --\nWaste Risk: --");
-        result.setAttribute("value", data.error?.message || "Unknown error");
-        return;
-      }
+  resultCard.setAttribute("visible", true);
+  resultText.setAttribute("visible", true);
+  againBtn.setAttribute("visible", true);
 
-      const labels = data?.responses?.[0]?.labelAnnotations || [];
+  resultText.setAttribute("value",
+`Chicken Meal 🍗
 
-      if (!labels.length) {
-        status.setAttribute("value", "STATUS: No labels found");
-        meal.setAttribute("value", "Meal not recognized");
-        metrics.setAttribute("value", "Calories: --\nProtein: --\nReward: --\nWaste Risk: --");
-        result.setAttribute("value", "Try another image.");
-        return;
-      }
+Calories: 520 kcal
+Protein: 35g
+Reward: +50 Miles ✈️
+Waste Risk: Low`);
+}
 
-      const mealData = inferMealData(labels.map(l => l.description));
+// 🔁 إعادة
+function reset() {
+  resultCard.setAttribute("visible", false);
+  resultText.setAttribute("visible", false);
+  againBtn.setAttribute("visible", false);
+  scanBtn.setAttribute("visible", true);
+  statusText.setAttribute("value", "Ready to scan");
+}
 
-      const resultText = labels
-        .slice(0,4)
-        .map((l,i) => `${i+1}. ${l.description} (${Math.round((l.score||0)*100)}%)`)
-        .join("\n");
-
-      status.setAttribute("value", "STATUS: Analysis complete");
-      meal.setAttribute("value", mealData.name);
-      metrics.setAttribute(
-        "value",
-        `Calories: ${mealData.calories}\nProtein: ${mealData.protein}\nReward: ${mealData.reward}\nWaste Risk: ${mealData.wasteRisk}`
-      );
-      result.setAttribute("value", resultText);
-
-    } catch (err) {
-      status.setAttribute("value", "STATUS: Request failed");
-      meal.setAttribute("value", "Unable to analyze");
-      metrics.setAttribute("value", "Calories: --\nProtein: --\nReward: --\nWaste Risk: --");
-      result.setAttribute("value", err.message);
-    }
-  }
-
-  function inferMealData(labels) {
-    const text = labels.join(" ").toLowerCase();
-
-    if (text.includes("rice") && (text.includes("chicken") || text.includes("meat"))) {
-      return { name:"Chicken Rice", calories:"520 kcal", protein:"35g", reward:"+50 Miles", wasteRisk:"Low" };
-    }
-    if (text.includes("salad") || (text.includes("vegetable") && text.includes("food"))) {
-      return { name:"Salad Bowl", calories:"250 kcal", protein:"10g", reward:"+35 Miles", wasteRisk:"Medium" };
-    }
-    if (text.includes("pasta") || text.includes("noodle")) {
-      return { name:"Pasta Dish", calories:"480 kcal", protein:"18g", reward:"+40 Miles", wasteRisk:"Medium" };
-    }
-    if (text.includes("sandwich") || text.includes("burger")) {
-      return { name:"Sandwich / Burger", calories:"560 kcal", protein:"25g", reward:"+45 Miles", wasteRisk:"Medium" };
-    }
-    if (text.includes("dessert") || text.includes("cake")) {
-      return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High" };
-    }
-
-    return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium" };
-  }
-
-  function toBase64(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result.split(",")[1]);
-      reader.onerror = err => reject(err);
-      reader.readAsDataURL(file);
-    });
-  }
 </script>
 
 </body>
 </html>
+
+#AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ
