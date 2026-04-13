@@ -1,16 +1,15 @@
 <<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SkyNutrition XR - Judge Demo</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SkyNutrition XR — WOW Demo</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
       overflow: hidden;
+      font-family: Arial, sans-serif;
       background: radial-gradient(circle at top, #12305a 0%, #071a2f 60%, #040b18 100%);
     }
 
@@ -18,12 +17,12 @@
       position: fixed;
       top: 20px;
       left: 20px;
-      width: 360px;
+      width: 370px;
       padding: 22px;
       border-radius: 22px;
-      background: linear-gradient(180deg, rgba(9,22,48,0.96), rgba(6,14,28,0.95));
+      background: linear-gradient(180deg, rgba(8,20,45,0.96), rgba(6,12,28,0.95));
       color: white;
-      z-index: 10;
+      z-index: 20;
       box-shadow: 0 16px 40px rgba(0,0,0,0.35);
       border: 1px solid rgba(124,173,255,0.16);
       backdrop-filter: blur(10px);
@@ -49,7 +48,7 @@
 
     .overlay p {
       margin: 0 0 16px 0;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.5;
       color: #dbeafe;
     }
@@ -109,130 +108,155 @@
     <button class="secondary-btn" onclick="enterVRMode()">Enter VR</button>
   </div>
 
-  <div class="note">Flow: upload → analyze → enter VR → press Start Scan.</div>
+  <div class="note">Best flow: upload → analyze → enter VR → focus on Start Scan.</div>
 </div>
 
-<a-scene background="color: #06101f">
+<a-scene renderer="colorManagement: true" background="color: #06101f">
 
   <!-- Camera -->
   <a-entity position="0 1.6 0">
     <a-camera>
-      <a-cursor color="#9dd6ff" fuse="false"></a-cursor>
+      <a-cursor
+        color="#9dd6ff"
+        fuse="true"
+        fuse-timeout="900"
+        raycaster="objects: .clickable">
+      </a-cursor>
     </a-camera>
   </a-entity>
 
   <a-sky color="#06101f"></a-sky>
 
-  <!-- Background ambience -->
-  <a-plane position="0 3 -7" width="20" height="9" color="#11284f" opacity="0.22"></a-plane>
-  <a-plane position="-4.8 1.8 -6" width="3.2" height="5.8" color="#12305e" opacity="0.10"></a-plane>
-  <a-plane position="4.8 1.8 -6" width="3.2" height="5.8" color="#12305e" opacity="0.10"></a-plane>
+  <!-- Atmosphere -->
+  <a-plane position="0 3 -7" width="20" height="9" color="#11284f" opacity="0.24"></a-plane>
+  <a-plane position="-5 2 -6" width="3.5" height="6" color="#12305e" opacity="0.09"></a-plane>
+  <a-plane position="5 2 -6" width="3.5" height="6" color="#12305e" opacity="0.09"></a-plane>
+
+  <!-- Runway / platform -->
+  <a-plane position="0 0 -4.2" rotation="-90 0 0" width="12" height="4.5" color="#091321"></a-plane>
+  <a-plane position="0 0.01 -4.2" rotation="-90 0 0" width="0.08" height="3.7" color="#60a5fa" opacity="0.7"></a-plane>
+
+  <!-- Floating particles vibe -->
+  <a-sphere position="-2.8 2.6 -5.5" radius="0.03" color="#7dd3fc" opacity="0.5"
+            animation="property: position; to: -2.8 2.8 -5.5; dir: alternate; dur: 2000; loop: true"></a-sphere>
+  <a-sphere position="2.4 2.2 -5.8" radius="0.025" color="#93c5fd" opacity="0.4"
+            animation="property: position; to: 2.4 2.45 -5.8; dir: alternate; dur: 1700; loop: true"></a-sphere>
+  <a-sphere position="1.7 3.0 -6.2" radius="0.02" color="#bfdbfe" opacity="0.35"
+            animation="property: position; to: 1.7 3.2 -6.2; dir: alternate; dur: 2200; loop: true"></a-sphere>
 
   <!-- Animated airplane -->
-  <a-entity position="-4.9 2.55 -5.2"
-            animation="property: position; to: 4.9 2.85 -5.2; dur: 6500; easing: linear; loop: true">
+  <a-entity position="-5.2 2.55 -5.2"
+            animation="property: position; to: 5.2 2.85 -5.2; dur: 6200; easing: linear; loop: true">
     <a-cylinder position="0 0 0" radius="0.11" height="1.25" rotation="90 0 0" color="#ffffff"></a-cylinder>
-    <a-box position="0 0 0" width="1.3" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
+    <a-box position="0 0 0" width="1.28" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
     <a-box position="0 0 -0.43" width="0.35" height="0.03" depth="0.08" color="#8dc6ff"></a-box>
     <a-box position="0 0.18 -0.43" width="0.08" height="0.22" depth="0.04" color="#8dc6ff"></a-box>
     <a-sphere position="0 0 0.62" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
   <!-- Logo header -->
-  <a-plane position="0 2.95 -2.55" width="4.3" height="1.0" color="#10284d" opacity="0.98"></a-plane>
-  <a-plane position="0 3.35 -2.53" width="3.7" height="0.06" color="#79beff" opacity="0.95"
-           animation="property: opacity; from: 0.45; to: 1; dir: alternate; dur: 1300; loop: true">
-  </a-plane>
+  <a-plane position="0 2.95 -2.65" width="4.2" height="0.95" color="#10284d" opacity="0.97"></a-plane>
+  <a-plane position="0 3.31 -2.63" width="3.6" height="0.05" color="#79beff" opacity="0.95"
+           animation="property: opacity; from: 0.45; to: 1; dir: alternate; dur: 1300; loop: true"></a-plane>
 
-  <a-plane position="-1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff"></a-plane>
-  <a-image src="assets/saudi.png" position="-1.2 2.9 -2.51" width="1.58" height="0.31"></a-image>
+  <a-plane position="-1.15 2.88 -2.62" width="1.7" height="0.52" color="#ffffff"></a-plane>
+  <a-image src="assets/saudi.png" position="-1.15 2.88 -2.61" width="1.52" height="0.30"></a-image>
 
-  <a-plane position="0 2.9 -2.50" width="0.02" height="0.72" color="#8cccff" opacity="0.7"></a-plane>
+  <a-plane position="0 2.88 -2.60" width="0.02" height="0.68" color="#8cccff" opacity="0.7"></a-plane>
 
-  <a-plane position="1.2 2.9 -2.52" width="1.75" height="0.56" color="#ffffff"></a-plane>
-  <a-image src="assets/kacst.png" position="1.2 2.9 -2.51" width="1.58" height="0.42"></a-image>
+  <a-plane position="1.15 2.88 -2.62" width="1.7" height="0.52" color="#ffffff"></a-plane>
+  <a-image src="assets/kacst.png" position="1.15 2.88 -2.61" width="1.52" height="0.40"></a-image>
 
-  <!-- Main experience panel -->
+  <!-- Main hero panel -->
   <a-plane
     id="mainPanel"
-    position="0 1.18 -2.28"
-    width="3.25"
-    height="2.02"
+    position="0 1.22 -2.35"
+    width="3.05"
+    height="1.95"
     color="#0c1f3f"
     opacity="0.98"
     animation="property: scale; from: 0.88 0.88 0.88; to: 1 1 1; dur: 800; easing: easeOutCubic">
   </a-plane>
 
-  <a-plane position="0 1.97 -2.26" width="2.85" height="0.07" color="#79beff" opacity="0.95"></a-plane>
+  <a-plane position="0 1.98 -2.33" width="2.65" height="0.07" color="#79beff" opacity="0.95"></a-plane>
 
   <a-text
     value="SkyNutrition XR"
-    position="0 1.70 -2.22"
+    position="0 1.72 -2.28"
     align="center"
     color="#ffffff"
-    width="3.4"
+    width="3.2"
     font="mozillavr">
   </a-text>
 
   <a-text
-    value="AI-powered inflight meal intelligence"
-    position="0 1.48 -2.22"
+    value="Inflight meal scan experience"
+    position="0 1.50 -2.28"
     align="center"
     color="#8cccff"
-    width="2.3"
-    wrap-count="30"
+    width="2.1"
+    wrap-count="26"
     font="mozillavr">
   </a-text>
 
-  <!-- Start scan button -->
+  <!-- Start Scan Button -->
   <a-plane id="startScanBtn"
-           position="0 1.10 -2.20"
-           width="1.55"
+           position="0 1.08 -2.26"
+           width="1.45"
            height="0.34"
-           color="#3b82f6"
+           color="#2f6ef0"
            class="clickable"
-           text="value: Start Scan; align: center; color: white; width: 3"
-           animation__hover="property: scale; startEvents: mouseenter; to: 1.08 1.08 1.08; dur: 180"
-           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 180">
+           text="value: Start Scan; align: center; color: white; width: 2.8"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.08 1.08 1.08; dur: 160"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 160">
   </a-plane>
 
-  <!-- Scan ring -->
+  <!-- Scan HUD -->
   <a-ring id="scanRing"
-          position="0 0.66 -2.18"
-          radius-inner="0.18"
+          position="0 0.62 -2.24"
+          radius-inner="0.17"
           radius-outer="0.26"
           color="#00cfff"
           visible="false"
-          animation="property: rotation; to: 0 0 360; loop: true; dur: 1000">
+          animation="property: rotation; to: 0 0 360; loop: true; dur: 900">
   </a-ring>
 
-  <!-- Scan pulse -->
-  <a-plane id="scanPulse"
-           position="0 0.66 -2.19"
-           width="0.48"
-           height="0.48"
-           color="#7dd3fc"
+  <a-ring id="scanRing2"
+          position="0 0.62 -2.245"
+          radius-inner="0.28"
+          radius-outer="0.31"
+          color="#7dd3fc"
+          visible="false"
+          opacity="0.5"
+          animation="property: scale; from: 0.8 0.8 0.8; to: 1.1 1.1 1.1; dir: alternate; dur: 650; loop: true">
+  </a-ring>
+
+  <a-plane id="scanBeam"
+           position="0 0.62 -2.23"
+           width="0.10"
+           height="0.55"
+           color="#67e8f9"
            opacity="0.0"
            visible="false"
-           animation="property: opacity; from: 0.0; to: 0.25; dir: alternate; dur: 500; loop: true">
+           animation="property: opacity; from: 0.0; to: 0.25; dir: alternate; dur: 300; loop: true">
   </a-plane>
 
-  <!-- State text -->
+  <!-- State Text -->
   <a-text id="scanState"
           value="Ready for scan"
-          position="0 0.18 -2.18"
+          position="0 0.10 -2.22"
           align="center"
           color="#e5f1ff"
-          width="2.2"
-          wrap-count="28"
+          width="2.05"
+          wrap-count="24"
           font="mozillavr">
   </a-text>
 
-  <!-- Result card -->
+  <!-- Result Card -->
   <a-plane id="resultCard"
-           position="0 -0.52 -2.20"
-           width="2.75"
-           height="1.05"
+           position="0 -0.55 -2.24"
+           width="2.6"
+           height="1.0"
            color="#08111f"
            opacity="0.97"
            visible="false">
@@ -240,63 +264,63 @@
 
   <a-text id="meal"
           value=""
-          position="0 -0.18 -2.15"
+          position="0 -0.22 -2.19"
           align="center"
           color="#ffffff"
-          width="2.35"
-          wrap-count="24"
+          width="2.15"
+          wrap-count="22"
           visible="false"
           font="mozillavr">
   </a-text>
 
   <a-text id="metrics"
           value=""
-          position="0 -0.70 -2.15"
+          position="0 -0.70 -2.19"
           align="center"
           color="#7dd3fc"
-          width="2.15"
-          wrap-count="28"
+          width="1.95"
+          wrap-count="24"
           visible="false"
           font="mozillavr">
   </a-text>
 
-  <!-- Buttons after result -->
+  <!-- Action Buttons -->
   <a-plane id="detailsBtn"
-           position="-0.66 -1.28 -2.18"
-           width="1.05"
-           height="0.24"
+           position="-0.60 -1.23 -2.22"
+           width="0.98"
+           height="0.23"
            color="#1d4ed8"
            visible="false"
            class="clickable"
-           text="value: AI Details; align: center; color: white; width: 2.1">
+           text="value: AI Details; align: center; color: white; width: 1.9">
   </a-plane>
 
   <a-plane id="againBtn"
-           position="0.66 -1.28 -2.18"
-           width="1.05"
-           height="0.24"
+           position="0.60 -1.23 -2.22"
+           width="0.98"
+           height="0.23"
            color="#16a34a"
            visible="false"
            class="clickable"
-           text="value: Scan Again; align: center; color: white; width: 2.1">
+           text="value: Scan Again; align: center; color: white; width: 1.9">
   </a-plane>
 
-  <!-- AI details card -->
+  <!-- Details Card -->
   <a-plane id="detailsCard"
-           position="0 -1.88 -2.22"
-           width="2.75"
-           height="0.58"
+           position="0 -1.78 -2.27"
+           width="2.6"
+           height="0.52"
            color="#06101d"
            visible="false">
   </a-plane>
 
   <a-text id="result"
           value=""
-          position="0 -1.90 -2.18"
+          position="0 -1.80 -2.23"
           align="center"
           color="#9dd6ff"
-          width="2.25"
-          wrap-count="28"
+          width="1.95"
+          wrap-count="24"
           visible="false"
           font="mozillavr">
   </a-text>
@@ -310,7 +334,8 @@
 
   const startScanBtn = document.getElementById("startScanBtn");
   const scanRing = document.getElementById("scanRing");
-  const scanPulse = document.getElementById("scanPulse");
+  const scanRing2 = document.getElementById("scanRing2");
+  const scanBeam = document.getElementById("scanBeam");
   const scanState = document.getElementById("scanState");
   const resultCard = document.getElementById("resultCard");
   const mealEl = document.getElementById("meal");
@@ -377,6 +402,7 @@
       };
 
       scanState.setAttribute("value", "AI ready. Enter VR and press Start Scan.");
+      alert("AI analysis prepared successfully.");
 
     } catch (err) {
       scanState.setAttribute("value", "Request failed");
@@ -400,7 +426,8 @@
     hideResultSections();
     startScanBtn.setAttribute("visible", false);
     scanRing.setAttribute("visible", true);
-    scanPulse.setAttribute("visible", true);
+    scanRing2.setAttribute("visible", true);
+    scanBeam.setAttribute("visible", true);
 
     scanState.setAttribute("value", "Detecting meal...");
 
@@ -414,7 +441,8 @@
 
     setTimeout(() => {
       scanRing.setAttribute("visible", false);
-      scanPulse.setAttribute("visible", false);
+      scanRing2.setAttribute("visible", false);
+      scanBeam.setAttribute("visible", false);
       showPreparedResult();
     }, 2200);
   });
