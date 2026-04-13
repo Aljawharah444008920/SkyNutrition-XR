@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkyNutrition XR — Premium Experience</title>
+  <title>SkyNutrition XR — Hologram Demo</title>
 
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
@@ -11,173 +11,122 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    :root{
-      --bg-1:#060b16;
-      --bg-2:#0a1730;
-      --bg-3:#12183b;
-      --cyan:#74e3ff;
-      --cyan-2:#38bdf8;
-      --blue:#4f7cff;
-      --violet:#7c3aed;
-      --violet-2:#a855f7;
-      --gold:#f5c96b;
-      --white:#f8fbff;
-      --muted:#c8ddff;
-      --card:rgba(7,12,24,.82);
-      --stroke:rgba(116,227,255,.18);
+    * { box-sizing: border-box; font-family: "Inter", sans-serif; }
+
+    body {
+      margin: 0;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(124,58,237,.18), transparent 22%),
+        radial-gradient(circle at 80% 18%, rgba(56,189,248,.14), transparent 22%),
+        radial-gradient(circle at 50% 0%, #183c6d 0%, #0a1730 40%, #050b15 100%);
     }
 
-    *{ box-sizing:border-box; font-family:"Inter",sans-serif; }
-
-    body{
-      margin:0;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(124,58,237,.18), transparent 22%),
-        radial-gradient(circle at 80% 20%, rgba(56,189,248,.14), transparent 24%),
-        radial-gradient(circle at 50% 0%, #17305f 0%, #0a1630 38%, #050b15 100%);
-    }
-
-    .overlay{
-      position:fixed;
-      top:18px;
-      left:18px;
-      width:390px;
-      padding:22px;
-      border-radius:28px;
-      background:
-        linear-gradient(180deg, rgba(10,18,36,.88), rgba(7,12,26,.84));
-      border:1px solid var(--stroke);
-      box-shadow:
-        0 24px 60px rgba(0,0,0,.42),
-        inset 0 1px 0 rgba(255,255,255,.04),
-        inset 0 0 50px rgba(56,189,248,.03);
+    .overlay {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      width: 390px;
+      padding: 22px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(9,18,36,.90), rgba(6,12,24,.86));
+      border: 1px solid rgba(116,227,255,.16);
+      box-shadow: 0 24px 60px rgba(0,0,0,.42);
       backdrop-filter: blur(16px);
-      color:var(--white);
-      z-index:20;
-      overflow:hidden;
+      color: #f8fbff;
+      z-index: 20;
     }
 
-    .overlay::before{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background:
-        linear-gradient(135deg, rgba(116,227,255,.16), transparent 28%, transparent 72%, rgba(124,58,237,.12));
-      pointer-events:none;
-      border-radius:28px;
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #dbf2ff;
+      background: linear-gradient(90deg, rgba(56,189,248,.18), rgba(124,58,237,.18));
+      border: 1px solid rgba(116,227,255,.14);
     }
 
-    .eyebrow{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:9px 14px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:800;
-      letter-spacing:1.3px;
-      text-transform:uppercase;
-      color:#dbf2ff;
-      background:linear-gradient(90deg, rgba(56,189,248,.18), rgba(124,58,237,.18));
-      border:1px solid rgba(116,227,255,.14);
-      position:relative;
-      z-index:1;
+    .title {
+      margin: 16px 0 10px;
+      font-size: 58px;
+      line-height: .92;
+      letter-spacing: -2.6px;
+      font-weight: 800;
+      background: linear-gradient(180deg, #ffffff 0%, #d9ecff 60%, #9ad8ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
-    .title{
-      position:relative;
-      z-index:1;
-      margin:16px 0 10px;
-      font-size:62px;
-      line-height:.92;
-      letter-spacing:-2.8px;
-      font-weight:800;
+    .sub {
+      margin: 0;
+      color: #dbeafe;
+      font-size: 17px;
+      line-height: 1.55;
+      max-width: 330px;
     }
 
-    .title span{
-      background:linear-gradient(180deg, #ffffff 0%, #d9ecff 60%, #9ad8ff 100%);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
+    .panel {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
     }
 
-    .sub{
-      position:relative;
-      z-index:1;
-      margin:0;
-      color:#dbeafe;
-      font-size:17px;
-      line-height:1.55;
-      max-width:330px;
+    input, button {
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      box-sizing: border-box;
     }
 
-    .panel{
-      position:relative;
-      z-index:1;
-      margin-top:18px;
-      padding:14px;
-      border-radius:18px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.07);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+    input {
+      margin-top: 4px;
+      padding: 14px;
+      background: #ffffff;
+      color: #111827;
     }
 
-    input,button{
-      width:100%;
-      border:none;
-      border-radius:15px;
-      font-size:16px;
-      box-sizing:border-box;
+    button {
+      margin-top: 10px;
+      padding: 14px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: transform .18s ease, filter .18s ease;
     }
 
-    input{
-      margin-top:4px;
-      padding:14px;
-      background:#ffffff;
-      color:#111827;
+    button:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.03);
     }
 
-    button{
-      margin-top:10px;
-      padding:14px;
-      font-weight:700;
-      color:white;
-      cursor:pointer;
-      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    .primary {
+      background: linear-gradient(90deg, #5ee7ff, #4f7cff);
+      box-shadow: 0 14px 28px rgba(59,130,246,.28);
     }
 
-    button:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.03);
+    .secondary {
+      background: linear-gradient(90deg, #272f44, #3c4761);
     }
 
-    .primary{
-      background:linear-gradient(90deg, #5ee7ff, #4f7cff);
-      box-shadow:0 14px 28px rgba(59,130,246,.28);
-    }
-
-    .secondary{
-      background:linear-gradient(90deg, #272f44, #3c4761);
-    }
-
-    .hint{
-      margin-top:12px;
-      padding:11px 12px;
-      border-radius:14px;
-      color:#d9efff;
-      background:rgba(116,227,255,.07);
-      border:1px solid rgba(116,227,255,.10);
-      font-size:13px;
-      line-height:1.45;
-      min-height:44px;
-    }
-
-    .foot{
-      margin-top:12px;
-      font-size:13px;
-      line-height:1.45;
-      color:#9ec9ff;
+    .hint {
+      margin-top: 12px;
+      padding: 11px 12px;
+      border-radius: 14px;
+      color: #d9efff;
+      background: rgba(116,227,255,.07);
+      border: 1px solid rgba(116,227,255,.10);
+      font-size: 13px;
+      line-height: 1.45;
+      min-height: 44px;
     }
   </style>
 </head>
@@ -185,14 +134,9 @@
 
 <div class="overlay" id="overlayUI">
   <div class="eyebrow">XR Premium Judge Demo</div>
-
-  <div class="title">
-    <span>SkyNutrition</span><br />
-    <span>XR</span>
-  </div>
-
+  <div class="title">SkyNutrition XR</div>
   <p class="sub">
-    A more cinematic inflight meal scan experience with live AI analysis and immersive XR presentation.
+    Upload a meal image, prepare the AI result, then launch the immersive hologram scan experience.
   </p>
 
   <div class="panel">
@@ -201,14 +145,9 @@
     <button class="secondary" onclick="enterXRMode()">Enter XR</button>
     <div class="hint" id="prepareState">Waiting for meal image.</div>
   </div>
-
-  <div class="foot">
-    Flow: upload image → analyze → enter XR → start scan.
-  </div>
 </div>
 
 <a-scene renderer="colorManagement: true" background="color: #050b15">
-
   <!-- Camera -->
   <a-entity position="0 1.6 0">
     <a-camera>
@@ -221,7 +160,7 @@
     </a-camera>
   </a-entity>
 
-  <!-- Atmosphere -->
+  <!-- Background -->
   <a-sky color="#050b15"></a-sky>
   <a-plane position="0 3 -7" width="22" height="10" color="#11244a" opacity="0.22"></a-plane>
   <a-plane position="-5.3 2 -6.7" width="3.6" height="6.4" color="#17305f" opacity="0.09"></a-plane>
@@ -231,13 +170,11 @@
   <a-plane position="0 0 -4.4" rotation="-90 0 0" width="13" height="5.7" color="#07111d"></a-plane>
   <a-plane position="0 0.01 -4.4" rotation="-90 0 0" width="0.07" height="4.6" color="#5ee7ff" opacity="0.55"></a-plane>
 
-  <!-- Floating lights -->
+  <!-- Floating particles -->
   <a-sphere position="-2.9 2.7 -5.8" radius="0.03" color="#74e3ff" opacity="0.45"
             animation="property: position; to: -2.9 2.95 -5.8; dir: alternate; dur: 1800; loop: true"></a-sphere>
   <a-sphere position="2.6 2.2 -6.1" radius="0.025" color="#9f7aea" opacity="0.35"
             animation="property: position; to: 2.6 2.45 -6.1; dir: alternate; dur: 2200; loop: true"></a-sphere>
-  <a-sphere position="1.8 3.0 -6.3" radius="0.02" color="#bfdbfe" opacity="0.35"
-            animation="property: position; to: 1.8 3.2 -6.3; dir: alternate; dur: 2000; loop: true"></a-sphere>
 
   <!-- Airplane -->
   <a-entity position="-5.8 2.55 -5.25"
@@ -249,7 +186,7 @@
     <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
-  <!-- Logo top strip -->
+  <!-- Logo strip -->
   <a-plane position="0 2.96 -2.72" width="4.05" height="0.92" color="#0e2347" opacity="0.96"></a-plane>
   <a-plane position="0 3.30 -2.69" width="3.46" height="0.045" color="#6cd9ff" opacity="0.95"></a-plane>
 
@@ -261,25 +198,23 @@
   <a-plane position="1.08 2.89 -2.68" width="1.56" height="0.48" color="#ffffff"></a-plane>
   <a-image src="assets/kacst.png" position="1.08 2.89 -2.67" width="1.40" height="0.36"></a-image>
 
-  <!-- Main XR panel -->
+  <!-- Main card -->
   <a-plane id="mainPanel"
-           position="0 1.20 -2.30"
-           width="3.02"
-           height="1.88"
+           position="0 1.22 -2.32"
+           width="3.08"
+           height="1.95"
            color="#0a1730"
            opacity="0.985"
            animation="property: scale; from: 0.84 0.84 0.84; to: 1 1 1; dur: 850; easing: easeOutCubic">
   </a-plane>
 
-  <!-- Decorative header lines -->
-  <a-plane position="0 1.94 -2.27" width="2.54" height="0.05" color="#6cd9ff" opacity="0.95"></a-plane>
-  <a-plane position="0 1.92 -2.28" width="2.58" height="0.012" color="#b6ecff" opacity="0.38"></a-plane>
+  <a-plane position="0 1.95 -2.29" width="2.58" height="0.05" color="#6cd9ff" opacity="0.95"></a-plane>
 
   <!-- Title -->
   <a-entity id="heroTitle"
     troika-text="
       value: SkyNutrition XR;
-      position: 0 1.62 -2.22;
+      position: 0 1.64 -2.24;
       align: center;
       color: #ffffff;
       fontSize: 0.12;
@@ -289,8 +224,8 @@
 
   <a-entity id="heroSubtitle"
     troika-text="
-      value: Scan. Analyze. Elevate onboard dining.;
-      position: 0 1.40 -2.22;
+      value: Scan. Analyze. Elevate dining.;
+      position: 0 1.42 -2.24;
       align: center;
       color: #91d7ff;
       fontSize: 0.050;
@@ -300,31 +235,28 @@
 
   <!-- Start button -->
   <a-plane id="startScanBtn"
-           position="0 1.05 -2.18"
-           width="1.42"
+           position="0 1.06 -2.20"
+           width="1.44"
            height="0.32"
-           color="#3e6fff"
+           color="#4f7cff"
            class="clickable"
            animation__hover="property: scale; startEvents: mouseenter; to: 1.08 1.08 1.08; dur: 170"
            animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 170">
   </a-plane>
-
-  <a-plane position="0 1.05 -2.175" width="1.46" height="0.035" color="#7ce8ff" opacity="0.22"></a-plane>
-
   <a-entity id="startBtnText"
     troika-text="
       value: Start Scan;
-      position: 0 1.05 -2.11;
+      position: 0 1.06 -2.14;
       align: center;
       color: #ffffff;
       fontSize: 0.067;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
-      maxWidth: 1.15;">
+      maxWidth: 1.18;">
   </a-entity>
 
-  <!-- Scan animation -->
+  <!-- Scan hologram -->
   <a-ring id="scanRing"
-          position="0 0.66 -2.16"
+          position="0 0.68 -2.18"
           radius-inner="0.17"
           radius-outer="0.25"
           color="#00d6ff"
@@ -333,7 +265,7 @@
   </a-ring>
 
   <a-ring id="scanRing2"
-          position="0 0.66 -2.165"
+          position="0 0.68 -2.185"
           radius-inner="0.28"
           radius-outer="0.31"
           color="#a855f7"
@@ -343,7 +275,7 @@
   </a-ring>
 
   <a-plane id="scanBeam"
-           position="0 0.66 -2.15"
+           position="0 0.68 -2.17"
            width="0.08"
            height="0.52"
            color="#67e8f9"
@@ -353,20 +285,38 @@
   </a-plane>
 
   <a-plane id="scanGlow"
-           position="0 0.66 -2.19"
-           width="0.72"
-           height="0.72"
+           position="0 0.68 -2.21"
+           width="0.74"
+           height="0.74"
            color="#3b82f6"
            opacity="0.0"
            visible="false"
            animation="property: opacity; from: 0.0; to: 0.14; dir: alternate; dur: 420; loop: true">
   </a-plane>
 
+  <!-- Meal hologram image -->
+  <a-plane id="mealImageGlow"
+           position="0 0.66 -2.19"
+           width="0.92"
+           height="0.72"
+           color="#6cd9ff"
+           opacity="0.0"
+           visible="false"
+           animation="property: opacity; from: 0.0; to: 0.12; dir: alternate; dur: 500; loop: true">
+  </a-plane>
+
+  <a-image id="mealImage"
+           position="0 0.66 -2.16"
+           width="0.82"
+           height="0.58"
+           visible="false">
+  </a-image>
+
   <!-- State -->
   <a-entity id="scanStateText"
     troika-text="
       value: Ready for scan;
-      position: 0 0.14 -2.14;
+      position: 0 0.10 -2.16;
       align: center;
       color: #eef8ff;
       fontSize: 0.060;
@@ -374,62 +324,81 @@
       maxWidth: 1.85;">
   </a-entity>
 
-  <!-- Result card -->
-  <a-plane id="resultCard"
-           position="0 -0.50 -2.19"
-           width="2.56"
-           height="1.00"
-           color="#07111d"
-           opacity="0.985"
-           visible="false">
-  </a-plane>
-
-  <a-plane id="resultAccent"
-           position="0 -0.06 -2.17"
-           width="2.20"
-           height="0.02"
-           color="#74e3ff"
-           opacity="0.75"
-           visible="false">
-  </a-plane>
-
-  <a-entity id="mealText"
+  <!-- Surrounding metrics -->
+  <a-entity id="caloriesText"
     troika-text="
       value: ;
-      position: 0 -0.22 -2.12;
+      position: 0 1.00 -2.04;
       align: center;
-      color: #ffffff;
-      fontSize: 0.10;
-      font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff;
-      maxWidth: 1.92;
+      color: #f8fbff;
+      fontSize: 0.055;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
+      maxWidth: 0.75;
       visible: false;">
   </a-entity>
 
-  <a-entity id="metricsText"
+  <a-entity id="proteinText"
     troika-text="
       value: ;
-      position: 0 -0.70 -2.12;
+      position: -0.92 0.66 -2.06;
       align: center;
       color: #8fdcff;
-      fontSize: 0.058;
-      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff;
-      maxWidth: 1.88;
+      fontSize: 0.052;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
+      maxWidth: 0.75;
+      visible: false;">
+  </a-entity>
+
+  <a-entity id="rewardText"
+    troika-text="
+      value: ;
+      position: 0.92 0.66 -2.06;
+      align: center;
+      color: #f5c96b;
+      fontSize: 0.052;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
+      maxWidth: 0.75;
+      visible: false;">
+  </a-entity>
+
+  <a-entity id="riskText"
+    troika-text="
+      value: ;
+      position: 0 0.18 -2.05;
+      align: center;
+      color: #d5dfff;
+      fontSize: 0.052;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
+      maxWidth: 0.75;
+      visible: false;">
+  </a-entity>
+
+  <!-- Meal title -->
+  <a-entity id="mealTitleText"
+    troika-text="
+      value: ;
+      position: 0 -0.42 -2.12;
+      align: center;
+      color: #ffffff;
+      fontSize: 0.095;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff;
+      maxWidth: 2.0;
       visible: false;">
   </a-entity>
 
   <!-- Action buttons -->
   <a-plane id="detailsBtn"
-           position="-0.58 -1.16 -2.16"
+           position="-0.58 -1.14 -2.18"
            width="0.98"
            height="0.21"
-           color="#6d28d9"
+           color="#7c3aed"
            visible="false"
            class="clickable">
   </a-plane>
   <a-entity id="detailsBtnText"
     troika-text="
       value: AI Details;
-      position: -0.58 -1.16 -2.10;
+      position: -0.58 -1.14 -2.12;
       align: center;
       color: #ffffff;
       fontSize: 0.046;
@@ -439,7 +408,7 @@
   </a-entity>
 
   <a-plane id="againBtn"
-           position="0.58 -1.16 -2.16"
+           position="0.58 -1.14 -2.18"
            width="0.98"
            height="0.21"
            color="#0ea5e9"
@@ -449,7 +418,7 @@
   <a-entity id="againBtnText"
     troika-text="
       value: Scan Again;
-      position: 0.58 -1.16 -2.10;
+      position: 0.58 -1.14 -2.12;
       align: center;
       color: #ffffff;
       fontSize: 0.046;
@@ -460,8 +429,8 @@
 
   <!-- Details card -->
   <a-plane id="detailsCard"
-           position="0 -1.72 -2.23"
-           width="2.56"
+           position="0 -1.68 -2.26"
+           width="2.58"
            height="0.50"
            color="#050b14"
            visible="false">
@@ -470,12 +439,12 @@
   <a-entity id="detailsText"
     troika-text="
       value: ;
-      position: 0 -1.73 -2.17;
+      position: 0 -1.69 -2.20;
       align: center;
       color: #a9dcff;
       fontSize: 0.050;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff;
-      maxWidth: 1.92;
+      maxWidth: 1.95;
       visible: false;">
   </a-entity>
 
@@ -483,7 +452,6 @@
 
 <script>
   const API_KEY = "AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ";
-
   let preparedAnalysis = null;
 
   const overlayUI = document.getElementById("overlayUI");
@@ -494,35 +462,40 @@
   const scanRing2 = document.getElementById("scanRing2");
   const scanBeam = document.getElementById("scanBeam");
   const scanGlow = document.getElementById("scanGlow");
+  const mealImage = document.getElementById("mealImage");
+  const mealImageGlow = document.getElementById("mealImageGlow");
 
   const scanStateText = document.getElementById("scanStateText");
-  const resultCard = document.getElementById("resultCard");
-  const resultAccent = document.getElementById("resultAccent");
-  const mealText = document.getElementById("mealText");
-  const metricsText = document.getElementById("metricsText");
+  const mealTitleText = document.getElementById("mealTitleText");
+  const caloriesText = document.getElementById("caloriesText");
+  const proteinText = document.getElementById("proteinText");
+  const rewardText = document.getElementById("rewardText");
+  const riskText = document.getElementById("riskText");
 
   const detailsBtn = document.getElementById("detailsBtn");
   const detailsBtnText = document.getElementById("detailsBtnText");
   const againBtn = document.getElementById("againBtn");
   const againBtnText = document.getElementById("againBtnText");
-
   const detailsCard = document.getElementById("detailsCard");
   const detailsText = document.getElementById("detailsText");
 
-  function setStateText(value) {
-    scanStateText.setAttribute("troika-text", `value: ${value}; position: 0 0.14 -2.14; align: center; color: #eef8ff; fontSize: 0.060; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.85;`);
+  function tSet(el, value, position, color, size, fontUrl, maxWidth) {
+    el.setAttribute(
+      "troika-text",
+      `value: ${value}; position: ${position}; align: center; color: ${color}; fontSize: ${size}; font: ${fontUrl}; maxWidth: ${maxWidth};`
+    );
   }
 
-  function setMealText(value) {
-    mealText.setAttribute("troika-text", `value: ${value}; position: 0 -0.22 -2.12; align: center; color: #ffffff; fontSize: 0.10; font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff; maxWidth: 1.92; visible: true;`);
-  }
-
-  function setMetricsText(value) {
-    metricsText.setAttribute("troika-text", `value: ${value}; position: 0 -0.70 -2.12; align: center; color: #8fdcff; fontSize: 0.058; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.88; visible: true;`);
-  }
-
-  function setDetailsText(value) {
-    detailsText.setAttribute("troika-text", `value: ${value}; position: 0 -1.73 -2.17; align: center; color: #a9dcff; fontSize: 0.050; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff; maxWidth: 1.92; visible: true;`);
+  function setState(value) {
+    tSet(
+      scanStateText,
+      value,
+      "0 0.10 -2.16",
+      "#eef8ff",
+      "0.060",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff",
+      "1.85"
+    );
   }
 
   async function prepareAnalysis() {
@@ -534,11 +507,12 @@
     }
 
     prepareState.textContent = "Preparing AI analysis...";
-    setStateText("Preparing AI analysis...");
+    setState("Preparing AI analysis...");
     hideResultSections();
 
     try {
       const base64 = await toBase64(file);
+      const imageUrl = URL.createObjectURL(file);
 
       const res = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`, {
         method: "POST",
@@ -546,7 +520,10 @@
         body: JSON.stringify({
           requests: [{
             image: { content: base64 },
-            features: [{ type: "LABEL_DETECTION", maxResults: 5 }]
+            features: [
+              { type: "LABEL_DETECTION", maxResults: 5 },
+              { type: "OBJECT_LOCALIZATION", maxResults: 3 }
+            ]
           }]
         })
       });
@@ -555,16 +532,15 @@
 
       if (!res.ok) {
         prepareState.textContent = "AI preparation failed.";
-        setStateText("AI preparation failed");
+        setState("AI preparation failed");
         alert(data.error?.message || "Vision API error");
         return;
       }
 
       const labels = data?.responses?.[0]?.labelAnnotations || [];
-
       if (!labels.length) {
         prepareState.textContent = "No meal detected.";
-        setStateText("No meal detected");
+        setState("No meal detected");
         alert("No labels found. Try another image.");
         return;
       }
@@ -581,14 +557,15 @@
         protein: mealData.protein,
         reward: mealData.reward,
         wasteRisk: mealData.wasteRisk,
-        labels: labelsText
+        labels: labelsText,
+        imageUrl
       };
 
       prepareState.textContent = "AI ready. Enter XR and start scan.";
-      setStateText("AI ready. Enter XR and start scan.");
+      setState("AI ready. Enter XR and start scan.");
     } catch (err) {
       prepareState.textContent = "Request failed.";
-      setStateText("Request failed");
+      setState("Request failed");
       alert(err.message);
     }
   }
@@ -601,7 +578,7 @@
 
   startScanBtn.addEventListener("click", () => {
     if (!preparedAnalysis) {
-      setStateText("Please analyze first");
+      setState("Please analyze first");
       return;
     }
 
@@ -612,11 +589,12 @@
     scanRing2.setAttribute("visible", true);
     scanBeam.setAttribute("visible", true);
     scanGlow.setAttribute("visible", true);
+    mealImageGlow.setAttribute("visible", true);
 
-    setStateText("Detecting meal...");
+    setState("Detecting meal...");
 
-    setTimeout(() => setStateText("Analyzing nutrition..."), 650);
-    setTimeout(() => setStateText("Calculating reward..."), 1350);
+    setTimeout(() => setState("Analyzing nutrition..."), 650);
+    setTimeout(() => setState("Calculating reward..."), 1350);
 
     setTimeout(() => {
       scanRing.setAttribute("visible", false);
@@ -635,35 +613,96 @@
 
   againBtn.addEventListener("click", () => {
     hideResultSections();
+    mealImage.setAttribute("visible", false);
+    mealImageGlow.setAttribute("visible", false);
     startScanBtn.setAttribute("visible", true);
-    setStateText("Ready for scan");
+    setState("Ready for scan");
   });
 
   function showPreparedResult() {
-    resultCard.setAttribute("visible", true);
-    resultAccent.setAttribute("visible", true);
-    mealText.setAttribute("visible", true);
-    metricsText.setAttribute("visible", true);
+    mealImage.setAttribute("src", preparedAnalysis.imageUrl);
+    mealImage.setAttribute("visible", true);
+
+    mealTitleText.setAttribute("visible", true);
+    caloriesText.setAttribute("visible", true);
+    proteinText.setAttribute("visible", true);
+    rewardText.setAttribute("visible", true);
+    riskText.setAttribute("visible", true);
+
+    tSet(
+      mealTitleText,
+      preparedAnalysis.name,
+      "0 -0.42 -2.12",
+      "#ffffff",
+      "0.095",
+      "https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff",
+      "2.0"
+    );
+
+    tSet(
+      caloriesText,
+      preparedAnalysis.calories,
+      "0 1.00 -2.04",
+      "#f8fbff",
+      "0.055",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff",
+      "0.75"
+    );
+
+    tSet(
+      proteinText,
+      `Protein\n${preparedAnalysis.protein}`,
+      "-0.92 0.66 -2.06",
+      "#8fdcff",
+      "0.052",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff",
+      "0.75"
+    );
+
+    tSet(
+      rewardText,
+      preparedAnalysis.reward,
+      "0.92 0.66 -2.06",
+      "#f5c96b",
+      "0.052",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff",
+      "0.75"
+    );
+
+    tSet(
+      riskText,
+      preparedAnalysis.wasteRisk,
+      "0 0.18 -2.05",
+      "#d5dfff",
+      "0.052",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff",
+      "0.75"
+    );
+
+    tSet(
+      detailsText,
+      preparedAnalysis.labels,
+      "0 -1.69 -2.20",
+      "#a9dcff",
+      "0.050",
+      "https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff",
+      "1.95"
+    );
 
     detailsBtn.setAttribute("visible", true);
     detailsBtnText.setAttribute("visible", true);
     againBtn.setAttribute("visible", true);
     againBtnText.setAttribute("visible", true);
 
-    setMealText(preparedAnalysis.name);
-    setMetricsText(
-      `Calories: ${preparedAnalysis.calories}\nProtein: ${preparedAnalysis.protein}\nReward: ${preparedAnalysis.reward}\nRisk: ${preparedAnalysis.wasteRisk}`
-    );
-    setDetailsText(preparedAnalysis.labels);
-
-    setStateText("Analysis complete");
+    setState("Analysis complete");
   }
 
   function hideResultSections() {
-    resultCard.setAttribute("visible", false);
-    resultAccent.setAttribute("visible", false);
-    mealText.setAttribute("visible", false);
-    metricsText.setAttribute("visible", false);
+    mealTitleText.setAttribute("visible", false);
+    caloriesText.setAttribute("visible", false);
+    proteinText.setAttribute("visible", false);
+    rewardText.setAttribute("visible", false);
+    riskText.setAttribute("visible", false);
 
     detailsBtn.setAttribute("visible", false);
     detailsBtnText.setAttribute("visible", false);
@@ -678,21 +717,21 @@
     const text = labels.join(" ").toLowerCase();
 
     if (text.includes("rice") && (text.includes("chicken") || text.includes("meat"))) {
-      return { name:"Chicken Rice", calories:"520 kcal", protein:"35g", reward:"+50 Miles", wasteRisk:"Low" };
+      return { name:"Chicken Rice", calories:"520 kcal", protein:"35g", reward:"+50 Miles", wasteRisk:"Low Risk" };
     }
     if (text.includes("salad") || (text.includes("vegetable") && text.includes("food"))) {
-      return { name:"Salad Bowl", calories:"250 kcal", protein:"10g", reward:"+35 Miles", wasteRisk:"Medium" };
+      return { name:"Salad Bowl", calories:"250 kcal", protein:"10g", reward:"+35 Miles", wasteRisk:"Medium Risk" };
     }
     if (text.includes("pasta") || text.includes("noodle")) {
-      return { name:"Pasta Dish", calories:"480 kcal", protein:"18g", reward:"+40 Miles", wasteRisk:"Medium" };
+      return { name:"Pasta Dish", calories:"480 kcal", protein:"18g", reward:"+40 Miles", wasteRisk:"Medium Risk" };
     }
     if (text.includes("sandwich") || text.includes("burger")) {
-      return { name:"Sandwich / Burger", calories:"560 kcal", protein:"25g", reward:"+45 Miles", wasteRisk:"Medium" };
+      return { name:"Sandwich / Burger", calories:"560 kcal", protein:"25g", reward:"+45 Miles", wasteRisk:"Medium Risk" };
     }
     if (text.includes("dessert") || text.includes("cake")) {
-      return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High" };
+      return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High Risk" };
     }
-    return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium" };
+    return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium Risk" };
   }
 
   function toBase64(file) {
