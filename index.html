@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SkyNutrition XR — Premium Demo</title>
+  <title>SkyNutrition XR — Premium Experience</title>
 
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-troika-text/dist/aframe-troika-text.min.js"></script>
@@ -11,344 +11,418 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    :root {
-      --bg1: #07111f;
-      --bg2: #0a1c33;
-      --card: rgba(10, 19, 37, 0.82);
-      --stroke: rgba(125, 211, 252, 0.18);
-      --text: #f8fbff;
-      --muted: #b8d7ff;
-      --accent1: #59c3ff;
-      --accent2: #3b82f6;
-      --accent3: #7c3aed;
+    :root{
+      --bg-1:#060b16;
+      --bg-2:#0a1730;
+      --bg-3:#12183b;
+      --cyan:#74e3ff;
+      --cyan-2:#38bdf8;
+      --blue:#4f7cff;
+      --violet:#7c3aed;
+      --violet-2:#a855f7;
+      --gold:#f5c96b;
+      --white:#f8fbff;
+      --muted:#c8ddff;
+      --card:rgba(7,12,24,.82);
+      --stroke:rgba(116,227,255,.18);
     }
 
-    * {
-      box-sizing: border-box;
-      font-family: "Inter", sans-serif;
-    }
+    *{ box-sizing:border-box; font-family:"Inter",sans-serif; }
 
-    body {
-      margin: 0;
-      overflow: hidden;
+    body{
+      margin:0;
+      overflow:hidden;
       background:
-        radial-gradient(circle at 50% 0%, #153a68 0%, #0a1830 38%, #050c18 100%);
+        radial-gradient(circle at 15% 15%, rgba(124,58,237,.18), transparent 22%),
+        radial-gradient(circle at 80% 20%, rgba(56,189,248,.14), transparent 24%),
+        radial-gradient(circle at 50% 0%, #17305f 0%, #0a1630 38%, #050b15 100%);
     }
 
-    .overlay {
-      position: fixed;
-      top: 18px;
-      left: 18px;
-      width: 390px;
-      padding: 20px;
-      border-radius: 26px;
-      background: linear-gradient(180deg, rgba(9,18,36,0.9), rgba(6,12,24,0.88));
-      border: 1px solid var(--stroke);
+    .overlay{
+      position:fixed;
+      top:18px;
+      left:18px;
+      width:390px;
+      padding:22px;
+      border-radius:28px;
+      background:
+        linear-gradient(180deg, rgba(10,18,36,.88), rgba(7,12,26,.84));
+      border:1px solid var(--stroke);
       box-shadow:
-        0 18px 48px rgba(0,0,0,0.38),
-        inset 0 1px 0 rgba(255,255,255,0.04);
-      backdrop-filter: blur(14px);
-      color: var(--text);
-      z-index: 20;
+        0 24px 60px rgba(0,0,0,.42),
+        inset 0 1px 0 rgba(255,255,255,.04),
+        inset 0 0 50px rgba(56,189,248,.03);
+      backdrop-filter: blur(16px);
+      color:var(--white);
+      z-index:20;
+      overflow:hidden;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: #cce7ff;
-      background: linear-gradient(90deg, rgba(59,130,246,.22), rgba(124,58,237,.18));
-      border: 1px solid rgba(125, 211, 252, 0.12);
+    .overlay::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        linear-gradient(135deg, rgba(116,227,255,.16), transparent 28%, transparent 72%, rgba(124,58,237,.12));
+      pointer-events:none;
+      border-radius:28px;
     }
 
-    .overlay h1 {
-      margin: 14px 0 10px;
-      font-size: 54px;
-      line-height: 0.95;
-      letter-spacing: -2px;
-      font-weight: 800;
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.3px;
+      text-transform:uppercase;
+      color:#dbf2ff;
+      background:linear-gradient(90deg, rgba(56,189,248,.18), rgba(124,58,237,.18));
+      border:1px solid rgba(116,227,255,.14);
+      position:relative;
+      z-index:1;
     }
 
-    .overlay .sub {
-      margin: 0;
-      font-size: 17px;
-      line-height: 1.55;
-      color: #dbeafe;
-      max-width: 320px;
+    .title{
+      position:relative;
+      z-index:1;
+      margin:16px 0 10px;
+      font-size:62px;
+      line-height:.92;
+      letter-spacing:-2.8px;
+      font-weight:800;
     }
 
-    .panel {
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
+    .title span{
+      background:linear-gradient(180deg, #ffffff 0%, #d9ecff 60%, #9ad8ff 100%);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
 
-    .row-note {
-      margin-top: 12px;
-      color: #8fc5ff;
-      font-size: 13px;
-      line-height: 1.45;
+    .sub{
+      position:relative;
+      z-index:1;
+      margin:0;
+      color:#dbeafe;
+      font-size:17px;
+      line-height:1.55;
+      max-width:330px;
     }
 
-    input, button {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      font-size: 16px;
+    .panel{
+      position:relative;
+      z-index:1;
+      margin-top:18px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
     }
 
-    input {
-      margin-top: 4px;
-      padding: 13px;
-      background: #ffffff;
-      color: #111827;
+    input,button{
+      width:100%;
+      border:none;
+      border-radius:15px;
+      font-size:16px;
+      box-sizing:border-box;
     }
 
-    button {
-      margin-top: 10px;
-      padding: 14px;
-      font-weight: 700;
-      color: white;
-      cursor: pointer;
-      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+    input{
+      margin-top:4px;
+      padding:14px;
+      background:#ffffff;
+      color:#111827;
     }
 
-    button:hover {
-      transform: translateY(-1px);
+    button{
+      margin-top:10px;
+      padding:14px;
+      font-weight:700;
+      color:white;
+      cursor:pointer;
+      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;
     }
 
-    .primary {
-      background: linear-gradient(90deg, #66d9ff, #3b82f6);
-      box-shadow: 0 14px 28px rgba(59,130,246,0.30);
+    button:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
     }
 
-    .secondary {
-      background: linear-gradient(90deg, #23334c, #334155);
+    .primary{
+      background:linear-gradient(90deg, #5ee7ff, #4f7cff);
+      box-shadow:0 14px 28px rgba(59,130,246,.28);
     }
 
-    .status-chip {
-      margin-top: 12px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      color: #d8ecff;
-      background: rgba(89,195,255,0.08);
-      border: 1px solid rgba(89,195,255,0.12);
+    .secondary{
+      background:linear-gradient(90deg, #272f44, #3c4761);
+    }
+
+    .hint{
+      margin-top:12px;
+      padding:11px 12px;
+      border-radius:14px;
+      color:#d9efff;
+      background:rgba(116,227,255,.07);
+      border:1px solid rgba(116,227,255,.10);
+      font-size:13px;
+      line-height:1.45;
+      min-height:44px;
+    }
+
+    .foot{
+      margin-top:12px;
+      font-size:13px;
+      line-height:1.45;
+      color:#9ec9ff;
     }
   </style>
 </head>
 <body>
 
 <div class="overlay" id="overlayUI">
-  <div class="pill">Premium XR Judge Demo</div>
-  <h1>SkyNutrition XR</h1>
+  <div class="eyebrow">XR Premium Judge Demo</div>
+
+  <div class="title">
+    <span>SkyNutrition</span><br />
+    <span>XR</span>
+  </div>
+
   <p class="sub">
-    AI-powered inflight meal scan experience with a cleaner XR journey designed for live judging.
+    A more cinematic inflight meal scan experience with live AI analysis and immersive XR presentation.
   </p>
 
   <div class="panel">
     <input type="file" id="imageInput" accept="image/*" />
     <button class="primary" onclick="prepareAnalysis()">Analyze & Prepare XR</button>
-    <button class="secondary" onclick="enterVRMode()">Enter XR</button>
-
-    <div class="status-chip" id="prepareState">
-      Waiting for meal image.
-    </div>
+    <button class="secondary" onclick="enterXRMode()">Enter XR</button>
+    <div class="hint" id="prepareState">Waiting for meal image.</div>
   </div>
 
-  <div class="row-note">
-    Best flow: upload image → analyze → enter XR → start scan.
+  <div class="foot">
+    Flow: upload image → analyze → enter XR → start scan.
   </div>
 </div>
 
-<a-scene renderer="colorManagement: true" background="color: #060d18">
+<a-scene renderer="colorManagement: true" background="color: #050b15">
 
   <!-- Camera -->
   <a-entity position="0 1.6 0">
     <a-camera>
       <a-cursor
-        color="#7dd3fc"
+        color="#74e3ff"
         fuse="true"
-        fuse-timeout="900"
+        fuse-timeout="850"
         raycaster="objects: .clickable">
       </a-cursor>
     </a-camera>
   </a-entity>
 
-  <!-- Background -->
-  <a-sky color="#060d18"></a-sky>
-  <a-plane position="0 3 -7" width="22" height="10" color="#0c203f" opacity="0.26"></a-plane>
-  <a-plane position="-5 2 -6.5" width="3.4" height="6.5" color="#0f2a54" opacity="0.09"></a-plane>
-  <a-plane position="5 2 -6.5" width="3.4" height="6.5" color="#0f2a54" opacity="0.09"></a-plane>
+  <!-- Atmosphere -->
+  <a-sky color="#050b15"></a-sky>
+  <a-plane position="0 3 -7" width="22" height="10" color="#11244a" opacity="0.22"></a-plane>
+  <a-plane position="-5.3 2 -6.7" width="3.6" height="6.4" color="#17305f" opacity="0.09"></a-plane>
+  <a-plane position="5.3 2 -6.7" width="3.6" height="6.4" color="#17305f" opacity="0.09"></a-plane>
 
   <!-- Floor -->
-  <a-plane position="0 0 -4.2" rotation="-90 0 0" width="12" height="5.5" color="#08111d"></a-plane>
-  <a-plane position="0 0.01 -4.2" rotation="-90 0 0" width="0.08" height="4.2" color="#66d9ff" opacity="0.65"></a-plane>
+  <a-plane position="0 0 -4.4" rotation="-90 0 0" width="13" height="5.7" color="#07111d"></a-plane>
+  <a-plane position="0 0.01 -4.4" rotation="-90 0 0" width="0.07" height="4.6" color="#5ee7ff" opacity="0.55"></a-plane>
+
+  <!-- Floating lights -->
+  <a-sphere position="-2.9 2.7 -5.8" radius="0.03" color="#74e3ff" opacity="0.45"
+            animation="property: position; to: -2.9 2.95 -5.8; dir: alternate; dur: 1800; loop: true"></a-sphere>
+  <a-sphere position="2.6 2.2 -6.1" radius="0.025" color="#9f7aea" opacity="0.35"
+            animation="property: position; to: 2.6 2.45 -6.1; dir: alternate; dur: 2200; loop: true"></a-sphere>
+  <a-sphere position="1.8 3.0 -6.3" radius="0.02" color="#bfdbfe" opacity="0.35"
+            animation="property: position; to: 1.8 3.2 -6.3; dir: alternate; dur: 2000; loop: true"></a-sphere>
 
   <!-- Airplane -->
-  <a-entity position="-5.6 2.5 -5.2"
-            animation="property: position; to: 5.6 2.8 -5.2; dur: 6200; easing: linear; loop: true">
-    <a-cylinder position="0 0 0" radius="0.11" height="1.25" rotation="90 0 0" color="#ffffff"></a-cylinder>
-    <a-box position="0 0 0" width="1.28" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
-    <a-box position="0 0 -0.43" width="0.35" height="0.03" depth="0.08" color="#8dc6ff"></a-box>
-    <a-box position="0 0.18 -0.43" width="0.08" height="0.22" depth="0.04" color="#8dc6ff"></a-box>
-    <a-sphere position="0 0 0.62" radius="0.11" color="#ffffff"></a-sphere>
+  <a-entity position="-5.8 2.55 -5.25"
+            animation="property: position; to: 5.8 2.88 -5.25; dur: 6200; easing: linear; loop: true">
+    <a-cylinder position="0 0 0" radius="0.11" height="1.28" rotation="90 0 0" color="#ffffff"></a-cylinder>
+    <a-box position="0 0 0" width="1.3" height="0.04" depth="0.22" color="#8dc6ff"></a-box>
+    <a-box position="0 0 -0.44" width="0.36" height="0.03" depth="0.08" color="#8dc6ff"></a-box>
+    <a-box position="0 0.18 -0.44" width="0.08" height="0.23" depth="0.04" color="#8dc6ff"></a-box>
+    <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
-  <!-- Logo strip -->
-  <a-plane position="0 2.96 -2.7" width="4.05" height="0.88" color="#0e2448" opacity="0.96"></a-plane>
-  <a-plane position="0 3.29 -2.67" width="3.45" height="0.045" color="#77c6ff" opacity="0.95"></a-plane>
+  <!-- Logo top strip -->
+  <a-plane position="0 2.96 -2.72" width="4.05" height="0.92" color="#0e2347" opacity="0.96"></a-plane>
+  <a-plane position="0 3.30 -2.69" width="3.46" height="0.045" color="#6cd9ff" opacity="0.95"></a-plane>
 
-  <a-plane position="-1.08 2.90 -2.66" width="1.55" height="0.47" color="#ffffff"></a-plane>
-  <a-image src="assets/saudi.png" position="-1.08 2.90 -2.65" width="1.40" height="0.27"></a-image>
+  <a-plane position="-1.08 2.89 -2.68" width="1.56" height="0.48" color="#ffffff"></a-plane>
+  <a-image src="assets/saudi.png" position="-1.08 2.89 -2.67" width="1.40" height="0.28"></a-image>
 
-  <a-plane position="0 2.90 -2.64" width="0.018" height="0.60" color="#8cccff" opacity="0.7"></a-plane>
+  <a-plane position="0 2.89 -2.66" width="0.018" height="0.62" color="#89d2ff" opacity="0.65"></a-plane>
 
-  <a-plane position="1.08 2.90 -2.66" width="1.55" height="0.47" color="#ffffff"></a-plane>
-  <a-image src="assets/kacst.png" position="1.08 2.90 -2.65" width="1.40" height="0.36"></a-image>
+  <a-plane position="1.08 2.89 -2.68" width="1.56" height="0.48" color="#ffffff"></a-plane>
+  <a-image src="assets/kacst.png" position="1.08 2.89 -2.67" width="1.40" height="0.36"></a-image>
 
-  <!-- Main glass card -->
+  <!-- Main XR panel -->
   <a-plane id="mainPanel"
-           position="0 1.18 -2.28"
-           width="2.95"
-           height="1.82"
-           color="#0b1930"
-           opacity="0.98"
-           animation="property: scale; from: 0.85 0.85 0.85; to: 1 1 1; dur: 850; easing: easeOutCubic">
+           position="0 1.20 -2.30"
+           width="3.02"
+           height="1.88"
+           color="#0a1730"
+           opacity="0.985"
+           animation="property: scale; from: 0.84 0.84 0.84; to: 1 1 1; dur: 850; easing: easeOutCubic">
   </a-plane>
 
-  <a-plane position="0 1.90 -2.25" width="2.48" height="0.055" color="#6ec8ff" opacity="0.95"></a-plane>
+  <!-- Decorative header lines -->
+  <a-plane position="0 1.94 -2.27" width="2.54" height="0.05" color="#6cd9ff" opacity="0.95"></a-plane>
+  <a-plane position="0 1.92 -2.28" width="2.58" height="0.012" color="#b6ecff" opacity="0.38"></a-plane>
 
   <!-- Title -->
-  <a-entity troika-text="
+  <a-entity id="heroTitle"
+    troika-text="
       value: SkyNutrition XR;
-      position: 0 1.60 -2.20;
+      position: 0 1.62 -2.22;
       align: center;
       color: #ffffff;
-      fontSize: 0.13;
+      fontSize: 0.12;
       font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff;
-      maxWidth: 2.2;">
+      maxWidth: 2.15;">
   </a-entity>
 
-  <a-entity troika-text="
-      value: Premium inflight meal scan;
-      position: 0 1.40 -2.20;
+  <a-entity id="heroSubtitle"
+    troika-text="
+      value: Scan. Analyze. Elevate onboard dining.;
+      position: 0 1.40 -2.22;
       align: center;
-      color: #8fd3ff;
-      fontSize: 0.055;
-      font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-500-normal.woff;
+      color: #91d7ff;
+      fontSize: 0.050;
+      font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff;
       maxWidth: 1.95;">
   </a-entity>
 
   <!-- Start button -->
   <a-plane id="startScanBtn"
            position="0 1.05 -2.18"
-           width="1.35"
-           height="0.30"
-           color="#2f6ef0"
-           class="clickable">
+           width="1.42"
+           height="0.32"
+           color="#3e6fff"
+           class="clickable"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.08 1.08 1.08; dur: 170"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 170">
   </a-plane>
 
-  <a-entity troika-text="
+  <a-plane position="0 1.05 -2.175" width="1.46" height="0.035" color="#7ce8ff" opacity="0.22"></a-plane>
+
+  <a-entity id="startBtnText"
+    troika-text="
       value: Start Scan;
-      position: 0 1.05 -2.12;
+      position: 0 1.05 -2.11;
       align: center;
       color: #ffffff;
-      fontSize: 0.07;
+      fontSize: 0.067;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
-      maxWidth: 1.2;">
+      maxWidth: 1.15;">
   </a-entity>
 
-  <!-- Scan visuals -->
+  <!-- Scan animation -->
   <a-ring id="scanRing"
-          position="0 0.64 -2.16"
+          position="0 0.66 -2.16"
           radius-inner="0.17"
           radius-outer="0.25"
-          color="#00d4ff"
+          color="#00d6ff"
           visible="false"
           animation="property: rotation; to: 0 0 360; loop: true; dur: 850">
   </a-ring>
 
   <a-ring id="scanRing2"
-          position="0 0.64 -2.165"
+          position="0 0.66 -2.165"
           radius-inner="0.28"
           radius-outer="0.31"
-          color="#8fd3ff"
-          opacity="0.45"
+          color="#a855f7"
+          opacity="0.38"
           visible="false"
-          animation="property: scale; from: 0.8 0.8 0.8; to: 1.12 1.12 1.12; dir: alternate; dur: 550; loop: true">
+          animation="property: scale; from: 0.8 0.8 0.8; to: 1.14 1.14 1.14; dir: alternate; dur: 560; loop: true">
   </a-ring>
 
   <a-plane id="scanBeam"
-           position="0 0.64 -2.15"
+           position="0 0.66 -2.15"
            width="0.08"
-           height="0.50"
+           height="0.52"
            color="#67e8f9"
            opacity="0.0"
            visible="false"
-           animation="property: opacity; from: 0.0; to: 0.28; dir: alternate; dur: 240; loop: true">
+           animation="property: opacity; from: 0.0; to: 0.30; dir: alternate; dur: 230; loop: true">
+  </a-plane>
+
+  <a-plane id="scanGlow"
+           position="0 0.66 -2.19"
+           width="0.72"
+           height="0.72"
+           color="#3b82f6"
+           opacity="0.0"
+           visible="false"
+           animation="property: opacity; from: 0.0; to: 0.14; dir: alternate; dur: 420; loop: true">
   </a-plane>
 
   <!-- State -->
   <a-entity id="scanStateText"
     troika-text="
       value: Ready for scan;
-      position: 0 0.16 -2.14;
+      position: 0 0.14 -2.14;
       align: center;
-      color: #eaf6ff;
-      fontSize: 0.06;
+      color: #eef8ff;
+      fontSize: 0.060;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff;
-      maxWidth: 1.8;">
+      maxWidth: 1.85;">
   </a-entity>
 
   <!-- Result card -->
   <a-plane id="resultCard"
-           position="0 -0.50 -2.18"
-           width="2.52"
-           height="0.94"
-           color="#08101b"
-           opacity="0.98"
+           position="0 -0.50 -2.19"
+           width="2.56"
+           height="1.00"
+           color="#07111d"
+           opacity="0.985"
+           visible="false">
+  </a-plane>
+
+  <a-plane id="resultAccent"
+           position="0 -0.06 -2.17"
+           width="2.20"
+           height="0.02"
+           color="#74e3ff"
+           opacity="0.75"
            visible="false">
   </a-plane>
 
   <a-entity id="mealText"
     troika-text="
       value: ;
-      position: 0 -0.18 -2.12;
+      position: 0 -0.22 -2.12;
       align: center;
       color: #ffffff;
       fontSize: 0.10;
       font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff;
-      maxWidth: 1.9;
+      maxWidth: 1.92;
       visible: false;">
   </a-entity>
 
   <a-entity id="metricsText"
     troika-text="
       value: ;
-      position: 0 -0.66 -2.12;
+      position: 0 -0.70 -2.12;
       align: center;
-      color: #86d6ff;
+      color: #8fdcff;
       fontSize: 0.058;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff;
-      maxWidth: 1.85;
+      maxWidth: 1.88;
       visible: false;">
   </a-entity>
 
   <!-- Action buttons -->
   <a-plane id="detailsBtn"
            position="-0.58 -1.16 -2.16"
-           width="0.95"
+           width="0.98"
            height="0.21"
-           color="#1d4ed8"
+           color="#6d28d9"
            visible="false"
            class="clickable">
   </a-plane>
@@ -358,17 +432,17 @@
       position: -0.58 -1.16 -2.10;
       align: center;
       color: #ffffff;
-      fontSize: 0.047;
+      fontSize: 0.046;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
-      maxWidth: 0.8;
+      maxWidth: 0.82;
       visible: false;">
   </a-entity>
 
   <a-plane id="againBtn"
            position="0.58 -1.16 -2.16"
-           width="0.95"
+           width="0.98"
            height="0.21"
-           color="#16a34a"
+           color="#0ea5e9"
            visible="false"
            class="clickable">
   </a-plane>
@@ -378,30 +452,30 @@
       position: 0.58 -1.16 -2.10;
       align: center;
       color: #ffffff;
-      fontSize: 0.047;
+      fontSize: 0.046;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-700-normal.woff;
-      maxWidth: 0.85;
+      maxWidth: 0.84;
       visible: false;">
   </a-entity>
 
   <!-- Details card -->
   <a-plane id="detailsCard"
-           position="0 -1.72 -2.22"
-           width="2.52"
-           height="0.48"
-           color="#050c15"
+           position="0 -1.72 -2.23"
+           width="2.56"
+           height="0.50"
+           color="#050b14"
            visible="false">
   </a-plane>
 
   <a-entity id="detailsText"
     troika-text="
       value: ;
-      position: 0 -1.73 -2.16;
+      position: 0 -1.73 -2.17;
       align: center;
-      color: #9dd6ff;
+      color: #a9dcff;
       fontSize: 0.050;
       font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff;
-      maxWidth: 1.9;
+      maxWidth: 1.92;
       visible: false;">
   </a-entity>
 
@@ -419,9 +493,11 @@
   const scanRing = document.getElementById("scanRing");
   const scanRing2 = document.getElementById("scanRing2");
   const scanBeam = document.getElementById("scanBeam");
+  const scanGlow = document.getElementById("scanGlow");
 
   const scanStateText = document.getElementById("scanStateText");
   const resultCard = document.getElementById("resultCard");
+  const resultAccent = document.getElementById("resultAccent");
   const mealText = document.getElementById("mealText");
   const metricsText = document.getElementById("metricsText");
 
@@ -434,19 +510,19 @@
   const detailsText = document.getElementById("detailsText");
 
   function setStateText(value) {
-    scanStateText.setAttribute("troika-text", `value: ${value}; position: 0 0.16 -2.14; align: center; color: #eaf6ff; fontSize: 0.06; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.8;`);
+    scanStateText.setAttribute("troika-text", `value: ${value}; position: 0 0.14 -2.14; align: center; color: #eef8ff; fontSize: 0.060; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.85;`);
   }
 
   function setMealText(value) {
-    mealText.setAttribute("troika-text", `value: ${value}; position: 0 -0.18 -2.12; align: center; color: #ffffff; fontSize: 0.10; font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff; maxWidth: 1.9; visible: true;`);
+    mealText.setAttribute("troika-text", `value: ${value}; position: 0 -0.22 -2.12; align: center; color: #ffffff; fontSize: 0.10; font: https://cdn.jsdelivr.net/npm/@fontsource/orbitron/files/orbitron-latin-700-normal.woff; maxWidth: 1.92; visible: true;`);
   }
 
   function setMetricsText(value) {
-    metricsText.setAttribute("troika-text", `value: ${value}; position: 0 -0.66 -2.12; align: center; color: #86d6ff; fontSize: 0.058; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.85; visible: true;`);
+    metricsText.setAttribute("troika-text", `value: ${value}; position: 0 -0.70 -2.12; align: center; color: #8fdcff; fontSize: 0.058; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-600-normal.woff; maxWidth: 1.88; visible: true;`);
   }
 
   function setDetailsText(value) {
-    detailsText.setAttribute("troika-text", `value: ${value}; position: 0 -1.73 -2.16; align: center; color: #9dd6ff; fontSize: 0.050; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff; maxWidth: 1.9; visible: true;`);
+    detailsText.setAttribute("troika-text", `value: ${value}; position: 0 -1.73 -2.17; align: center; color: #a9dcff; fontSize: 0.050; font: https://cdn.jsdelivr.net/npm/@fontsource/inter/files/inter-latin-500-normal.woff; maxWidth: 1.92; visible: true;`);
   }
 
   async function prepareAnalysis() {
@@ -517,12 +593,10 @@
     }
   }
 
-  function enterVRMode() {
+  function enterXRMode() {
     overlayUI.style.display = "none";
     const scene = document.querySelector("a-scene");
-    if (scene.enterVR) {
-      scene.enterVR();
-    }
+    if (scene.enterVR) scene.enterVR();
   }
 
   startScanBtn.addEventListener("click", () => {
@@ -537,21 +611,18 @@
     scanRing.setAttribute("visible", true);
     scanRing2.setAttribute("visible", true);
     scanBeam.setAttribute("visible", true);
+    scanGlow.setAttribute("visible", true);
 
     setStateText("Detecting meal...");
 
-    setTimeout(() => {
-      setStateText("Analyzing nutrition...");
-    }, 650);
-
-    setTimeout(() => {
-      setStateText("Calculating reward...");
-    }, 1350);
+    setTimeout(() => setStateText("Analyzing nutrition..."), 650);
+    setTimeout(() => setStateText("Calculating reward..."), 1350);
 
     setTimeout(() => {
       scanRing.setAttribute("visible", false);
       scanRing2.setAttribute("visible", false);
       scanBeam.setAttribute("visible", false);
+      scanGlow.setAttribute("visible", false);
       showPreparedResult();
     }, 2200);
   });
@@ -570,6 +641,7 @@
 
   function showPreparedResult() {
     resultCard.setAttribute("visible", true);
+    resultAccent.setAttribute("visible", true);
     mealText.setAttribute("visible", true);
     metricsText.setAttribute("visible", true);
 
@@ -589,6 +661,7 @@
 
   function hideResultSections() {
     resultCard.setAttribute("visible", false);
+    resultAccent.setAttribute("visible", false);
     mealText.setAttribute("visible", false);
     metricsText.setAttribute("visible", false);
 
@@ -619,7 +692,6 @@
     if (text.includes("dessert") || text.includes("cake")) {
       return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High" };
     }
-
     return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium" };
   }
 
