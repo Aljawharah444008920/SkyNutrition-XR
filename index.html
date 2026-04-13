@@ -5,110 +5,179 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SkyNutrition XR</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(circle at top, #17305f 0%, #0a1630 38%, #050b15 100%);
+    :root{
+      --bg1:#06101f;
+      --bg2:#0b1d38;
+      --bg3:#142d52;
+      --cyan:#74e3ff;
+      --cyan2:#57c8ff;
+      --blue:#4f7cff;
+      --violet:#7c3aed;
+      --white:#f8fbff;
+      --muted:#d8e9ff;
+      --gold:#f6c768;
+      --danger:#ef4444;
+      --panel:rgba(8,18,36,.88);
+      --stroke:rgba(116,227,255,.16);
     }
 
-    .overlay {
-      position: fixed;
-      top: 18px;
-      left: 18px;
-      width: 380px;
-      padding: 20px;
-      border-radius: 22px;
-      background: rgba(8, 18, 36, 0.9);
-      color: white;
-      z-index: 10;
-      border: 1px solid rgba(116, 227, 255, 0.18);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.35);
-      backdrop-filter: blur(12px);
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      overflow:hidden;
+      font-family:Inter,Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(124,58,237,.18), transparent 22%),
+        radial-gradient(circle at 80% 16%, rgba(87,200,255,.15), transparent 22%),
+        radial-gradient(circle at 50% 0%, #193966 0%, #0b1830 42%, #050b15 100%);
     }
 
-    .overlay h1 {
-      margin: 0 0 10px;
-      font-size: 48px;
-      line-height: 0.95;
+    .overlay{
+      position:fixed;
+      top:18px;
+      left:18px;
+      width:390px;
+      padding:22px;
+      border-radius:26px;
+      color:var(--white);
+      background:linear-gradient(180deg, rgba(8,18,36,.92), rgba(5,10,21,.88));
+      border:1px solid var(--stroke);
+      box-shadow:0 24px 60px rgba(0,0,0,.38);
+      backdrop-filter:blur(16px);
+      z-index:10;
+      overflow:hidden;
     }
 
-    .overlay p {
-      margin: 0 0 14px;
-      color: #dbeafe;
-      font-size: 16px;
-      line-height: 1.5;
+    .overlay::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(135deg, rgba(116,227,255,.08), transparent 26%, transparent 74%, rgba(124,58,237,.08));
     }
 
-    .pill {
-      display: inline-block;
-      margin-bottom: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      background: rgba(59,130,246,0.18);
-      color: #d7eeff;
+    .pill{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:#ddf2ff;
+      background:linear-gradient(90deg, rgba(79,124,255,.20), rgba(124,58,237,.18));
+      border:1px solid rgba(116,227,255,.12);
+      position:relative;
+      z-index:1;
     }
 
-    .box {
-      margin-top: 14px;
-      padding: 14px;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+    .title{
+      position:relative;
+      z-index:1;
+      margin:16px 0 10px;
+      font-size:58px;
+      line-height:.92;
+      letter-spacing:-2.4px;
+      font-weight:800;
+      color:#fff;
     }
 
-    input, button {
-      width: 100%;
-      box-sizing: border-box;
-      margin-top: 10px;
-      padding: 13px;
-      border-radius: 14px;
-      border: none;
-      font-size: 16px;
+    .title .accent{
+      display:block;
+      color:#aee7ff;
     }
 
-    input {
-      background: white;
-      color: #111827;
+    .sub{
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:330px;
+      font-size:17px;
+      line-height:1.55;
+      color:#dbeafe;
     }
 
-    button {
-      font-weight: bold;
-      color: white;
-      cursor: pointer;
+    .box{
+      position:relative;
+      z-index:1;
+      margin-top:18px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
     }
 
-    .primary {
-      background: linear-gradient(90deg, #5ee7ff, #4f7cff);
+    input,button{
+      width:100%;
+      margin-top:10px;
+      padding:14px;
+      border:none;
+      border-radius:15px;
+      font-size:16px;
     }
 
-    .secondary {
-      background: linear-gradient(90deg, #273449, #3b475e);
+    input{
+      background:#fff;
+      color:#111827;
     }
 
-    .status {
-      margin-top: 12px;
-      padding: 11px 12px;
-      border-radius: 12px;
-      background: rgba(116,227,255,0.07);
-      border: 1px solid rgba(116,227,255,0.10);
-      color: #dff3ff;
-      font-size: 13px;
-      min-height: 42px;
+    button{
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
+    }
+
+    .primary{
+      background:linear-gradient(90deg, #68e2ff, #4f7cff);
+      box-shadow:0 14px 30px rgba(79,124,255,.26);
+    }
+
+    .secondary{
+      background:linear-gradient(90deg, #2d3a53, #44506a);
+    }
+
+    .status{
+      margin-top:12px;
+      min-height:44px;
+      padding:11px 12px;
+      border-radius:14px;
+      font-size:13px;
+      line-height:1.45;
+      color:#dff3ff;
+      background:rgba(116,227,255,.07);
+      border:1px solid rgba(116,227,255,.10);
+    }
+
+    .foot{
+      position:relative;
+      z-index:1;
+      margin-top:12px;
+      font-size:13px;
+      color:#9ec9ff;
+      line-height:1.45;
     }
   </style>
 </head>
 <body>
 
 <div class="overlay" id="overlayUI">
-  <div class="pill">Stable XR Demo</div>
-  <h1>SkyNutrition XR</h1>
-  <p>Upload a meal image, prepare the analysis, then enter XR and press Start Scan.</p>
+  <div class="pill">Premium XR Judge Demo</div>
+  <div class="title">
+    SkyNutrition
+    <span class="accent">XR</span>
+  </div>
+  <p class="sub">
+    Upload a meal image, prepare the AI result, then enter an immersive hologram scan experience designed for live judging.
+  </p>
 
   <div class="box">
     <input type="file" id="imageInput" accept="image/*">
@@ -116,9 +185,14 @@
     <button class="secondary" onclick="enterXRMode()">Enter XR</button>
     <div class="status" id="prepareState">Waiting for meal image.</div>
   </div>
+
+  <div class="foot">Flow: upload image → analyze → enter XR → start scan.</div>
 </div>
 
 <a-scene background="color: #050b15">
+  <a-assets>
+    <img id="mealAsset" alt="meal image">
+  </a-assets>
 
   <!-- Camera -->
   <a-entity position="0 1.6 0">
@@ -126,21 +200,30 @@
       <a-cursor
         color="#74e3ff"
         fuse="true"
-        fuse-timeout="900"
-        raycaster="objects: .clickable">
+        fuse-timeout="850"
+        raycaster="objects: .clickable"
+        animation__fuse="property: scale; startEvents: fusing; from: 1 1 1; to: 0.7 0.7 0.7; dur: 850">
       </a-cursor>
     </a-camera>
   </a-entity>
 
-  <a-sky color="#050b15"></a-sky>
-
   <!-- Background -->
-  <a-plane position="0 3 -7" width="22" height="10" color="#11244a" opacity="0.22"></a-plane>
-  <a-plane position="-5.3 2 -6.7" width="3.6" height="6.4" color="#17305f" opacity="0.09"></a-plane>
-  <a-plane position="5.3 2 -6.7" width="3.6" height="6.4" color="#17305f" opacity="0.09"></a-plane>
+  <a-sky color="#050b15"></a-sky>
+  <a-plane position="0 3 -7" width="22" height="10" color="#102347" opacity="0.24"></a-plane>
+  <a-plane position="-5.1 2 -6.6" width="3.6" height="6.4" color="#17305f" opacity="0.08"></a-plane>
+  <a-plane position="5.1 2 -6.6" width="3.6" height="6.4" color="#17305f" opacity="0.08"></a-plane>
 
   <!-- Floor -->
-  <a-plane position="0 0 -4.4" rotation="-90 0 0" width="13" height="5.7" color="#07111d"></a-plane>
+  <a-plane position="0 0 -4.4" rotation="-90 0 0" width="13" height="5.8" color="#07111d"></a-plane>
+  <a-plane position="0 0.01 -4.4" rotation="-90 0 0" width="0.07" height="4.8" color="#5ee7ff" opacity="0.55"></a-plane>
+
+  <!-- Floating particles -->
+  <a-sphere position="-2.9 2.7 -5.8" radius="0.03" color="#74e3ff" opacity="0.42"
+            animation="property: position; to: -2.9 2.95 -5.8; dir: alternate; dur: 1800; loop: true"></a-sphere>
+  <a-sphere position="2.7 2.25 -6.0" radius="0.024" color="#a855f7" opacity="0.34"
+            animation="property: position; to: 2.7 2.48 -6.0; dir: alternate; dur: 2200; loop: true"></a-sphere>
+  <a-sphere position="1.7 3.0 -6.2" radius="0.02" color="#bfe9ff" opacity="0.34"
+            animation="property: position; to: 1.7 3.18 -6.2; dir: alternate; dur: 2000; loop: true"></a-sphere>
 
   <!-- Airplane -->
   <a-entity position="-5.8 2.55 -5.25"
@@ -152,199 +235,199 @@
     <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
-  <!-- Top logos -->
-  <a-plane position="0 2.95 -2.8" width="4.1" height="0.9" color="#0e2347" opacity="0.95"></a-plane>
+  <!-- Logo bar -->
+  <a-plane position="0 2.95 -2.78" width="4.1" height="0.92" color="#0e2347" opacity="0.96"></a-plane>
+  <a-plane position="0 3.28 -2.75" width="3.42" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
 
-  <a-plane position="-1.08 2.90 -2.78" width="1.55" height="0.48" color="#ffffff"></a-plane>
-  <a-image src="assets/saudi.png" position="-1.08 2.90 -2.77" width="1.40" height="0.28"></a-image>
+  <a-plane position="-1.08 2.90 -2.76" width="1.56" height="0.48" color="#ffffff"></a-plane>
+  <a-image src="assets/saudi.png" position="-1.08 2.90 -2.75" width="1.40" height="0.28"></a-image>
 
-  <a-plane position="0 2.90 -2.76" width="0.02" height="0.62" color="#89d2ff" opacity="0.65"></a-plane>
+  <a-plane position="0 2.90 -2.74" width="0.018" height="0.62" color="#89d2ff" opacity="0.65"></a-plane>
 
-  <a-plane position="1.08 2.90 -2.78" width="1.55" height="0.48" color="#ffffff"></a-plane>
-  <a-image src="assets/kacst.png" position="1.08 2.90 -2.77" width="1.40" height="0.36"></a-image>
+  <a-plane position="1.08 2.90 -2.76" width="1.56" height="0.48" color="#ffffff"></a-plane>
+  <a-image src="assets/kacst.png" position="1.08 2.90 -2.75" width="1.40" height="0.36"></a-image>
 
-  <!-- Main XR card -->
-  <a-plane id="mainPanel"
-           position="0 1.35 -2.45"
-           width="2.9"
-           height="2.3"
-           color="#0a1730"
-           opacity="0.98">
-  </a-plane>
-
-  <a-plane position="0 2.15 -2.43" width="2.35" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
-
-  <!-- Title -->
-  <a-text id="heroTitle"
-          value="SkyNutrition XR"
-          position="0 1.92 -2.40"
+  <!-- Exit button -->
+  <a-plane id="exitBtn"
+           class="clickable"
+           position="0 2.30 -2.40"
+           width="0.86"
+           height="0.22"
+           color="#ef4444"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.06 1.06 1.06; dur: 150"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
+  <a-text value="Exit XR"
+          position="0 2.30 -2.35"
           align="center"
           color="#ffffff"
-          width="3.4">
-  </a-text>
+          width="1.6"></a-text>
+
+  <!-- Main panel -->
+  <a-plane id="mainPanel"
+           position="0 1.34 -2.44"
+           width="3.0"
+           height="2.36"
+           color="#0a1730"
+           opacity="0.985"
+           animation="property: scale; from: 0.86 0.86 0.86; to: 1 1 1; dur: 800"></a-plane>
+
+  <a-plane position="0 2.10 -2.42" width="2.36" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
+
+  <a-text id="heroTitle"
+          value="SkyNutrition XR"
+          position="0 1.88 -2.39"
+          align="center"
+          color="#ffffff"
+          width="3.2"></a-text>
 
   <a-text id="heroSub"
-          value="Immersive meal scan"
-          position="0 1.67 -2.40"
+          value="Immersive hologram meal scan"
+          position="0 1.62 -2.39"
           align="center"
           color="#9edbff"
-          width="2.2">
-  </a-text>
+          width="2.28"></a-text>
 
-  <!-- Start button -->
+  <!-- Start -->
   <a-plane id="startScanBtn"
            class="clickable"
-           position="0 1.38 -2.38"
-           width="1.4"
+           position="0 1.32 -2.36"
+           width="1.42"
            height="0.28"
            color="#4f7cff"
-           visible="true">
-  </a-plane>
+           animation="property: scale; dir: alternate; from: 1 1 1; to: 1.03 1.03 1.03; dur: 1200; loop: true"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.08 1.08 1.08; dur: 150"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
 
   <a-text id="startScanLabel"
           value="Start Scan"
-          position="0 1.38 -2.34"
+          position="0 1.32 -2.31"
           align="center"
           color="#ffffff"
-          width="2.1">
-  </a-text>
+          width="2.0"></a-text>
 
-  <!-- Scan animation -->
+  <!-- Scan effects -->
   <a-ring id="scanRing"
-          position="0 0.82 -2.35"
-          radius-inner="0.18"
-          radius-outer="0.25"
+          position="0 0.92 -2.33"
+          radius-inner="0.19"
+          radius-outer="0.27"
           color="#00d6ff"
           visible="false"
-          animation="property: rotation; to: 0 0 360; loop: true; dur: 850">
-  </a-ring>
+          animation="property: rotation; to: 0 0 360; loop: true; dur: 850"></a-ring>
+
+  <a-ring id="scanRing2"
+          position="0 0.92 -2.335"
+          radius-inner="0.29"
+          radius-outer="0.32"
+          color="#7c3aed"
+          opacity="0.35"
+          visible="false"
+          animation="property: scale; from: 0.85 0.85 0.85; to: 1.10 1.10 1.10; dir: alternate; dur: 500; loop: true"></a-ring>
 
   <a-plane id="scanBeam"
-           position="0 0.82 -2.34"
+           position="0 0.92 -2.32"
            width="0.08"
-           height="0.52"
+           height="0.62"
            color="#67e8f9"
            opacity="0"
            visible="false"
-           animation="property: opacity; from: 0; to: 0.28; dir: alternate; dur: 230; loop: true">
-  </a-plane>
+           animation="property: opacity; from: 0; to: 0.28; dir: alternate; dur: 230; loop: true"></a-plane>
 
   <!-- Meal image -->
-  <a-image id="mealImage"
-           position="0 0.82 -2.32"
-           width="0.82"
-           height="0.58"
-           visible="false">
-  </a-image>
+  <a-plane id="mealFrame"
+           position="0 0.92 -2.35"
+           width="0.96"
+           height="0.70"
+           color="#11213c"
+           opacity="0.95"
+           visible="false"></a-plane>
 
-  <!-- Status -->
+  <a-image id="mealImage"
+           position="0 0.92 -2.31"
+           width="0.84"
+           height="0.60"
+           visible="false"
+           animation__show="property: scale; startEvents: showMeal; from: 0.8 0.8 0.8; to: 1 1 1; dur: 350"></a-image>
+
+  <!-- State -->
   <a-text id="scanState"
           value="Ready for scan"
-          position="0 0.30 -2.34"
+          position="0 0.22 -2.33"
           align="center"
           color="#eef8ff"
-          width="2.2">
-  </a-text>
+          width="2.2"></a-text>
 
-  <!-- Info around image -->
-  <a-text id="caloriesText"
-          value=""
-          position="0 1.15 -2.28"
-          align="center"
-          color="#ffffff"
-          width="1.2"
-          visible="false">
-  </a-text>
+  <!-- Metric cards -->
+  <a-plane id="caloriesCard" position="0 1.20 -2.28" width="0.82" height="0.20" color="#12233f" visible="false"></a-plane>
+  <a-text id="caloriesText" position="0 1.20 -2.23" align="center" color="#ffffff" width="1.08" visible="false"></a-text>
 
-  <a-text id="proteinText"
-          value=""
-          position="-0.95 0.82 -2.28"
-          align="center"
-          color="#8fdcff"
-          width="1.2"
-          visible="false">
-  </a-text>
+  <a-plane id="proteinCard" position="-0.98 0.92 -2.28" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
+  <a-text id="proteinText" position="-0.98 0.92 -2.23" align="center" color="#8fdcff" width="1.02" visible="false"></a-text>
 
-  <a-text id="rewardText"
-          value=""
-          position="0.95 0.82 -2.28"
-          align="center"
-          color="#f5c96b"
-          width="1.2"
-          visible="false">
-  </a-text>
+  <a-plane id="rewardCard" position="0.98 0.92 -2.28" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
+  <a-text id="rewardText" position="0.98 0.92 -2.23" align="center" color="#f5c96b" width="1.02" visible="false"></a-text>
 
-  <a-text id="riskText"
-          value=""
-          position="0 0.05 -2.28"
-          align="center"
-          color="#d5dfff"
-          width="1.2"
-          visible="false">
-  </a-text>
+  <a-plane id="riskCard" position="0 0.46 -2.28" width="0.90" height="0.20" color="#12233f" visible="false"></a-plane>
+  <a-text id="riskText" position="0 0.46 -2.23" align="center" color="#d5dfff" width="1.08" visible="false"></a-text>
 
   <!-- Meal name -->
   <a-text id="mealTitle"
           value=""
-          position="0 -0.35 -2.30"
+          position="0 -0.18 -2.30"
           align="center"
           color="#ffffff"
-          width="2.4"
-          visible="false">
-  </a-text>
+          width="2.25"
+          visible="false"></a-text>
 
   <!-- Buttons -->
   <a-plane id="detailsBtn"
            class="clickable"
-           position="-0.58 -0.80 -2.32"
-           width="1.0"
+           position="-0.60 -0.62 -2.32"
+           width="1.02"
            height="0.22"
            color="#7c3aed"
-           visible="false">
-  </a-plane>
+           visible="false"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.06 1.06 1.06; dur: 150"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
   <a-text id="detailsBtnLabel"
           value="AI Details"
-          position="-0.58 -0.80 -2.28"
+          position="-0.60 -0.62 -2.27"
           align="center"
           color="#ffffff"
-          width="1.5"
-          visible="false">
-  </a-text>
+          width="1.45"
+          visible="false"></a-text>
 
   <a-plane id="againBtn"
            class="clickable"
-           position="0.58 -0.80 -2.32"
-           width="1.0"
+           position="0.60 -0.62 -2.32"
+           width="1.02"
            height="0.22"
            color="#0ea5e9"
-           visible="false">
-  </a-plane>
+           visible="false"
+           animation__hover="property: scale; startEvents: mouseenter; to: 1.06 1.06 1.06; dur: 150"
+           animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
   <a-text id="againBtnLabel"
           value="Scan Again"
-          position="0.58 -0.80 -2.28"
+          position="0.60 -0.62 -2.27"
           align="center"
           color="#ffffff"
-          width="1.5"
-          visible="false">
-  </a-text>
+          width="1.45"
+          visible="false"></a-text>
 
-  <!-- Details card -->
+  <!-- Details -->
   <a-plane id="detailsCard"
-           position="0 -1.25 -2.36"
-           width="2.55"
-           height="0.44"
+           position="0 -1.02 -2.36"
+           width="2.58"
+           height="0.46"
            color="#050b14"
-           visible="false">
-  </a-plane>
+           visible="false"></a-plane>
 
   <a-text id="detailsText"
           value=""
-          position="0 -1.25 -2.31"
+          position="0 -1.02 -2.31"
           align="center"
           color="#a9dcff"
-          width="2.0"
-          visible="false">
-  </a-text>
+          width="2.02"
+          visible="false"></a-text>
 
 </a-scene>
 
@@ -358,13 +441,22 @@
   const startScanBtn = document.getElementById("startScanBtn");
   const startScanLabel = document.getElementById("startScanLabel");
   const scanRing = document.getElementById("scanRing");
+  const scanRing2 = document.getElementById("scanRing2");
   const scanBeam = document.getElementById("scanBeam");
+
+  const mealAsset = document.getElementById("mealAsset");
+  const mealFrame = document.getElementById("mealFrame");
   const mealImage = document.getElementById("mealImage");
 
   const scanState = document.getElementById("scanState");
+
+  const caloriesCard = document.getElementById("caloriesCard");
   const caloriesText = document.getElementById("caloriesText");
+  const proteinCard = document.getElementById("proteinCard");
   const proteinText = document.getElementById("proteinText");
+  const rewardCard = document.getElementById("rewardCard");
   const rewardText = document.getElementById("rewardText");
+  const riskCard = document.getElementById("riskCard");
   const riskText = document.getElementById("riskText");
   const mealTitle = document.getElementById("mealTitle");
 
@@ -374,6 +466,7 @@
   const againBtnLabel = document.getElementById("againBtnLabel");
   const detailsCard = document.getElementById("detailsCard");
   const detailsText = document.getElementById("detailsText");
+  const exitBtn = document.getElementById("exitBtn");
 
   async function prepareAnalysis() {
     const file = document.getElementById("imageInput").files[0];
@@ -387,8 +480,9 @@
     hideResultSections();
 
     try {
-      const base64 = await toBase64(file);
-      const imageUrl = URL.createObjectURL(file);
+      const dataUrl = await toDataURL(file);
+      mealAsset.src = dataUrl;
+      const base64 = dataUrl.split(",")[1];
 
       const res = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`, {
         method: "POST",
@@ -434,7 +528,7 @@
         reward: mealData.reward,
         wasteRisk: mealData.wasteRisk,
         labels: labelsText,
-        imageUrl
+        dataUrl
       };
 
       prepareState.textContent = "AI ready. Enter XR and press Start Scan.";
@@ -452,6 +546,12 @@
     if (scene.enterVR) scene.enterVR();
   }
 
+  exitBtn.addEventListener("click", () => {
+    const scene = document.querySelector("a-scene");
+    if (scene.exitVR) scene.exitVR();
+    overlayUI.style.display = "block";
+  });
+
   startScanBtn.addEventListener("click", () => {
     if (!preparedAnalysis) {
       scanState.setAttribute("value", "Please analyze first");
@@ -459,12 +559,13 @@
     }
 
     hideResultSections();
-
     startScanBtn.setAttribute("visible", false);
     startScanLabel.setAttribute("visible", false);
 
     scanRing.setAttribute("visible", true);
+    scanRing2.setAttribute("visible", true);
     scanBeam.setAttribute("visible", true);
+
     scanState.setAttribute("value", "Detecting meal...");
 
     setTimeout(() => {
@@ -477,6 +578,7 @@
 
     setTimeout(() => {
       scanRing.setAttribute("visible", false);
+      scanRing2.setAttribute("visible", false);
       scanBeam.setAttribute("visible", false);
       showPreparedResult();
     }, 2200);
@@ -490,6 +592,7 @@
 
   againBtn.addEventListener("click", () => {
     hideResultSections();
+    mealFrame.setAttribute("visible", false);
     mealImage.setAttribute("visible", false);
     startScanBtn.setAttribute("visible", true);
     startScanLabel.setAttribute("visible", true);
@@ -497,21 +600,27 @@
   });
 
   function showPreparedResult() {
-    mealImage.setAttribute("src", preparedAnalysis.imageUrl);
+    mealImage.setAttribute("src", preparedAnalysis.dataUrl);
+    mealFrame.setAttribute("visible", true);
     mealImage.setAttribute("visible", true);
+    mealImage.emit("showMeal");
 
     mealTitle.setAttribute("value", preparedAnalysis.name);
     mealTitle.setAttribute("visible", true);
 
+    caloriesCard.setAttribute("visible", true);
     caloriesText.setAttribute("value", preparedAnalysis.calories);
     caloriesText.setAttribute("visible", true);
 
+    proteinCard.setAttribute("visible", true);
     proteinText.setAttribute("value", `Protein\n${preparedAnalysis.protein}`);
     proteinText.setAttribute("visible", true);
 
+    rewardCard.setAttribute("visible", true);
     rewardText.setAttribute("value", preparedAnalysis.reward);
     rewardText.setAttribute("visible", true);
 
+    riskCard.setAttribute("visible", true);
     riskText.setAttribute("value", preparedAnalysis.wasteRisk);
     riskText.setAttribute("visible", true);
 
@@ -526,12 +635,20 @@
   }
 
   function hideResultSections() {
+    mealFrame.setAttribute("visible", false);
     mealImage.setAttribute("visible", false);
     mealTitle.setAttribute("visible", false);
 
+    caloriesCard.setAttribute("visible", false);
     caloriesText.setAttribute("visible", false);
+
+    proteinCard.setAttribute("visible", false);
     proteinText.setAttribute("visible", false);
+
+    rewardCard.setAttribute("visible", false);
     rewardText.setAttribute("visible", false);
+
+    riskCard.setAttribute("visible", false);
     riskText.setAttribute("visible", false);
 
     detailsBtn.setAttribute("visible", false);
@@ -564,10 +681,10 @@
     return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium Risk" };
   }
 
-  function toBase64(file) {
+  function toDataURL(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onload = () => resolve(reader.result.split(",")[1]);
+      reader.onload = () => resolve(reader.result);
       reader.onerror = err => reject(err);
       reader.readAsDataURL(file);
     });
