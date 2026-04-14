@@ -24,10 +24,11 @@
     }
 
     *{box-sizing:border-box}
+
     body{
       margin:0;
       overflow:hidden;
-      font-family:Inter,Arial,sans-serif;
+      font-family:Arial,sans-serif;
       background:
         radial-gradient(circle at 20% 10%, rgba(124,58,237,.18), transparent 22%),
         radial-gradient(circle at 80% 16%, rgba(87,200,255,.15), transparent 22%),
@@ -250,39 +251,39 @@
   <!-- Exit button -->
   <a-plane id="exitBtn"
            class="clickable"
-           position="0 2.30 -2.40"
-           width="0.86"
+           position="0 2.18 -2.42"
+           width="0.92"
            height="0.22"
            color="#ef4444"
            animation__hover="property: scale; startEvents: mouseenter; to: 1.06 1.06 1.06; dur: 150"
            animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
   <a-text value="Exit XR"
-          position="0 2.30 -2.35"
+          position="0 2.18 -2.37"
           align="center"
           color="#ffffff"
           width="1.6"></a-text>
 
   <!-- Main panel -->
   <a-plane id="mainPanel"
-           position="0 1.34 -2.44"
+           position="0 1.26 -2.44"
            width="3.0"
-           height="2.36"
+           height="2.32"
            color="#0a1730"
            opacity="0.985"
            animation="property: scale; from: 0.86 0.86 0.86; to: 1 1 1; dur: 800"></a-plane>
 
-  <a-plane position="0 2.10 -2.42" width="2.36" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
+  <a-plane position="0 1.98 -2.42" width="2.36" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
 
   <a-text id="heroTitle"
           value="SkyNutrition XR"
-          position="0 1.88 -2.39"
+          position="0 1.78 -2.39"
           align="center"
           color="#ffffff"
           width="3.2"></a-text>
 
   <a-text id="heroSub"
           value="Immersive hologram meal scan"
-          position="0 1.62 -2.39"
+          position="0 1.54 -2.39"
           align="center"
           color="#9edbff"
           width="2.28"></a-text>
@@ -290,7 +291,7 @@
   <!-- Start -->
   <a-plane id="startScanBtn"
            class="clickable"
-           position="0 1.32 -2.36"
+           position="0 1.24 -2.36"
            width="1.42"
            height="0.28"
            color="#4f7cff"
@@ -300,14 +301,14 @@
 
   <a-text id="startScanLabel"
           value="Start Scan"
-          position="0 1.32 -2.31"
+          position="0 1.24 -2.31"
           align="center"
           color="#ffffff"
           width="2.0"></a-text>
 
   <!-- Scan effects -->
   <a-ring id="scanRing"
-          position="0 0.92 -2.33"
+          position="0 1.04 -2.33"
           radius-inner="0.19"
           radius-outer="0.27"
           color="#00d6ff"
@@ -315,7 +316,7 @@
           animation="property: rotation; to: 0 0 360; loop: true; dur: 850"></a-ring>
 
   <a-ring id="scanRing2"
-          position="0 0.92 -2.335"
+          position="0 1.04 -2.335"
           radius-inner="0.29"
           radius-outer="0.32"
           color="#7c3aed"
@@ -324,7 +325,7 @@
           animation="property: scale; from: 0.85 0.85 0.85; to: 1.10 1.10 1.10; dir: alternate; dur: 500; loop: true"></a-ring>
 
   <a-plane id="scanBeam"
-           position="0 0.92 -2.32"
+           position="0 1.04 -2.32"
            width="0.08"
            height="0.62"
            color="#67e8f9"
@@ -334,45 +335,64 @@
 
   <!-- Meal image -->
   <a-plane id="mealFrame"
-           position="0 0.92 -2.35"
-           width="0.96"
-           height="0.70"
+           position="0 1.16 -2.35"
+           width="0.98"
+           height="0.72"
            color="#11213c"
            opacity="0.95"
            visible="false"></a-plane>
 
-  <a-image id="mealImage"
-           position="0 0.92 -2.31"
-           width="0.84"
-           height="0.60"
+  <a-plane id="mealGlow"
+           position="0 1.16 -2.37"
+           width="1.22"
+           height="0.92"
+           color="#4f7cff"
+           opacity="0"
            visible="false"
-           animation__show="property: scale; startEvents: showMeal; from: 0.8 0.8 0.8; to: 1 1 1; dur: 350"></a-image>
+           animation="property: opacity; from: 0.02; to: 0.14; dir: alternate; dur: 700; loop: true"></a-plane>
 
-  <!-- State -->
+  <a-image id="mealImage"
+           position="0 1.16 -2.31"
+           width="0.86"
+           height="0.62"
+           visible="false"
+           scale="0.82 0.82 0.82"
+           animation__show="property: scale; startEvents: showMeal; from: 0.82 0.82 0.82; to: 1 1 1; dur: 420"></a-image>
+
+  <a-ring id="mealPulse"
+          position="0 1.16 -2.34"
+          radius-inner="0.43"
+          radius-outer="0.46"
+          color="#74e3ff"
+          opacity="0"
+          visible="false"
+          animation="property: scale; from: 0.92 0.92 0.92; to: 1.06 1.06 1.06; dir: alternate; dur: 900; loop: true"></a-ring>
+
+  <!-- Status -->
   <a-text id="scanState"
           value="Ready for scan"
-          position="0 0.22 -2.33"
+          position="0 -0.02 -2.33"
           align="center"
           color="#eef8ff"
           width="2.2"></a-text>
 
   <!-- Metric cards -->
-  <a-plane id="caloriesCard" position="0 1.20 -2.28" width="0.82" height="0.20" color="#12233f" visible="false"></a-plane>
-  <a-text id="caloriesText" position="0 1.20 -2.23" align="center" color="#ffffff" width="1.08" visible="false"></a-text>
+  <a-plane id="caloriesCard" position="0 1.46 -2.28" width="0.82" height="0.20" color="#12233f" visible="false"></a-plane>
+  <a-text id="caloriesText" position="0 1.46 -2.23" align="center" color="#ffffff" width="1.08" visible="false"></a-text>
 
-  <a-plane id="proteinCard" position="-0.98 0.92 -2.28" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
-  <a-text id="proteinText" position="-0.98 0.92 -2.23" align="center" color="#8fdcff" width="1.02" visible="false"></a-text>
+  <a-plane id="proteinCard" position="-0.98 1.16 -2.30" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
+  <a-text id="proteinText" position="-0.98 1.16 -2.23" align="center" color="#8fdcff" width="1.02" visible="false"></a-text>
 
-  <a-plane id="rewardCard" position="0.98 0.92 -2.28" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
-  <a-text id="rewardText" position="0.98 0.92 -2.23" align="center" color="#f5c96b" width="1.02" visible="false"></a-text>
+  <a-plane id="rewardCard" position="0.98 1.16 -2.30" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
+  <a-text id="rewardText" position="0.98 1.16 -2.23" align="center" color="#f5c96b" width="1.02" visible="false"></a-text>
 
-  <a-plane id="riskCard" position="0 0.46 -2.28" width="0.90" height="0.20" color="#12233f" visible="false"></a-plane>
-  <a-text id="riskText" position="0 0.46 -2.23" align="center" color="#d5dfff" width="1.08" visible="false"></a-text>
+  <a-plane id="riskCard" position="0 0.72 -2.28" width="0.90" height="0.20" color="#12233f" visible="false"></a-plane>
+  <a-text id="riskText" position="0 0.72 -2.23" align="center" color="#d5dfff" width="1.08" visible="false"></a-text>
 
   <!-- Meal name -->
   <a-text id="mealTitle"
           value=""
-          position="0 -0.18 -2.30"
+          position="0 0.18 -2.30"
           align="center"
           color="#ffffff"
           width="2.25"
@@ -381,7 +401,7 @@
   <!-- Buttons -->
   <a-plane id="detailsBtn"
            class="clickable"
-           position="-0.60 -0.62 -2.32"
+           position="-0.60 -0.52 -2.32"
            width="1.02"
            height="0.22"
            color="#7c3aed"
@@ -390,7 +410,7 @@
            animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
   <a-text id="detailsBtnLabel"
           value="AI Details"
-          position="-0.60 -0.62 -2.27"
+          position="-0.60 -0.52 -2.27"
           align="center"
           color="#ffffff"
           width="1.45"
@@ -398,7 +418,7 @@
 
   <a-plane id="againBtn"
            class="clickable"
-           position="0.60 -0.62 -2.32"
+           position="0.60 -0.52 -2.32"
            width="1.02"
            height="0.22"
            color="#0ea5e9"
@@ -407,7 +427,7 @@
            animation__leave="property: scale; startEvents: mouseleave; to: 1 1 1; dur: 150"></a-plane>
   <a-text id="againBtnLabel"
           value="Scan Again"
-          position="0.60 -0.62 -2.27"
+          position="0.60 -0.52 -2.27"
           align="center"
           color="#ffffff"
           width="1.45"
@@ -415,7 +435,7 @@
 
   <!-- Details -->
   <a-plane id="detailsCard"
-           position="0 -1.02 -2.36"
+           position="0 -0.90 -2.36"
            width="2.58"
            height="0.46"
            color="#050b14"
@@ -423,12 +443,11 @@
 
   <a-text id="detailsText"
           value=""
-          position="0 -1.02 -2.31"
+          position="0 -0.90 -2.31"
           align="center"
           color="#a9dcff"
           width="2.02"
           visible="false"></a-text>
-
 </a-scene>
 
 <script>
@@ -439,14 +458,15 @@
   const prepareState = document.getElementById("prepareState");
 
   const startScanBtn = document.getElementById("startScanBtn");
-  const startScanLabel = document.getElementById("startScanLabel");
   const scanRing = document.getElementById("scanRing");
   const scanRing2 = document.getElementById("scanRing2");
   const scanBeam = document.getElementById("scanBeam");
 
   const mealAsset = document.getElementById("mealAsset");
   const mealFrame = document.getElementById("mealFrame");
+  const mealGlow = document.getElementById("mealGlow");
   const mealImage = document.getElementById("mealImage");
+  const mealPulse = document.getElementById("mealPulse");
 
   const scanState = document.getElementById("scanState");
 
@@ -559,8 +579,9 @@
     }
 
     hideResultSections();
-    startScanBtn.setAttribute("visible", false);
-    startScanLabel.setAttribute("visible", false);
+
+    document.getElementById("startScanBtn").setAttribute("visible", false);
+    document.getElementById("startScanLabel").setAttribute("visible", false);
 
     scanRing.setAttribute("visible", true);
     scanRing2.setAttribute("visible", true);
@@ -593,16 +614,21 @@
   againBtn.addEventListener("click", () => {
     hideResultSections();
     mealFrame.setAttribute("visible", false);
+    mealGlow.setAttribute("visible", false);
     mealImage.setAttribute("visible", false);
-    startScanBtn.setAttribute("visible", true);
-    startScanLabel.setAttribute("visible", true);
+    mealPulse.setAttribute("visible", false);
+    document.getElementById("startScanBtn").setAttribute("visible", true);
+    document.getElementById("startScanLabel").setAttribute("visible", true);
     scanState.setAttribute("value", "Ready for scan");
   });
 
   function showPreparedResult() {
     mealImage.setAttribute("src", preparedAnalysis.dataUrl);
+
     mealFrame.setAttribute("visible", true);
+    mealGlow.setAttribute("visible", true);
     mealImage.setAttribute("visible", true);
+    mealPulse.setAttribute("visible", true);
     mealImage.emit("showMeal");
 
     mealTitle.setAttribute("value", preparedAnalysis.name);
@@ -631,33 +657,28 @@
     againBtn.setAttribute("visible", true);
     againBtnLabel.setAttribute("visible", true);
 
+    caloriesCard.setAttribute("animation", "property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 250");
+    proteinCard.setAttribute("animation", "property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 350");
+    rewardCard.setAttribute("animation", "property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 450");
+    riskCard.setAttribute("animation", "property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 550");
+
     scanState.setAttribute("value", "Analysis complete");
   }
 
   function hideResultSections() {
-    mealFrame.setAttribute("visible", false);
-    mealImage.setAttribute("visible", false);
-    mealTitle.setAttribute("visible", false);
-
-    caloriesCard.setAttribute("visible", false);
-    caloriesText.setAttribute("visible", false);
-
-    proteinCard.setAttribute("visible", false);
-    proteinText.setAttribute("visible", false);
-
-    rewardCard.setAttribute("visible", false);
-    rewardText.setAttribute("visible", false);
-
-    riskCard.setAttribute("visible", false);
-    riskText.setAttribute("visible", false);
-
-    detailsBtn.setAttribute("visible", false);
-    detailsBtnLabel.setAttribute("visible", false);
-    againBtn.setAttribute("visible", false);
-    againBtnLabel.setAttribute("visible", false);
-
-    detailsCard.setAttribute("visible", false);
-    detailsText.setAttribute("visible", false);
+    [
+      "mealFrame","mealGlow","mealImage","mealPulse",
+      "caloriesCard","caloriesText",
+      "proteinCard","proteinText",
+      "rewardCard","rewardText",
+      "riskCard","riskText",
+      "mealTitle",
+      "detailsBtn","detailsBtnLabel",
+      "againBtn","againBtnLabel",
+      "detailsCard","detailsText"
+    ].forEach(id => {
+      document.getElementById(id).setAttribute("visible", false);
+    });
   }
 
   function inferMealData(labels) {
