@@ -215,7 +215,7 @@
     <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
-  <!-- Smaller logo bar -->
+  <!-- Top logos -->
   <a-plane position="0 2.82 -2.78" width="3.75" height="0.68" color="#0e2347" opacity="0.96"></a-plane>
   <a-plane position="0 3.04 -2.75" width="3.10" height="0.035" color="#6cd9ff" opacity="0.95"></a-plane>
 
@@ -240,16 +240,13 @@
           color="#ffffff"
           width="1.6"></a-text>
 
-  <!-- Raised main panel -->
+  <!-- Main panel -->
   <a-plane id="mainPanel"
            position="0 1.42 -2.44"
            width="3.0"
            height="2.32"
            color="#0a1730"
-           opacity="0.985">
-  </a-plane>
-
-  <a-plane position="0 2.24 -2.42" width="2.36" height="0.04" color="#6cd9ff" opacity="0.95"></a-plane>
+           opacity="0.985"></a-plane>
 
   <a-text id="heroTitle"
           value="SkyNutrition XR"
@@ -279,6 +276,7 @@
           color="#ffffff"
           width="2.1"></a-text>
 
+  <!-- Scan effects -->
   <a-ring id="scanRing"
           position="0 1.18 -2.33"
           radius-inner="0.19"
@@ -305,7 +303,7 @@
            visible="false"
            animation="property: opacity; from: 0; to: 0.28; dir: alternate; dur: 230; loop: true"></a-plane>
 
-  <!-- Raised meal block -->
+  <!-- Meal block -->
   <a-plane id="mealFrame"
            position="0 1.40 -2.35"
            width="0.98"
@@ -367,7 +365,7 @@
           width="2.25"
           visible="false"></a-text>
 
-  <!-- Raised bottom buttons -->
+  <!-- Bottom buttons -->
   <a-plane id="detailsBtn"
            class="clickable"
            position="-0.60 0.18 -2.32"
@@ -396,6 +394,47 @@
           align="center"
           color="#ffffff"
           width="1.5"
+          visible="false"></a-text>
+
+  <!-- Details panel -->
+  <a-plane id="detailsPanel"
+           position="1.48 1.12 -2.34"
+           width="1.16"
+           height="1.00"
+           color="#0f1f3d"
+           opacity="0.95"
+           visible="false"></a-plane>
+
+  <a-text id="detailsTitle"
+          value="AI Details"
+          position="1.48 1.45 -2.28"
+          align="center"
+          color="#74e3ff"
+          width="1.35"
+          visible="false"></a-text>
+
+  <a-text id="detailsContent"
+          value=""
+          position="1.48 1.10 -2.28"
+          align="center"
+          color="#ffffff"
+          width="0.98"
+          visible="false"></a-text>
+
+  <a-plane id="closeDetails"
+           class="clickable"
+           position="1.48 0.68 -2.29"
+           width="0.72"
+           height="0.18"
+           color="#ef4444"
+           visible="false"></a-plane>
+
+  <a-text id="closeDetailsText"
+          value="Close"
+          position="1.48 0.68 -2.24"
+          align="center"
+          color="#ffffff"
+          width="1.05"
           visible="false"></a-text>
 </a-scene>
 
@@ -430,6 +469,12 @@
   const againBtn = document.getElementById("againBtn");
   const againBtnLabel = document.getElementById("againBtnLabel");
   const exitBtn = document.getElementById("exitBtn");
+
+  const detailsPanel = document.getElementById("detailsPanel");
+  const detailsTitle = document.getElementById("detailsTitle");
+  const detailsContent = document.getElementById("detailsContent");
+  const closeDetails = document.getElementById("closeDetails");
+  const closeDetailsText = document.getElementById("closeDetailsText");
 
   async function prepareAnalysis() {
     const file = document.getElementById("imageInput").files[0];
@@ -478,13 +523,9 @@
         return;
       }
 
-      const mealData = inferMealData(labels.map(l => l.description));
       preparedAnalysis = {
-        name: mealData.name,
-        calories: mealData.calories,
-        protein: mealData.protein,
-        reward: mealData.reward,
-        wasteRisk: mealData.wasteRisk,
+        ...inferMealData(labels.map(l => l.description)),
+        labels: labels.slice(0, 4).map((l, i) => `${i + 1}. ${l.description} (${Math.round((l.score || 0) * 100)}%)`).join("\n"),
         dataUrl
       };
 
@@ -543,7 +584,38 @@
   });
 
   detailsBtn.addEventListener("click", () => {
-    alert("تفاصيل إضافية جاهزة في النسخة القادمة");
+    if (!preparedAnalysis) return;
+
+    detailsContent.setAttribute(
+      "value",
+      `Meal: ${preparedAnalysis.name}
+
+Calories:
+${preparedAnalysis.calories}
+
+Protein:
+${preparedAnalysis.protein}
+
+Reward:
+${preparedAnalysis.reward}
+
+Waste:
+${preparedAnalysis.wasteRisk}`
+    );
+
+    detailsPanel.setAttribute("visible", true);
+    detailsTitle.setAttribute("visible", true);
+    detailsContent.setAttribute("visible", true);
+    closeDetails.setAttribute("visible", true);
+    closeDetailsText.setAttribute("visible", true);
+  });
+
+  closeDetails.addEventListener("click", () => {
+    detailsPanel.setAttribute("visible", false);
+    detailsTitle.setAttribute("visible", false);
+    detailsContent.setAttribute("visible", false);
+    closeDetails.setAttribute("visible", false);
+    closeDetailsText.setAttribute("visible", false);
   });
 
   againBtn.addEventListener("click", () => {
@@ -602,7 +674,9 @@
       "riskCard","riskText",
       "mealTitle",
       "detailsBtn","detailsBtnLabel",
-      "againBtn","againBtnLabel"
+      "againBtn","againBtnLabel",
+      "detailsPanel","detailsTitle","detailsContent",
+      "closeDetails","closeDetailsText"
     ].forEach(id => {
       document.getElementById(id).setAttribute("visible", false);
     });
