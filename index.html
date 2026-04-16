@@ -20,7 +20,7 @@
     body{
       margin:0;
       overflow:hidden;
-      font-family:Arial,sans-serif;
+      font-family:Arial, sans-serif;
       background:
         radial-gradient(circle at 20% 10%, rgba(124,58,237,.18), transparent 22%),
         radial-gradient(circle at 80% 16%, rgba(87,200,255,.15), transparent 22%),
@@ -31,11 +31,11 @@
       position:fixed;
       top:18px;
       left:18px;
-      width:390px;
-      padding:22px;
-      border-radius:26px;
+      width:410px;
+      padding:24px;
+      border-radius:28px;
       color:#fff;
-      background:linear-gradient(180deg, rgba(8,18,36,.92), rgba(5,10,21,.88));
+      background:linear-gradient(180deg, rgba(8,18,36,.94), rgba(5,10,21,.90));
       border:1px solid rgba(116,227,255,.16);
       box-shadow:0 24px 60px rgba(0,0,0,.38);
       backdrop-filter:blur(16px);
@@ -52,30 +52,33 @@
         linear-gradient(135deg, rgba(116,227,255,.08), transparent 26%, transparent 74%, rgba(124,58,237,.08));
     }
 
+    .overlay > *{
+      position:relative;
+      z-index:1;
+    }
+
     .pill{
       display:inline-block;
       padding:8px 14px;
       border-radius:999px;
       font-size:11px;
       font-weight:800;
-      letter-spacing:1.2px;
+      letter-spacing:1.3px;
       text-transform:uppercase;
       color:#ddf2ff;
       background:linear-gradient(90deg, rgba(79,124,255,.20), rgba(124,58,237,.18));
       border:1px solid rgba(116,227,255,.12);
-      position:relative;
-      z-index:1;
+      box-shadow:0 8px 24px rgba(79,124,255,.18);
     }
 
     .title{
-      position:relative;
-      z-index:1;
-      margin:16px 0 10px;
-      font-size:58px;
+      margin:18px 0 12px;
+      font-size:60px;
       line-height:.92;
       letter-spacing:-2.4px;
       font-weight:800;
       color:#fff;
+      text-shadow:0 6px 24px rgba(79,124,255,.18);
     }
 
     .title .accent{
@@ -84,49 +87,39 @@
     }
 
     .sub{
-      position:relative;
-      z-index:1;
       margin:0;
-      max-width:330px;
+      max-width:345px;
       font-size:17px;
-      line-height:1.55;
+      line-height:1.6;
       color:#dbeafe;
     }
 
     .box{
-      position:relative;
-      z-index:1;
-      margin-top:18px;
-      padding:14px;
-      border-radius:18px;
+      margin-top:20px;
+      padding:16px;
+      border-radius:20px;
       background:rgba(255,255,255,.04);
       border:1px solid rgba(255,255,255,.07);
-    }
-
-    input,button{
-      width:100%;
-      margin-top:10px;
-      padding:14px;
-      border:none;
-      border-radius:15px;
-      font-size:16px;
-    }
-
-    input{
-      background:#fff;
-      color:#111827;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
     }
 
     button{
+      width:100%;
+      margin-top:10px;
+      padding:15px;
+      border:none;
+      border-radius:16px;
+      font-size:17px;
       color:#fff;
       font-weight:700;
       cursor:pointer;
-      transition:transform .18s ease, filter .18s ease;
+      transition:transform .18s ease, filter .18s ease, box-shadow .18s ease;
     }
 
     button:hover{
-      transform:translateY(-1px);
-      filter:brightness(1.03);
+      transform:translateY(-2px);
+      filter:brightness(1.04);
+      box-shadow:0 18px 34px rgba(79,124,255,.28);
     }
 
     .primary{
@@ -134,29 +127,23 @@
       box-shadow:0 14px 30px rgba(79,124,255,.26);
     }
 
-    .secondary{
-      background:linear-gradient(90deg, #2d3a53, #44506a);
-    }
-
     .status{
       margin-top:12px;
-      min-height:44px;
-      padding:11px 12px;
-      border-radius:14px;
-      font-size:13px;
-      line-height:1.45;
+      min-height:48px;
+      padding:12px 14px;
+      border-radius:16px;
+      font-size:14px;
+      line-height:1.5;
       color:#dff3ff;
       background:rgba(116,227,255,.07);
       border:1px solid rgba(116,227,255,.10);
     }
 
     .foot{
-      position:relative;
-      z-index:1;
-      margin-top:12px;
-      font-size:13px;
+      margin-top:14px;
+      font-size:14px;
       color:#9ec9ff;
-      line-height:1.45;
+      line-height:1.5;
     }
   </style>
 </head>
@@ -164,22 +151,26 @@
 
 <div class="overlay" id="overlayUI">
   <div class="pill">Premium XR Judge Demo</div>
+
   <div class="title">
     SkyNutrition
     <span class="accent">XR</span>
   </div>
+
   <p class="sub">
-    Upload a meal image, prepare the AI result, then enter an immersive hologram scan experience designed for live judging.
+    Welcome to SkyNutrition XR, an immersive airline dining experience where users explore a smart meal menu inside virtual reality, select a dish, and view interactive nutrition insights in a futuristic hologram environment.
   </p>
 
   <div class="box">
-    <input type="file" id="imageInput" accept="image/*">
-    <button class="primary" onclick="prepareAnalysis()">Analyze & Prepare XR</button>
-    <button class="secondary" onclick="enterXRMode()">Enter XR</button>
-    <div class="status" id="prepareState">Waiting for meal image.</div>
+    <button class="primary" onclick="enterXRMode()">Enter VR Experience</button>
+    <div class="status" id="prepareState">
+      Step into XR to open the meal menu, choose a dish, view the cart, and analyze the selected meal.
+    </div>
   </div>
 
-  <div class="foot">Flow: upload image → analyze → enter XR → start scan.</div>
+  <div class="foot">
+    Experience flow: enter VR → open meal menu → choose meal → analyze.
+  </div>
 </div>
 
 <a-scene background="color: #050b15">
@@ -193,6 +184,8 @@
         color="#74e3ff"
         fuse="true"
         fuse-timeout="900"
+        animation__fusing="property: scale; startEvents: fusing; dur: 900; from: 1 1 1; to: 1.18 1.18 1.18"
+        animation__mouseleave="property: scale; startEvents: mouseleave; dur: 150; to: 1 1 1"
         raycaster="objects: .clickable">
       </a-cursor>
     </a-camera>
@@ -215,7 +208,7 @@
     <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
   </a-entity>
 
-  <!-- Top logos -->
+  <!-- top logos area -->
   <a-plane position="0 2.82 -2.78" width="3.75" height="0.68" color="#0e2347" opacity="0.96"></a-plane>
   <a-plane position="0 3.04 -2.75" width="3.10" height="0.035" color="#6cd9ff" opacity="0.95"></a-plane>
 
@@ -227,58 +220,219 @@
   <a-plane position="0.95 2.82 -2.76" width="1.32" height="0.38" color="#ffffff"></a-plane>
   <a-image src="assets/kacst.png" position="0.95 2.82 -2.75" width="1.18" height="0.28"></a-image>
 
-  <!-- Exit -->
+  <!-- exit -->
   <a-plane id="exitBtn"
            class="clickable"
            position="0 2.22 -2.42"
-           width="1.00"
-           height="0.22"
-           color="#ef4444"></a-plane>
+           width="1.04"
+           height="0.24"
+           color="#ef4444"
+           material="shader: flat"
+           animation__pulse="property: scale; dir: alternate; dur: 1400; loop: true; to: 1.03 1.03 1.03"></a-plane>
   <a-text value="Exit XR"
           position="0 2.22 -2.37"
           align="center"
           color="#ffffff"
           width="1.6"></a-text>
 
-  <!-- Main panel -->
+  <!-- center panel -->
   <a-plane id="mainPanel"
-           position="0 1.42 -2.44"
-           width="3.0"
-           height="2.32"
+           position="0 1.30 -2.45"
+           width="3.10"
+           height="2.45"
            color="#0a1730"
            opacity="0.985"></a-plane>
 
+  <a-plane position="0 1.30 -2.449" width="3.18" height="2.53" color="#5ee7ff" opacity="0.06"></a-plane>
+
   <a-text id="heroTitle"
           value="SkyNutrition XR"
-          position="0 2.00 -2.39"
+          position="0 1.92 -2.39"
           align="center"
           color="#ffffff"
-          width="3.2"></a-text>
+          width="3.3"></a-text>
 
   <a-text id="heroSub"
           value="Immersive hologram meal scan"
-          position="0 1.76 -2.39"
+          position="0 1.68 -2.39"
           align="center"
           color="#9edbff"
-          width="2.28"></a-text>
+          width="2.4"></a-text>
+
+  <a-plane id="startScanBtnGlow"
+           position="0 1.35 -2.37"
+           width="1.95"
+           height="0.42"
+           color="#68e2ff"
+           opacity="0.10"
+           animation="property: opacity; from: 0.06; to: 0.14; dir: alternate; dur: 1200; loop: true"></a-plane>
 
   <a-plane id="startScanBtn"
            class="clickable"
-           position="0 1.46 -2.36"
-           width="1.55"
+           position="0 1.35 -2.36"
+           width="1.72"
            height="0.30"
-           color="#4f7cff"></a-plane>
+           color="#4f7cff"
+           material="shader: flat"
+           animation__hoverpulse="property: scale; dir: alternate; dur: 1500; loop: true; to: 1.02 1.02 1.02"></a-plane>
 
   <a-text id="startScanLabel"
-          value="Start Scan"
-          position="0 1.46 -2.31"
+          value="Choose From Menu"
+          position="0 1.35 -2.31"
           align="center"
           color="#ffffff"
-          width="2.1"></a-text>
+          width="2.15"></a-text>
 
-  <!-- Scan effects -->
+  <a-text id="scanState"
+          value="Open the menu to begin"
+          position="0 0.26 -2.33"
+          align="center"
+          color="#eef8ff"
+          width="2.5"></a-text>
+
+  <!-- cart panel -->
+  <a-text id="cartTitle"
+          value="Your Cart"
+          position="-1.85 1.92 -2.28"
+          align="center"
+          color="#74e3ff"
+          width="1.6"
+          visible="false"></a-text>
+
+  <a-plane id="cartPanelGlow"
+           position="-1.85 1.18 -2.31"
+           width="1.65"
+           height="1.95"
+           color="#74e3ff"
+           opacity="0.08"
+           visible="false"></a-plane>
+
+  <a-plane id="cartPanel"
+           position="-1.85 1.18 -2.30"
+           width="1.55"
+           height="1.85"
+           color="#0a1a33"
+           opacity="0.98"
+           visible="false"></a-plane>
+
+  <a-text id="cartCountText"
+          value="Cart: 0 items"
+          position="-1.85 1.62 -2.25"
+          align="center"
+          color="#f6c768"
+          width="1.4"
+          visible="false"></a-text>
+
+  <a-text id="cartItemsText"
+          value="No items yet"
+          position="-1.85 1.05 -2.25"
+          align="center"
+          color="#ffffff"
+          width="1.05"
+          visible="false"></a-text>
+
+  <a-plane id="clearCartBtn"
+           class="clickable"
+           position="-1.85 0.44 -2.23"
+           width="1.00"
+           height="0.20"
+           color="#334155"
+           visible="false"
+           animation__scale="property: scale; dir: alternate; dur: 1800; loop: true; to: 1.02 1.02 1.02"></a-plane>
+
+  <a-text id="clearCartBtnText"
+          value="Clear Cart"
+          position="-1.85 0.44 -2.18"
+          align="center"
+          color="#ffffff"
+          width="1.2"
+          visible="false"></a-text>
+
+  <!-- menu popup -->
+  <a-text id="menuTitle"
+          value="Meal Menu"
+          position="1.85 2.02 -2.28"
+          align="center"
+          color="#74e3ff"
+          width="1.9"
+          visible="false"></a-text>
+
+  <a-plane id="menuPanelGlow"
+           position="1.85 1.18 -2.31"
+           width="2.62"
+           height="2.57"
+           color="#74e3ff"
+           opacity="0.08"
+           visible="false"></a-plane>
+
+  <a-plane id="menuPanel"
+           position="1.85 1.18 -2.30"
+           width="2.50"
+           height="2.45"
+           color="#0a1a33"
+           opacity="0.98"
+           visible="false"></a-plane>
+
+  <!-- card 1 -->
+  <a-plane id="mealCard1" class="clickable meal-select" data-id="1" position="1.35 1.55 -2.22" width="0.92" height="0.78" color="#132340" visible="false" animation__card1="property: scale; dir: alternate; dur: 2200; loop: true; to: 1.015 1.015 1.015"></a-plane>
+  <a-plane id="mealCard1Glow" position="1.35 1.55 -2.23" width="0.99" height="0.85" color="#5ee7ff" opacity="0.08" visible="false"></a-plane>
+  <a-text id="mealCard1Title" value="Chicken Rice" position="1.35 1.77 -2.16" align="center" color="#ffffff" width="1.05" visible="false"></a-text>
+  <a-text id="mealCard1Meta" value="520 kcal" position="1.35 1.59 -2.16" align="center" color="#cfe5ff" width="0.92" visible="false"></a-text>
+  <a-plane id="mealSelect1" class="clickable meal-select" data-id="1" position="1.23 1.35 -2.15" width="0.28" height="0.12" color="#4f7cff" visible="false"></a-plane>
+  <a-text id="mealSelect1Text" value="Select" position="1.23 1.35 -2.10" align="center" color="#ffffff" width="0.56" visible="false"></a-text>
+  <a-plane id="mealAdd1" class="clickable meal-add" data-id="1" position="1.47 1.35 -2.15" width="0.28" height="0.12" color="#f6c768" visible="false"></a-plane>
+  <a-text id="mealAdd1Text" value="Add" position="1.47 1.35 -2.10" align="center" color="#172033" width="0.56" visible="false"></a-text>
+
+  <!-- card 2 -->
+  <a-plane id="mealCard2" class="clickable meal-select" data-id="2" position="2.35 1.55 -2.22" width="0.92" height="0.78" color="#132340" visible="false" animation__card2="property: scale; dir: alternate; dur: 2100; loop: true; to: 1.015 1.015 1.015"></a-plane>
+  <a-plane id="mealCard2Glow" position="2.35 1.55 -2.23" width="0.99" height="0.85" color="#5ee7ff" opacity="0.08" visible="false"></a-plane>
+  <a-text id="mealCard2Title" value="Salad Bowl" position="2.35 1.77 -2.16" align="center" color="#ffffff" width="1.05" visible="false"></a-text>
+  <a-text id="mealCard2Meta" value="250 kcal" position="2.35 1.59 -2.16" align="center" color="#cfe5ff" width="0.92" visible="false"></a-text>
+  <a-plane id="mealSelect2" class="clickable meal-select" data-id="2" position="2.23 1.35 -2.15" width="0.28" height="0.12" color="#4f7cff" visible="false"></a-plane>
+  <a-text id="mealSelect2Text" value="Select" position="2.23 1.35 -2.10" align="center" color="#ffffff" width="0.56" visible="false"></a-text>
+  <a-plane id="mealAdd2" class="clickable meal-add" data-id="2" position="2.47 1.35 -2.15" width="0.28" height="0.12" color="#f6c768" visible="false"></a-plane>
+  <a-text id="mealAdd2Text" value="Add" position="2.47 1.35 -2.10" align="center" color="#172033" width="0.56" visible="false"></a-text>
+
+  <!-- card 3 -->
+  <a-plane id="mealCard3" class="clickable meal-select" data-id="3" position="1.35 0.74 -2.22" width="0.92" height="0.78" color="#132340" visible="false" animation__card3="property: scale; dir: alternate; dur: 2300; loop: true; to: 1.015 1.015 1.015"></a-plane>
+  <a-plane id="mealCard3Glow" position="1.35 0.74 -2.23" width="0.99" height="0.85" color="#5ee7ff" opacity="0.08" visible="false"></a-plane>
+  <a-text id="mealCard3Title" value="Pasta Dish" position="1.35 0.96 -2.16" align="center" color="#ffffff" width="1.05" visible="false"></a-text>
+  <a-text id="mealCard3Meta" value="480 kcal" position="1.35 0.78 -2.16" align="center" color="#cfe5ff" width="0.92" visible="false"></a-text>
+  <a-plane id="mealSelect3" class="clickable meal-select" data-id="3" position="1.23 0.54 -2.15" width="0.28" height="0.12" color="#4f7cff" visible="false"></a-plane>
+  <a-text id="mealSelect3Text" value="Select" position="1.23 0.54 -2.10" align="center" color="#ffffff" width="0.56" visible="false"></a-text>
+  <a-plane id="mealAdd3" class="clickable meal-add" data-id="3" position="1.47 0.54 -2.15" width="0.28" height="0.12" color="#f6c768" visible="false"></a-plane>
+  <a-text id="mealAdd3Text" value="Add" position="1.47 0.54 -2.10" align="center" color="#172033" width="0.56" visible="false"></a-text>
+
+  <!-- card 4 -->
+  <a-plane id="mealCard4" class="clickable meal-select" data-id="4" position="2.35 0.74 -2.22" width="0.92" height="0.78" color="#132340" visible="false" animation__card4="property: scale; dir: alternate; dur: 2000; loop: true; to: 1.015 1.015 1.015"></a-plane>
+  <a-plane id="mealCard4Glow" position="2.35 0.74 -2.23" width="0.99" height="0.85" color="#5ee7ff" opacity="0.08" visible="false"></a-plane>
+  <a-text id="mealCard4Title" value="Grilled Fish" position="2.35 0.96 -2.16" align="center" color="#ffffff" width="1.05" visible="false"></a-text>
+  <a-text id="mealCard4Meta" value="390 kcal" position="2.35 0.78 -2.16" align="center" color="#cfe5ff" width="0.92" visible="false"></a-text>
+  <a-plane id="mealSelect4" class="clickable meal-select" data-id="4" position="2.23 0.54 -2.15" width="0.28" height="0.12" color="#4f7cff" visible="false"></a-plane>
+  <a-text id="mealSelect4Text" value="Select" position="2.23 0.54 -2.10" align="center" color="#ffffff" width="0.56" visible="false"></a-text>
+  <a-plane id="mealAdd4" class="clickable meal-add" data-id="4" position="2.47 0.54 -2.15" width="0.28" height="0.12" color="#f6c768" visible="false"></a-plane>
+  <a-text id="mealAdd4Text" value="Add" position="2.47 0.54 -2.10" align="center" color="#172033" width="0.56" visible="false"></a-text>
+
+  <a-plane id="closeMenuBtn"
+           class="clickable"
+           position="1.85 0.04 -2.20"
+           width="1.15"
+           height="0.20"
+           color="#334155"
+           visible="false"
+           animation__close="property: scale; dir: alternate; dur: 1800; loop: true; to: 1.02 1.02 1.02"></a-plane>
+
+  <a-text id="closeMenuBtnText"
+          value="Close Menu"
+          position="1.85 0.04 -2.15"
+          align="center"
+          color="#ffffff"
+          width="1.25"
+          visible="false"></a-text>
+
+  <!-- scan effects -->
   <a-ring id="scanRing"
-          position="0 1.18 -2.33"
+          position="0 1.05 -2.33"
           radius-inner="0.19"
           radius-outer="0.27"
           color="#00d6ff"
@@ -286,7 +440,7 @@
           animation="property: rotation; to: 0 0 360; loop: true; dur: 850"></a-ring>
 
   <a-ring id="scanRing2"
-          position="0 1.18 -2.335"
+          position="0 1.05 -2.335"
           radius-inner="0.29"
           radius-outer="0.32"
           color="#7c3aed"
@@ -295,7 +449,7 @@
           animation="property: scale; from: 0.85 0.85 0.85; to: 1.10 1.10 1.10; dir: alternate; dur: 500; loop: true"></a-ring>
 
   <a-plane id="scanBeam"
-           position="0 1.18 -2.32"
+           position="0 1.05 -2.32"
            width="0.08"
            height="0.62"
            color="#67e8f9"
@@ -303,158 +457,170 @@
            visible="false"
            animation="property: opacity; from: 0; to: 0.28; dir: alternate; dur: 230; loop: true"></a-plane>
 
-  <!-- Meal block -->
+  <!-- result block -->
   <a-plane id="mealFrame"
-           position="0 1.40 -2.35"
-           width="0.98"
-           height="0.72"
+           position="0 1.20 -2.35"
+           width="1.08"
+           height="0.78"
            color="#11213c"
            opacity="0.95"
            visible="false"></a-plane>
 
   <a-plane id="mealGlow"
-           position="0 1.40 -2.37"
-           width="1.22"
-           height="0.92"
+           position="0 1.20 -2.37"
+           width="1.28"
+           height="0.98"
            color="#4f7cff"
            opacity="0"
            visible="false"
            animation="property: opacity; from: 0.02; to: 0.14; dir: alternate; dur: 700; loop: true"></a-plane>
 
   <a-image id="mealImage"
-           position="0 1.40 -2.31"
-           width="0.86"
-           height="0.62"
+           position="0 1.20 -2.31"
+           width="0.94"
+           height="0.68"
            visible="false"
            scale="0.82 0.82 0.82"
            animation__show="property: scale; startEvents: showMeal; from: 0.82 0.82 0.82; to: 1 1 1; dur: 420"></a-image>
 
   <a-ring id="mealPulse"
-          position="0 1.40 -2.34"
-          radius-inner="0.43"
-          radius-outer="0.46"
+          position="0 1.20 -2.34"
+          radius-inner="0.47"
+          radius-outer="0.50"
           color="#74e3ff"
           opacity="0"
           visible="false"
           animation="property: scale; from: 0.92 0.92 0.92; to: 1.06 1.06 1.06; dir: alternate; dur: 900; loop: true"></a-ring>
 
-  <a-text id="scanState"
-          value="Ready for scan"
-          position="0 0.40 -2.33"
-          align="center"
-          color="#eef8ff"
-          width="2.2"></a-text>
+  <a-plane id="caloriesCard"
+           position="0 1.62 -2.28"
+           width="0.90"
+           height="0.20"
+           color="#12233f"
+           visible="false"
+           animation__cal="property: scale; dir: alternate; dur: 1700; loop: true; to: 1.02 1.02 1.02"></a-plane>
+  <a-text id="caloriesText" position="0 1.62 -2.23" align="center" color="#ffffff" width="1.12" visible="false"></a-text>
 
-  <a-plane id="caloriesCard" position="0 1.68 -2.28" width="0.82" height="0.20" color="#12233f" visible="false"></a-plane>
-  <a-text id="caloriesText" position="0 1.68 -2.23" align="center" color="#ffffff" width="1.08" visible="false"></a-text>
+  <a-plane id="proteinCard"
+           position="-1.00 1.20 -2.30"
+           width="0.80"
+           height="0.25"
+           color="#12233f"
+           visible="false"
+           animation__pro="property: scale; dir: alternate; dur: 1850; loop: true; to: 1.02 1.02 1.02"></a-plane>
+  <a-text id="proteinText" position="-1.00 1.20 -2.23" align="center" color="#8fdcff" width="1.05" visible="false"></a-text>
 
-  <a-plane id="proteinCard" position="-0.98 1.40 -2.30" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
-  <a-text id="proteinText" position="-0.98 1.40 -2.23" align="center" color="#8fdcff" width="1.02" visible="false"></a-text>
+  <a-plane id="rewardCard"
+           position="1.00 1.20 -2.30"
+           width="0.80"
+           height="0.25"
+           color="#12233f"
+           visible="false"
+           animation__rew="property: scale; dir: alternate; dur: 1900; loop: true; to: 1.02 1.02 1.02"></a-plane>
+  <a-text id="rewardText" position="1.00 1.20 -2.23" align="center" color="#f5c96b" width="1.05" visible="false"></a-text>
 
-  <a-plane id="rewardCard" position="0.98 1.40 -2.30" width="0.76" height="0.24" color="#12233f" visible="false"></a-plane>
-  <a-text id="rewardText" position="0.98 1.40 -2.23" align="center" color="#f5c96b" width="1.02" visible="false"></a-text>
-
-  <a-plane id="riskCard" position="0 0.98 -2.28" width="0.90" height="0.20" color="#12233f" visible="false"></a-plane>
-  <a-text id="riskText" position="0 0.98 -2.23" align="center" color="#d5dfff" width="1.08" visible="false"></a-text>
+  <a-plane id="riskCard"
+           position="0 0.72 -2.28"
+           width="1.00"
+           height="0.20"
+           color="#12233f"
+           visible="false"
+           animation__risk="property: scale; dir: alternate; dur: 2000; loop: true; to: 1.02 1.02 1.02"></a-plane>
+  <a-text id="riskText" position="0 0.72 -2.23" align="center" color="#d5dfff" width="1.15" visible="false"></a-text>
 
   <a-text id="mealTitle"
           value=""
-          position="0 0.72 -2.30"
+          position="0 0.48 -2.30"
           align="center"
           color="#ffffff"
-          width="2.25"
+          width="2.35"
           visible="false"></a-text>
 
-  <!-- Bottom buttons -->
-  <a-plane id="detailsBtn"
-           class="clickable"
-           position="-0.60 0.18 -2.32"
-           width="1.12"
-           height="0.24"
-           color="#7c3aed"
+  <!-- action buttons -->
+  <a-plane id="againBtnGlow"
+           position="0 0.22 -2.33"
+           width="1.05"
+           height="0.30"
+           color="#0ea5e9"
+           opacity="0.10"
            visible="false"></a-plane>
-  <a-text id="detailsBtnLabel"
-          value="AI Details"
-          position="-0.60 0.18 -2.27"
-          align="center"
-          color="#ffffff"
-          width="1.5"
-          visible="false"></a-text>
 
   <a-plane id="againBtn"
            class="clickable"
-           position="0.60 0.18 -2.32"
-           width="1.12"
-           height="0.24"
+           position="0 0.22 -2.32"
+           width="0.92"
+           height="0.22"
            color="#0ea5e9"
-           visible="false"></a-plane>
+           visible="false"
+           animation__again="property: scale; dir: alternate; dur: 1400; loop: true; to: 1.03 1.03 1.03"></a-plane>
   <a-text id="againBtnLabel"
           value="Scan Again"
-          position="0.60 0.18 -2.27"
+          position="0 0.22 -2.27"
           align="center"
           color="#ffffff"
-          width="1.5"
-          visible="false"></a-text>
-
-  <!-- Details panel -->
-  <a-plane id="detailsPanel"
-           position="1.48 1.12 -2.34"
-           width="1.16"
-           height="1.00"
-           color="#0f1f3d"
-           opacity="0.95"
-           visible="false"></a-plane>
-
-  <a-text id="detailsTitle"
-          value="AI Details"
-          position="1.48 1.45 -2.28"
-          align="center"
-          color="#74e3ff"
-          width="1.35"
-          visible="false"></a-text>
-
-  <a-text id="detailsContent"
-          value=""
-          position="1.48 1.10 -2.28"
-          align="center"
-          color="#ffffff"
-          width="0.98"
-          visible="false"></a-text>
-
-  <a-plane id="closeDetails"
-           class="clickable"
-           position="1.48 0.68 -2.29"
-           width="0.72"
-           height="0.18"
-           color="#ef4444"
-           visible="false"></a-plane>
-
-  <a-text id="closeDetailsText"
-          value="Close"
-          position="1.48 0.68 -2.24"
-          align="center"
-          color="#ffffff"
-          width="1.05"
+          width="1.2"
           visible="false"></a-text>
 </a-scene>
 
 <script>
-  const API_KEY = "AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ";
   let preparedAnalysis = null;
+  let cart = [];
+
+  const demoMeals = {
+    1: {
+      id: 1,
+      name: "Chicken Rice",
+      calories: "520 kcal",
+      protein: "35g",
+      reward: "+50 Miles",
+      wasteRisk: "Low Risk",
+      dataUrl: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80"
+    },
+    2: {
+      id: 2,
+      name: "Salad Bowl",
+      calories: "250 kcal",
+      protein: "10g",
+      reward: "+35 Miles",
+      wasteRisk: "Medium Risk",
+      dataUrl: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80"
+    },
+    3: {
+      id: 3,
+      name: "Pasta Dish",
+      calories: "480 kcal",
+      protein: "18g",
+      reward: "+40 Miles",
+      wasteRisk: "Medium Risk",
+      dataUrl: "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?auto=format&fit=crop&w=800&q=80"
+    },
+    4: {
+      id: 4,
+      name: "Grilled Fish",
+      calories: "390 kcal",
+      protein: "32g",
+      reward: "+55 Miles",
+      wasteRisk: "Low Risk",
+      dataUrl: "https://images.unsplash.com/photo-1544943910-4c1dc44aab44?auto=format&fit=crop&w=800&q=80"
+    }
+  };
 
   const overlayUI = document.getElementById("overlayUI");
   const prepareState = document.getElementById("prepareState");
+
   const startScanBtn = document.getElementById("startScanBtn");
   const startScanLabel = document.getElementById("startScanLabel");
+  const scanState = document.getElementById("scanState");
+
   const scanRing = document.getElementById("scanRing");
   const scanRing2 = document.getElementById("scanRing2");
   const scanBeam = document.getElementById("scanBeam");
-  const mealAsset = document.getElementById("mealAsset");
+
   const mealFrame = document.getElementById("mealFrame");
   const mealGlow = document.getElementById("mealGlow");
   const mealImage = document.getElementById("mealImage");
   const mealPulse = document.getElementById("mealPulse");
-  const scanState = document.getElementById("scanState");
+
   const caloriesCard = document.getElementById("caloriesCard");
   const caloriesText = document.getElementById("caloriesText");
   const proteinCard = document.getElementById("proteinCard");
@@ -464,79 +630,32 @@
   const riskCard = document.getElementById("riskCard");
   const riskText = document.getElementById("riskText");
   const mealTitle = document.getElementById("mealTitle");
-  const detailsBtn = document.getElementById("detailsBtn");
-  const detailsBtnLabel = document.getElementById("detailsBtnLabel");
+
   const againBtn = document.getElementById("againBtn");
   const againBtnLabel = document.getElementById("againBtnLabel");
+  const againBtnGlow = document.getElementById("againBtnGlow");
   const exitBtn = document.getElementById("exitBtn");
 
-  const detailsPanel = document.getElementById("detailsPanel");
-  const detailsTitle = document.getElementById("detailsTitle");
-  const detailsContent = document.getElementById("detailsContent");
-  const closeDetails = document.getElementById("closeDetails");
-  const closeDetailsText = document.getElementById("closeDetailsText");
+  const menuTitle = document.getElementById("menuTitle");
+  const menuPanel = document.getElementById("menuPanel");
+  const menuPanelGlow = document.getElementById("menuPanelGlow");
+  const closeMenuBtn = document.getElementById("closeMenuBtn");
+  const closeMenuBtnText = document.getElementById("closeMenuBtnText");
 
-  async function prepareAnalysis() {
-    const file = document.getElementById("imageInput").files[0];
-    if (!file) {
-      alert("Please choose an image first.");
-      return;
-    }
+  const cartTitle = document.getElementById("cartTitle");
+  const cartPanel = document.getElementById("cartPanel");
+  const cartPanelGlow = document.getElementById("cartPanelGlow");
+  const cartCountText = document.getElementById("cartCountText");
+  const cartItemsText = document.getElementById("cartItemsText");
+  const clearCartBtn = document.getElementById("clearCartBtn");
+  const clearCartBtnText = document.getElementById("clearCartBtnText");
 
-    prepareState.textContent = "Preparing AI analysis...";
-    scanState.setAttribute("value", "Preparing AI analysis...");
-    hideResultSections();
-
-    try {
-      const dataUrl = await toDataURL(file);
-      mealAsset.src = dataUrl;
-      const base64 = dataUrl.split(",")[1];
-
-      const res = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}`, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          requests: [{
-            image: { content: base64 },
-            features: [
-              { type: "LABEL_DETECTION", maxResults: 5 },
-              { type: "OBJECT_LOCALIZATION", maxResults: 3 }
-            ]
-          }]
-        })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        prepareState.textContent = "AI preparation failed.";
-        scanState.setAttribute("value", "AI preparation failed");
-        alert(data.error?.message || "Vision API error");
-        return;
-      }
-
-      const labels = data?.responses?.[0]?.labelAnnotations || [];
-      if (!labels.length) {
-        prepareState.textContent = "No meal detected.";
-        scanState.setAttribute("value", "No meal detected");
-        alert("No labels found. Try another image.");
-        return;
-      }
-
-      preparedAnalysis = {
-        ...inferMealData(labels.map(l => l.description)),
-        labels: labels.slice(0, 4).map((l, i) => `${i + 1}. ${l.description} (${Math.round((l.score || 0) * 100)}%)`).join("\n"),
-        dataUrl
-      };
-
-      prepareState.textContent = "AI ready. Enter XR and press Start Scan.";
-      scanState.setAttribute("value", "AI ready. Enter XR and press Start Scan.");
-    } catch (err) {
-      prepareState.textContent = "Request failed.";
-      scanState.setAttribute("value", "Request failed");
-      alert(err.message);
-    }
-  }
+  const menuItems = [
+    "mealCard1","mealCard1Glow","mealCard1Title","mealCard1Meta","mealSelect1","mealSelect1Text","mealAdd1","mealAdd1Text",
+    "mealCard2","mealCard2Glow","mealCard2Title","mealCard2Meta","mealSelect2","mealSelect2Text","mealAdd2","mealAdd2Text",
+    "mealCard3","mealCard3Glow","mealCard3Title","mealCard3Meta","mealSelect3","mealSelect3Text","mealAdd3","mealAdd3Text",
+    "mealCard4","mealCard4Glow","mealCard4Title","mealCard4Meta","mealSelect4","mealSelect4Text","mealAdd4","mealAdd4Text"
+  ];
 
   function enterXRMode() {
     overlayUI.style.display = "none";
@@ -544,19 +663,147 @@
     if (scene.enterVR) scene.enterVR();
   }
 
-  exitBtn.addEventListener("click", () => {
+  function goHome() {
     const scene = document.querySelector("a-scene");
     if (scene.exitVR) scene.exitVR();
+
     overlayUI.style.display = "block";
+    hideMenu();
+    hideResultSections();
+
+    preparedAnalysis = null;
+    startScanBtn.setAttribute("visible", true);
+    startScanLabel.setAttribute("visible", true);
+    scanState.setAttribute("value", "Open the menu to begin");
+    prepareState.textContent = "Step into XR to open the meal menu, choose a dish, view the cart, and analyze the selected meal.";
+  }
+
+  exitBtn.addEventListener("click", goHome);
+
+  function showMenu() {
+    menuTitle.setAttribute("visible", true);
+    menuPanel.setAttribute("visible", true);
+    menuPanelGlow.setAttribute("visible", true);
+    closeMenuBtn.setAttribute("visible", true);
+    closeMenuBtnText.setAttribute("visible", true);
+
+    cartTitle.setAttribute("visible", true);
+    cartPanel.setAttribute("visible", true);
+    cartPanelGlow.setAttribute("visible", true);
+    cartCountText.setAttribute("visible", true);
+    cartItemsText.setAttribute("visible", true);
+    clearCartBtn.setAttribute("visible", true);
+    clearCartBtnText.setAttribute("visible", true);
+
+    menuItems.forEach(id => {
+      document.getElementById(id).setAttribute("visible", true);
+    });
+
+    updateCartDisplay();
+  }
+
+  function hideMenu() {
+    menuTitle.setAttribute("visible", false);
+    menuPanel.setAttribute("visible", false);
+    menuPanelGlow.setAttribute("visible", false);
+    closeMenuBtn.setAttribute("visible", false);
+    closeMenuBtnText.setAttribute("visible", false);
+
+    cartTitle.setAttribute("visible", false);
+    cartPanel.setAttribute("visible", false);
+    cartPanelGlow.setAttribute("visible", false);
+    cartCountText.setAttribute("visible", false);
+    cartItemsText.setAttribute("visible", false);
+    clearCartBtn.setAttribute("visible", false);
+    clearCartBtnText.setAttribute("visible", false);
+
+    menuItems.forEach(id => {
+      document.getElementById(id).setAttribute("visible", false);
+    });
+  }
+
+  function updateCartDisplay() {
+    const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+    cartCountText.setAttribute("value", `Cart: ${totalItems} items`);
+
+    if (!cart.length) {
+      cartItemsText.setAttribute("value", "No items yet");
+      return;
+    }
+
+    const lines = cart.map(item => `${item.name} x${item.qty}`);
+    cartItemsText.setAttribute("value", lines.join("\n"));
+  }
+
+  function clearCart() {
+    cart = [];
+    updateCartDisplay();
+    prepareState.textContent = "Cart cleared.";
+    scanState.setAttribute("value", "Cart cleared");
+  }
+
+  clearCartBtn.addEventListener("click", clearCart);
+
+  closeMenuBtn.addEventListener("click", () => {
+    hideMenu();
+    startScanBtn.setAttribute("visible", true);
+    startScanLabel.setAttribute("visible", true);
+
+    if (preparedAnalysis) {
+      startScanLabel.setAttribute("value", "Analyze Meal");
+      scanState.setAttribute("value", "Meal selected. Press Analyze Meal.");
+    } else {
+      startScanLabel.setAttribute("value", "Choose From Menu");
+      scanState.setAttribute("value", "Menu closed");
+    }
+  });
+
+  document.querySelectorAll(".meal-add").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      const meal = demoMeals[id];
+      const found = cart.find(item => item.id === meal.id);
+
+      if (found) {
+        found.qty += 1;
+      } else {
+        cart.push({ id: meal.id, name: meal.name, qty: 1 });
+      }
+
+      updateCartDisplay();
+      prepareState.textContent = `${meal.name} added to cart.`;
+      scanState.setAttribute("value", `${meal.name} added to cart`);
+    });
+  });
+
+  document.querySelectorAll(".meal-select").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      preparedAnalysis = { ...demoMeals[id] };
+
+      hideMenu();
+      hideResultSections();
+
+      startScanBtn.setAttribute("visible", true);
+      startScanLabel.setAttribute("visible", true);
+      startScanLabel.setAttribute("value", "Analyze Meal");
+
+      prepareState.textContent = `${demoMeals[id].name} selected inside XR.`;
+      scanState.setAttribute("value", `${demoMeals[id].name} selected. Press Analyze Meal.`);
+    });
   });
 
   startScanBtn.addEventListener("click", () => {
     if (!preparedAnalysis) {
-      scanState.setAttribute("value", "Please analyze first");
+      showMenu();
+      startScanBtn.setAttribute("visible", false);
+      startScanLabel.setAttribute("visible", false);
+      scanState.setAttribute("value", "Choose a meal from the menu");
       return;
     }
 
     hideResultSections();
+    hideMenu();
 
     startScanBtn.setAttribute("visible", false);
     startScanLabel.setAttribute("visible", false);
@@ -583,52 +830,6 @@
     }, 2200);
   });
 
-  detailsBtn.addEventListener("click", () => {
-    if (!preparedAnalysis) return;
-
-    detailsContent.setAttribute(
-      "value",
-      `Meal: ${preparedAnalysis.name}
-
-Calories:
-${preparedAnalysis.calories}
-
-Protein:
-${preparedAnalysis.protein}
-
-Reward:
-${preparedAnalysis.reward}
-
-Waste:
-${preparedAnalysis.wasteRisk}`
-    );
-
-    detailsPanel.setAttribute("visible", true);
-    detailsTitle.setAttribute("visible", true);
-    detailsContent.setAttribute("visible", true);
-    closeDetails.setAttribute("visible", true);
-    closeDetailsText.setAttribute("visible", true);
-  });
-
-  closeDetails.addEventListener("click", () => {
-    detailsPanel.setAttribute("visible", false);
-    detailsTitle.setAttribute("visible", false);
-    detailsContent.setAttribute("visible", false);
-    closeDetails.setAttribute("visible", false);
-    closeDetailsText.setAttribute("visible", false);
-  });
-
-  againBtn.addEventListener("click", () => {
-    hideResultSections();
-    mealFrame.setAttribute("visible", false);
-    mealGlow.setAttribute("visible", false);
-    mealImage.setAttribute("visible", false);
-    mealPulse.setAttribute("visible", false);
-    startScanBtn.setAttribute("visible", true);
-    startScanLabel.setAttribute("visible", true);
-    scanState.setAttribute("value", "Ready for scan");
-  });
-
   function showPreparedResult() {
     mealImage.setAttribute("src", preparedAnalysis.dataUrl);
 
@@ -638,32 +839,39 @@ ${preparedAnalysis.wasteRisk}`
     mealPulse.setAttribute("visible", true);
     mealImage.emit("showMeal");
 
-    mealTitle.setAttribute("value", preparedAnalysis.name);
+    caloriesCard.setAttribute("visible", true);
+    caloriesText.setAttribute("visible", true);
+    proteinCard.setAttribute("visible", true);
+    proteinText.setAttribute("visible", true);
+    rewardCard.setAttribute("visible", true);
+    rewardText.setAttribute("visible", true);
+    riskCard.setAttribute("visible", true);
+    riskText.setAttribute("visible", true);
     mealTitle.setAttribute("visible", true);
 
-    caloriesCard.setAttribute("visible", true);
+    mealTitle.setAttribute("value", preparedAnalysis.name);
     caloriesText.setAttribute("value", preparedAnalysis.calories);
-    caloriesText.setAttribute("visible", true);
-
-    proteinCard.setAttribute("visible", true);
     proteinText.setAttribute("value", `Protein\n${preparedAnalysis.protein}`);
-    proteinText.setAttribute("visible", true);
-
-    rewardCard.setAttribute("visible", true);
     rewardText.setAttribute("value", preparedAnalysis.reward);
-    rewardText.setAttribute("visible", true);
-
-    riskCard.setAttribute("visible", true);
     riskText.setAttribute("value", preparedAnalysis.wasteRisk);
-    riskText.setAttribute("visible", true);
 
-    detailsBtn.setAttribute("visible", true);
-    detailsBtnLabel.setAttribute("visible", true);
     againBtn.setAttribute("visible", true);
     againBtnLabel.setAttribute("visible", true);
+    againBtnGlow.setAttribute("visible", true);
 
     scanState.setAttribute("value", "Analysis complete");
   }
+
+  againBtn.addEventListener("click", () => {
+    hideResultSections();
+    preparedAnalysis = null;
+
+    startScanBtn.setAttribute("visible", true);
+    startScanLabel.setAttribute("visible", true);
+    startScanLabel.setAttribute("value", "Choose From Menu");
+
+    scanState.setAttribute("value", "Open the menu to choose another meal");
+  });
 
   function hideResultSections() {
     [
@@ -673,42 +881,9 @@ ${preparedAnalysis.wasteRisk}`
       "rewardCard","rewardText",
       "riskCard","riskText",
       "mealTitle",
-      "detailsBtn","detailsBtnLabel",
-      "againBtn","againBtnLabel",
-      "detailsPanel","detailsTitle","detailsContent",
-      "closeDetails","closeDetailsText"
+      "againBtn","againBtnLabel","againBtnGlow"
     ].forEach(id => {
       document.getElementById(id).setAttribute("visible", false);
-    });
-  }
-
-  function inferMealData(labels) {
-    const text = labels.join(" ").toLowerCase();
-
-    if (text.includes("rice") && (text.includes("chicken") || text.includes("meat"))) {
-      return { name:"Chicken Rice", calories:"520 kcal", protein:"35g", reward:"+50 Miles", wasteRisk:"Low Risk" };
-    }
-    if (text.includes("salad") || (text.includes("vegetable") && text.includes("food"))) {
-      return { name:"Salad Bowl", calories:"250 kcal", protein:"10g", reward:"+35 Miles", wasteRisk:"Medium Risk" };
-    }
-    if (text.includes("pasta") || text.includes("noodle")) {
-      return { name:"Pasta Dish", calories:"480 kcal", protein:"18g", reward:"+40 Miles", wasteRisk:"Medium Risk" };
-    }
-    if (text.includes("sandwich") || text.includes("burger")) {
-      return { name:"Sandwich / Burger", calories:"560 kcal", protein:"25g", reward:"+45 Miles", wasteRisk:"Medium Risk" };
-    }
-    if (text.includes("dessert") || text.includes("cake")) {
-      return { name:"Dessert", calories:"320 kcal", protein:"5g", reward:"+20 Miles", wasteRisk:"High Risk" };
-    }
-    return { name:"Mixed Meal", calories:"400 kcal", protein:"20g", reward:"+30 Miles", wasteRisk:"Medium Risk" };
-  }
-
-  function toDataURL(file) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = err => reject(err);
-      reader.readAsDataURL(file);
     });
   }
 </script>

@@ -1,0 +1,680 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SkyNutrition XR</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <style>
+    :root{
+      --saudi-green:#118b5a;
+      --saudi-green-soft:#33b97e;
+      --kacst-blue:#5fb8ff;
+      --kacst-deep:#173a7a;
+      --white:#f8fbff;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      overflow:hidden;
+      font-family:Arial,sans-serif;
+      background:
+        radial-gradient(circle at 20% 12%, rgba(17,139,90,.12), transparent 24%),
+        radial-gradient(circle at 80% 16%, rgba(95,184,255,.14), transparent 24%),
+        radial-gradient(circle at 50% 0%, #16345f 0%, #0b1830 44%, #050b15 100%);
+    }
+
+    .overlay{
+      position:fixed;
+      top:18px;
+      left:18px;
+      width:395px;
+      padding:22px;
+      border-radius:26px;
+      color:#fff;
+      background:linear-gradient(180deg, rgba(8,18,36,.94), rgba(5,10,21,.92));
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:0 24px 60px rgba(0,0,0,.35);
+      backdrop-filter:blur(14px);
+      z-index:10;
+      overflow:hidden;
+    }
+
+    .overlay::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(135deg, rgba(17,139,90,.08), transparent 28%, transparent 68%, rgba(95,184,255,.10));
+    }
+
+    .pill{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      color:#eaf8ff;
+      background:linear-gradient(90deg, rgba(17,139,90,.22), rgba(95,184,255,.18));
+      border:1px solid rgba(255,255,255,.10);
+      position:relative;
+      z-index:1;
+    }
+
+    .title{
+      position:relative;
+      z-index:1;
+      margin:16px 0 10px;
+      font-size:58px;
+      line-height:.92;
+      letter-spacing:-2.4px;
+      font-weight:800;
+      color:#fff;
+    }
+
+    .title .accent{
+      display:block;
+      background:linear-gradient(90deg, #bff0d8, #a9dcff);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .sub{
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:335px;
+      font-size:17px;
+      line-height:1.55;
+      color:#dbeafe;
+    }
+
+    .box{
+      position:relative;
+      z-index:1;
+      margin-top:18px;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.07);
+    }
+
+    button{
+      width:100%;
+      margin-top:10px;
+      padding:14px;
+      border:none;
+      border-radius:15px;
+      font-size:16px;
+      color:#fff;
+      font-weight:700;
+      cursor:pointer;
+      transition:transform .18s ease, filter .18s ease;
+    }
+
+    button:hover{
+      transform:translateY(-1px);
+      filter:brightness(1.03);
+    }
+
+    .primary{
+      background:linear-gradient(90deg, var(--saudi-green-soft), var(--kacst-blue));
+      box-shadow:0 14px 30px rgba(44,140,170,.26);
+    }
+
+    .status{
+      margin-top:12px;
+      min-height:44px;
+      padding:11px 12px;
+      border-radius:14px;
+      font-size:13px;
+      line-height:1.45;
+      color:#dff3ff;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+    }
+
+    .foot{
+      position:relative;
+      z-index:1;
+      margin-top:12px;
+      font-size:13px;
+      color:#b8d8f5;
+      line-height:1.45;
+    }
+  </style>
+</head>
+<body>
+
+<div class="overlay" id="overlayUI">
+  <div class="pill">SAUDI × KACST XR EXPERIENCE</div>
+
+  <div class="title">
+    SkyNutrition
+    <span class="accent">XR</span>
+  </div>
+
+  <p class="sub">
+    Welcome onboard. Enter XR to browse inflight meals, review nutrition, and experience a smarter passenger journey.
+  </p>
+
+  <div class="box">
+    <button class="primary" onclick="enterXRMode()">Enter XR Experience</button>
+
+    <div class="status" id="prepareState">
+      Welcome onboard. Your immersive passenger journey is ready.
+    </div>
+  </div>
+
+  <div class="foot">Start → Explore Meals → Analyze → Add to Cart</div>
+</div>
+
+<a-scene background="color:#050b15">
+  <a-entity position="0 1.6 0">
+    <a-camera>
+      <a-cursor
+        color="#dff7ea"
+        fuse="true"
+        fuse-timeout="900"
+        raycaster="objects: .clickable">
+      </a-cursor>
+    </a-camera>
+  </a-entity>
+
+  <a-sky color="#050b15"></a-sky>
+  <a-plane position="0 3 -7" width="22" height="10" color="#102347" opacity="0.24"></a-plane>
+  <a-plane position="-5.1 2 -6.6" width="3.6" height="6.4" color="#17305f" opacity="0.08"></a-plane>
+  <a-plane position="5.1 2 -6.6" width="3.6" height="6.4" color="#118b5a" opacity="0.05"></a-plane>
+
+  <a-plane position="0 0 -4.4" rotation="-90 0 0" width="13" height="5.8" color="#07111d"></a-plane>
+  <a-plane position="0 0.01 -4.4" rotation="-90 0 0" width="0.07" height="4.8" color="#a9dcff" opacity="0.35"></a-plane>
+
+  <a-entity position="-5.8 2.55 -5.25"
+            animation="property: position; to: 5.8 2.88 -5.25; dur: 6200; easing: linear; loop: true">
+    <a-cylinder position="0 0 0" radius="0.11" height="1.28" rotation="90 0 0" color="#ffffff"></a-cylinder>
+    <a-box position="0 0 0" width="1.3" height="0.04" depth="0.22" color="#dff7ea"></a-box>
+    <a-box position="0 0 -0.44" width="0.36" height="0.03" depth="0.08" color="#a9dcff"></a-box>
+    <a-box position="0 0.18 -0.44" width="0.08" height="0.23" depth="0.04" color="#dff7ea"></a-box>
+    <a-sphere position="0 0 0.63" radius="0.11" color="#ffffff"></a-sphere>
+  </a-entity>
+
+  <!-- BRAND BAR -->
+  <a-plane position="0 2.86 -2.80" width="3.90" height="0.72" color="#102347" opacity="0.96"></a-plane>
+  <a-plane position="0 3.06 -2.77" width="3.10" height="0.035" color="#a9dcff" opacity="0.85"></a-plane>
+
+  <a-plane position="-0.98 2.86 -2.78" width="1.36" height="0.40" color="#ffffff"></a-plane>
+  <a-image src="assets/saudi.png" position="-0.98 2.86 -2.77" width="1.18" height="0.22"></a-image>
+
+  <a-plane position="0 2.86 -2.76" width="0.015" height="0.48" color="#dff7ea" opacity="0.55"></a-plane>
+
+  <a-plane position="0.98 2.86 -2.78" width="1.36" height="0.40" color="#ffffff"></a-plane>
+  <a-image src="assets/kacst.png" position="0.98 2.86 -2.77" width="1.18" height="0.28"></a-image>
+
+  <!-- EXIT -->
+  <a-plane id="exitBtn"
+           class="clickable"
+           position="0 2.22 -2.42"
+           width="1.02"
+           height="0.22"
+           color="#ef4444"></a-plane>
+  <a-text value="Exit XR"
+          position="0 2.22 -2.37"
+          align="center"
+          color="#ffffff"
+          width="1.6"></a-text>
+
+  <!-- MAIN PANEL -->
+  <a-plane id="mainPanel"
+           position="0 1.40 -2.46"
+           width="3.10"
+           height="2.42"
+           color="#0a1730"
+           opacity="0.985"></a-plane>
+
+  <!-- WELCOME SCREEN -->
+  <a-entity id="welcomeGroup">
+    <a-text value="Welcome Onboard"
+            position="0 1.94 -2.39"
+            align="center"
+            color="#ffffff"
+            width="3.1"></a-text>
+
+    <a-text value="Explore your inflight meal experience in VR"
+            position="0 1.68 -2.39"
+            align="center"
+            color="#c7fff2"
+            width="2.45"></a-text>
+
+    <a-plane id="startExperienceBtn"
+             class="clickable"
+             position="0 1.28 -2.36"
+             width="1.70"
+             height="0.30"
+             color="#2aa975"></a-plane>
+    <a-text value="Start Experience"
+            position="0 1.28 -2.31"
+            align="center"
+            color="#ffffff"
+            width="2.0"></a-text>
+
+    <a-text value="Saudi hospitality meets immersive nutrition intelligence"
+            position="0 0.84 -2.36"
+            align="center"
+            color="#a9dcff"
+            width="2.25"></a-text>
+  </a-entity>
+
+  <!-- MENU -->
+  <a-entity id="menuGroup" visible="false">
+    <a-text value="Choose Your Meal"
+            position="0 1.96 -2.39"
+            align="center"
+            color="#ffffff"
+            width="2.8"></a-text>
+
+    <a-text value="Browse the onboard menu and select a meal to review"
+            position="0 1.72 -2.39"
+            align="center"
+            color="#c7fff2"
+            width="2.4"></a-text>
+
+    <a-plane id="card1" class="clickable" position="-0.78 1.10 -2.33" width="0.86" height="0.72" color="#123129"></a-plane>
+    <a-image src="https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80"
+             position="-0.78 1.18 -2.29" width="0.72" height="0.42"></a-image>
+    <a-text value="Chicken Rice" position="-0.78 0.83 -2.27" align="center" color="#ffffff" width="1.08"></a-text>
+
+    <a-plane id="card2" class="clickable" position="0.78 1.10 -2.33" width="0.86" height="0.72" color="#173a7a"></a-plane>
+    <a-image src="https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?auto=format&fit=crop&w=800&q=80"
+             position="0.78 1.18 -2.29" width="0.72" height="0.42"></a-image>
+    <a-text value="Pasta" position="0.78 0.83 -2.27" align="center" color="#ffffff" width="1.08"></a-text>
+
+    <a-plane id="card3" class="clickable" position="-0.78 0.12 -2.33" width="0.86" height="0.72" color="#123129"></a-plane>
+    <a-image src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80"
+             position="-0.78 0.20 -2.29" width="0.72" height="0.42"></a-image>
+    <a-text value="Salad Bowl" position="-0.78 -0.15 -2.27" align="center" color="#ffffff" width="1.08"></a-text>
+
+    <a-plane id="card4" class="clickable" position="0.78 0.12 -2.33" width="0.86" height="0.72" color="#173a7a"></a-plane>
+    <a-image src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80"
+             position="0.78 0.20 -2.29" width="0.72" height="0.42"></a-image>
+    <a-text value="Dessert" position="0.78 -0.15 -2.27" align="center" color="#ffffff" width="1.08"></a-text>
+  </a-entity>
+
+  <!-- ANALYSIS VIEW -->
+  <a-entity id="analysisGroup" visible="false">
+    <a-text id="heroTitle"
+            value="Passenger Meal Experience"
+            position="0 2.00 -2.39"
+            align="center"
+            color="#ffffff"
+            width="3.2"></a-text>
+
+    <a-text id="heroSub"
+            value="Analyze and decide before ordering"
+            position="0 1.76 -2.39"
+            align="center"
+            color="#c7fff2"
+            width="2.4"></a-text>
+
+    <a-plane id="mealFrame"
+             position="0 1.34 -2.35"
+             width="0.98"
+             height="0.72"
+             color="#11213c"></a-plane>
+
+    <a-plane id="mealGlow"
+             position="0 1.34 -2.37"
+             width="1.22"
+             height="0.92"
+             color="#2aa975"
+             opacity="0.08"></a-plane>
+
+    <a-image id="mealImage"
+             position="0 1.34 -2.31"
+             width="0.86"
+             height="0.62"></a-image>
+
+    <a-ring id="mealPulse"
+            position="0 1.34 -2.34"
+            radius-inner="0.43"
+            radius-outer="0.46"
+            color="#a9dcff"
+            opacity="0.20"
+            animation="property: scale; from: 0.92 0.92 0.92; to: 1.05 1.05 1.05; dir: alternate; dur: 900; loop: true"></a-ring>
+
+    <a-text id="caloriesText"
+            position="0 1.62 -2.23"
+            align="center"
+            color="#ffffff"
+            width="1.10"></a-text>
+
+    <a-plane id="proteinCard" position="-0.98 1.34 -2.30" width="0.78" height="0.24" color="#173c31"></a-plane>
+    <a-text id="proteinText" position="-0.98 1.34 -2.23" align="center" color="#dff7ea" width="1.05"></a-text>
+
+    <a-plane id="rewardCard" position="0.98 1.34 -2.30" width="0.78" height="0.24" color="#173a7a"></a-plane>
+    <a-text id="rewardText" position="0.98 1.34 -2.23" align="center" color="#f6c768" width="1.05"></a-text>
+
+    <a-plane id="riskCard" position="0 0.98 -2.28" width="0.96" height="0.20" color="#173c31"></a-plane>
+    <a-text id="riskText" position="0 0.98 -2.23" align="center" color="#eafff5" width="1.10"></a-text>
+
+    <a-text id="mealTitle"
+            value=""
+            position="0 0.74 -2.30"
+            align="center"
+            color="#ffffff"
+            width="2.25"></a-text>
+
+    <a-text id="scanState"
+            value="Meal selected"
+            position="0 0.52 -2.33"
+            align="center"
+            color="#eef8ff"
+            width="2.2"></a-text>
+
+    <a-plane id="analyzeBtn"
+             class="clickable"
+             position="0 0.22 -2.32"
+             width="1.20"
+             height="0.24"
+             color="#2aa975"></a-plane>
+    <a-text id="analyzeBtnLabel"
+            value="Analyze Meal"
+            position="0 0.22 -2.27"
+            align="center"
+            color="#ffffff"
+            width="1.45"></a-text>
+
+    <a-plane id="detailsBtn"
+             class="clickable"
+             position="-0.82 -0.10 -2.32"
+             width="1.02"
+             height="0.24"
+             color="#35534a"></a-plane>
+    <a-text id="detailsBtnLabel"
+            value="Details"
+            position="-0.82 -0.10 -2.27"
+            align="center"
+            color="#ffffff"
+            width="1.25"></a-text>
+
+    <a-plane id="cartBtn"
+             class="clickable"
+             position="0 -0.10 -2.32"
+             width="1.02"
+             height="0.24"
+             color="#173a7a"></a-plane>
+    <a-text id="cartBtnLabel"
+            value="Add to Cart"
+            position="0 -0.10 -2.27"
+            align="center"
+            color="#ffffff"
+            width="1.30"></a-text>
+
+    <a-plane id="backBtn"
+             class="clickable"
+             position="0.82 -0.10 -2.32"
+             width="1.02"
+             height="0.24"
+             color="#294239"></a-plane>
+    <a-text id="backBtnLabel"
+            value="Back to Menu"
+            position="0.82 -0.10 -2.27"
+            align="center"
+            color="#ffffff"
+            width="1.35"></a-text>
+  </a-entity>
+
+  <!-- DETAILS PANEL -->
+  <a-plane id="detailsPanel"
+           position="1.48 1.10 -2.34"
+           width="1.16"
+           height="1.00"
+           color="#102347"
+           opacity="0.95"
+           visible="false"></a-plane>
+
+  <a-text id="detailsTitle"
+          value="Meal Details"
+          position="1.48 1.44 -2.28"
+          align="center"
+          color="#dff7ea"
+          width="1.35"
+          visible="false"></a-text>
+
+  <a-text id="detailsContent"
+          value=""
+          position="1.48 1.10 -2.28"
+          align="center"
+          color="#ffffff"
+          width="0.98"
+          visible="false"></a-text>
+
+  <a-plane id="closeDetails"
+           class="clickable"
+           position="1.48 0.68 -2.29"
+           width="0.72"
+           height="0.18"
+           color="#ef4444"
+           visible="false"></a-plane>
+
+  <a-text id="closeDetailsText"
+          value="Close"
+          position="1.48 0.68 -2.24"
+          align="center"
+          color="#ffffff"
+          width="1.05"
+          visible="false"></a-text>
+
+  <!-- CART CONFIRM -->
+  <a-plane id="confirmPanel"
+           position="0 0.72 -2.36"
+           width="2.10"
+           height="0.72"
+           color="#102347"
+           opacity="0.97"
+           visible="false"></a-plane>
+
+  <a-text id="confirmText"
+          value=""
+          position="0 0.72 -2.30"
+          align="center"
+          color="#ffffff"
+          width="1.85"
+          visible="false"></a-text>
+</a-scene>
+
+<script>
+  let selectedMeal = null;
+
+  const mealCatalog = {
+    chicken: {
+      name: "Chicken Rice",
+      image: "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80",
+      calories: "520 kcal",
+      protein: "35g",
+      reward: "+50 Miles",
+      wasteRisk: "Low Risk",
+      insight: "Balanced inflight main course with strong protein value."
+    },
+    pasta: {
+      name: "Pasta",
+      image: "https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?auto=format&fit=crop&w=800&q=80",
+      calories: "480 kcal",
+      protein: "18g",
+      reward: "+40 Miles",
+      wasteRisk: "Medium Risk",
+      insight: "Comfort option with moderate protein and broad passenger appeal."
+    },
+    salad: {
+      name: "Salad Bowl",
+      image: "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=800&q=80",
+      calories: "250 kcal",
+      protein: "10g",
+      reward: "+35 Miles",
+      wasteRisk: "Medium Risk",
+      insight: "Light and fresh choice with lower calories."
+    },
+    dessert: {
+      name: "Dessert",
+      image: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=800&q=80",
+      calories: "320 kcal",
+      protein: "5g",
+      reward: "+20 Miles",
+      wasteRisk: "High Risk",
+      insight: "Premium treat with higher indulgence and lower protein."
+    }
+  };
+
+  const overlayUI = document.getElementById("overlayUI");
+  const prepareState = document.getElementById("prepareState");
+
+  const welcomeGroup = document.getElementById("welcomeGroup");
+  const menuGroup = document.getElementById("menuGroup");
+  const analysisGroup = document.getElementById("analysisGroup");
+
+  const mealImage = document.getElementById("mealImage");
+  const mealTitle = document.getElementById("mealTitle");
+  const caloriesText = document.getElementById("caloriesText");
+  const proteinText = document.getElementById("proteinText");
+  const rewardText = document.getElementById("rewardText");
+  const riskText = document.getElementById("riskText");
+  const scanState = document.getElementById("scanState");
+
+  const detailsPanel = document.getElementById("detailsPanel");
+  const detailsTitle = document.getElementById("detailsTitle");
+  const detailsContent = document.getElementById("detailsContent");
+  const closeDetails = document.getElementById("closeDetails");
+  const closeDetailsText = document.getElementById("closeDetailsText");
+
+  const confirmPanel = document.getElementById("confirmPanel");
+  const confirmText = document.getElementById("confirmText");
+
+  function enterXRMode() {
+    overlayUI.style.display = "none";
+    const scene = document.querySelector("a-scene");
+    if (scene.enterVR) scene.enterVR();
+  }
+
+  document.getElementById("exitBtn").addEventListener("click", () => {
+    const scene = document.querySelector("a-scene");
+    if (scene.exitVR) scene.exitVR();
+    overlayUI.style.display = "block";
+  });
+
+  document.getElementById("startExperienceBtn").addEventListener("click", () => {
+    welcomeGroup.setAttribute("visible", false);
+    menuGroup.setAttribute("visible", true);
+  });
+
+  document.getElementById("card1").addEventListener("click", () => selectMeal("chicken"));
+  document.getElementById("card2").addEventListener("click", () => selectMeal("pasta"));
+  document.getElementById("card3").addEventListener("click", () => selectMeal("salad"));
+  document.getElementById("card4").addEventListener("click", () => selectMeal("dessert"));
+
+  function selectMeal(key) {
+    selectedMeal = mealCatalog[key];
+    menuGroup.setAttribute("visible", false);
+    analysisGroup.setAttribute("visible", true);
+    hideTransientPanels();
+
+    mealImage.setAttribute("src", selectedMeal.image);
+    mealTitle.setAttribute("value", selectedMeal.name);
+    caloriesText.setAttribute("value", "");
+    proteinText.setAttribute("value", "");
+    rewardText.setAttribute("value", "");
+    riskText.setAttribute("value", "");
+    scanState.setAttribute("value", "Meal selected. Press Analyze Meal.");
+  }
+
+  document.getElementById("analyzeBtn").addEventListener("click", () => {
+    if (!selectedMeal) return;
+
+    caloriesText.setAttribute("value", selectedMeal.calories);
+    proteinText.setAttribute("value", `Protein\n${selectedMeal.protein}`);
+    rewardText.setAttribute("value", selectedMeal.reward);
+    riskText.setAttribute("value", selectedMeal.wasteRisk);
+    scanState.setAttribute("value", "Meal analyzed. Review details or add to cart.");
+  });
+
+  document.getElementById("detailsBtn").addEventListener("click", () => {
+    if (!selectedMeal) return;
+
+    detailsContent.setAttribute("value",
+      `Meal:
+${selectedMeal.name}
+
+Calories:
+${selectedMeal.calories}
+
+Protein:
+${selectedMeal.protein}
+
+Reward:
+${selectedMeal.reward}
+
+Waste:
+${selectedMeal.wasteRisk}
+
+Insight:
+${selectedMeal.insight}`
+    );
+
+    detailsPanel.setAttribute("visible", true);
+    detailsTitle.setAttribute("visible", true);
+    detailsContent.setAttribute("visible", true);
+    closeDetails.setAttribute("visible", true);
+    closeDetailsText.setAttribute("visible", true);
+  });
+
+  closeDetails.addEventListener("click", () => {
+    detailsPanel.setAttribute("visible", false);
+    detailsTitle.setAttribute("visible", false);
+    detailsContent.setAttribute("visible", false);
+    closeDetails.setAttribute("visible", false);
+    closeDetailsText.setAttribute("visible", false);
+  });
+
+  document.getElementById("cartBtn").addEventListener("click", () => {
+    if (!selectedMeal) return;
+
+    confirmText.setAttribute("value",
+      `Added to cart
+
+${selectedMeal.name}
+
+Expected service:
+15 minutes`
+    );
+    confirmPanel.setAttribute("visible", true);
+    confirmText.setAttribute("visible", true);
+    scanState.setAttribute("value", "Meal added to cart successfully.");
+  });
+
+  document.getElementById("backBtn").addEventListener("click", () => {
+    selectedMeal = null;
+    analysisGroup.setAttribute("visible", false);
+    menuGroup.setAttribute("visible", true);
+    hideTransientPanels();
+  });
+
+  function hideTransientPanels() {
+    detailsPanel.setAttribute("visible", false);
+    detailsTitle.setAttribute("visible", false);
+    detailsContent.setAttribute("visible", false);
+    closeDetails.setAttribute("visible", false);
+    closeDetailsText.setAttribute("visible", false);
+    confirmPanel.setAttribute("visible", false);
+    confirmText.setAttribute("visible", false);
+  }
+</script>
+
+</body>
+</html>
+#AIzaSyD6CJ45RiftcqFDNjIjskTKk2PiHWZ_TPQ
